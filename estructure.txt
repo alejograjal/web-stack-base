@@ -77,6 +77,7 @@
 │   │   │   └── LinqHelper.cs
 │   │   └── WebStackBase.Common.csproj
 │   ├── WebStackBase.Database
+│   │   ├── 01.CLEAN_DATABASE.sql
 │   │   └── WebStackBase.Database.csproj
 │   ├── WebStackBase.Domain
 │   │   ├── Core
@@ -135,6 +136,10 @@
 │   │   │   ├── SpecificationEvaluator.cs
 │   │   │   └── UnitOfWork.cs
 │   │   └── WebStackBase.Infrastructure.csproj
+│   ├── WebStackBase.Tests
+│   │   ├── Services
+│   │   │   └── ServiceCustomerFeedbackTests.cs
+│   │   └── WebStackBase.Tests.csproj
 │   ├── WebStackBase.Util
 │   │   ├── Converter
 │   │   │   ├── DateOnlyJsonConverter.cs
@@ -158,10 +163,15 @@
 │       │   ├── ErrorHandling.cs
 │       │   ├── ExceptionHandlingConfigurationExtension.cs
 │       │   ├── FluentValidationConfiguration.cs
+│       │   ├── HealthCheckConfiguration.cs
 │       │   └── IoCConfiguration.cs
 │       ├── Endpoints
 │       │   ├── CustomerFeedbackEndpoints.cs
-│       │   └── HealthCheckEndpoints.cs
+│       │   ├── HealthCheckEndpoints.cs
+│       │   ├── ReservationEndpoints.cs
+│       │   ├── ResourceEndpoints.cs
+│       │   ├── ServiceEndpoints.cs
+│       │   └── ServiceServiceResourceEndpoints.cs
 │       ├── ErrorDetailsBaseReservation.cs
 │       ├── Program.cs
 │       ├── Properties
@@ -175,8 +185,8 @@
 │       ├── WebStackBase.WebAPI.csproj
 │       ├── appsettings.Development.json
 │       └── appsettings.json
+├── estructure.txt
 ├── site-admin
-├── site-public
-└── structure.txt
+└── site-public
 
-48 directories, 132 files
+50 directories, 140 files
