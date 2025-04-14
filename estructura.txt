@@ -1,0 +1,192 @@
+.
+├── README.md
+├── api
+│   ├── WebStackBase.Api.sln
+│   ├── WebStackBase.Application
+│   │   ├── Configuration
+│   │   │   ├── Authentication
+│   │   │   │   └── AuthenticationConfiguration.cs
+│   │   │   ├── Configuration.cs
+│   │   │   └── Pagination
+│   │   │       ├── PagedList.cs
+│   │   │       └── PaginationParameters.cs
+│   │   ├── Core
+│   │   │   ├── Interfaces
+│   │   │   │   ├── IBaseRepositoryAsync.cs
+│   │   │   │   ├── ICoreService.cs
+│   │   │   │   └── IUnitOfWork.cs
+│   │   │   ├── Models
+│   │   │   │   └── PageResultDto.cs
+│   │   │   └── Services
+│   │   │       └── CoreService.cs
+│   │   ├── Enums
+│   │   │   └── RoleApplication.cs
+│   │   ├── RequestDtos
+│   │   │   ├── RequestBaseDto.cs
+│   │   │   ├── RequestCustomerFeedbackDto.cs
+│   │   │   ├── RequestReservationDetailDto.cs
+│   │   │   ├── RequestReservationDto.cs
+│   │   │   ├── RequestResourceDto.cs
+│   │   │   ├── RequestServiceDto.cs
+│   │   │   ├── RequestServiceResourceDto.cs
+│   │   │   └── RequestUserLoginDTO.cs
+│   │   ├── ResponseDtos
+│   │   │   ├── Authentication
+│   │   │   │   ├── AuthenticationResult.cs
+│   │   │   │   ├── CurrentUser.cs
+│   │   │   │   └── TokenModel.cs
+│   │   │   ├── Base
+│   │   │   │   ├── BaseEntity.cs
+│   │   │   │   └── BaseSimpleEntity.cs
+│   │   │   ├── ResponseCustomerFeedbackDto.cs
+│   │   │   ├── ResponseReservationDetailDto.cs
+│   │   │   ├── ResponseReservationDto.cs
+│   │   │   ├── ResponseResourceDto.cs
+│   │   │   ├── ResponseResourceTypeDto.cs
+│   │   │   ├── ResponseRoleDto.cs
+│   │   │   ├── ResponseServiceDto.cs
+│   │   │   ├── ResponseServiceResourceDto.cs
+│   │   │   └── ResponseUserDto.cs
+│   │   ├── Services
+│   │   │   ├── Implementations
+│   │   │   │   ├── Authorization
+│   │   │   │   ├── ServiceCustomerFeedback.cs
+│   │   │   │   ├── ServiceIdentity.cs
+│   │   │   │   ├── ServiceReservation.cs
+│   │   │   │   ├── ServiceResource.cs
+│   │   │   │   ├── ServiceService.cs
+│   │   │   │   ├── ServiceServiceResource.cs
+│   │   │   │   └── ServiceUser.cs
+│   │   │   └── Interfaces
+│   │   │       ├── Authorization
+│   │   │       ├── IServiceCustomerFeedback.cs
+│   │   │       ├── IServiceIdentity.cs
+│   │   │       ├── IServiceReservation.cs
+│   │   │       ├── IServiceResource.cs
+│   │   │       ├── IServiceService.cs
+│   │   │       ├── IServiceServiceResource.cs
+│   │   │       └── IServiceUser.cs
+│   │   └── WebStackBase.Application.csproj
+│   ├── WebStackBase.Common
+│   │   ├── Extensions
+│   │   │   ├── CollectionExtensions.cs
+│   │   │   ├── FormattableStringExpressions.cs
+│   │   │   └── IQueryableExtensions.cs
+│   │   ├── Helper
+│   │   │   ├── ErrorHandling.cs
+│   │   │   └── LinqHelper.cs
+│   │   └── WebStackBase.Common.csproj
+│   ├── WebStackBase.Database
+│   │   └── WebStackBase.Database.csproj
+│   ├── WebStackBase.Domain
+│   │   ├── Core
+│   │   │   ├── Models
+│   │   │   │   ├── BaseEntity.cs
+│   │   │   │   ├── BaseSimpleEntity.cs
+│   │   │   │   ├── PageResultBase.cs
+│   │   │   │   └── PagingDetails.cs
+│   │   │   └── Specifications
+│   │   │       ├── BaseSpecification.cs
+│   │   │       └── ISpecification.cs
+│   │   ├── Entities
+│   │   │   ├── CustomerFeedback.cs
+│   │   │   ├── Reservation.cs
+│   │   │   ├── ReservationDetail.cs
+│   │   │   ├── Resource.cs
+│   │   │   ├── ResourceType.cs
+│   │   │   ├── Role.cs
+│   │   │   ├── Service.cs
+│   │   │   ├── ServiceResource.cs
+│   │   │   ├── TokenMaster.cs
+│   │   │   └── User.cs
+│   │   ├── Exceptions
+│   │   │   ├── BadRequestException.cs
+│   │   │   ├── BaseException.cs
+│   │   │   ├── ListNotAddedExecption.cs
+│   │   │   ├── NotFoundException.cs
+│   │   │   ├── UnAuthorizedException.cs
+│   │   │   ├── ValidationEntityException.cs
+│   │   │   └── WebStackBaseException.cs
+│   │   ├── Validations
+│   │   │   ├── CustomerFeedbackValidator.cs
+│   │   │   ├── ReservationDetailValidator.cs
+│   │   │   ├── ReservationValidator.cs
+│   │   │   ├── ResourceValidator.cs
+│   │   │   ├── ServiceResourceValidator.cs
+│   │   │   └── ServiceValidator.cs
+│   │   └── WebStackBase.Domain.csproj
+│   ├── WebStackBase.Infrastructure
+│   │   ├── Data
+│   │   │   └── WebStackBaseContext.cs
+│   │   ├── Mappings
+│   │   │   ├── Mappers
+│   │   │   │   ├── DTOToModelApplicationProfile.cs
+│   │   │   │   └── ModelToDTOApplicationProfile.cs
+│   │   │   └── ValueResolvers
+│   │   │       ├── CurrentUserIdResolverAdd.cs
+│   │   │       └── CurrentUserIdResolverModify.cs
+│   │   ├── Migrations
+│   │   │   ├── 20250413192542_Initial.Designer.cs
+│   │   │   ├── 20250413192542_Initial.cs
+│   │   │   └── WebStackBaseContextModelSnapshot.cs
+│   │   ├── Repositories
+│   │   │   ├── BaseRepositoryAsync.cs
+│   │   │   ├── Configuration.cs
+│   │   │   ├── SpecificationEvaluator.cs
+│   │   │   └── UnitOfWork.cs
+│   │   └── WebStackBase.Infrastructure.csproj
+│   ├── WebStackBase.Tests
+│   │   ├── Services
+│   │   │   └── ServiceCustomerFeedbackTests.cs
+│   │   └── WebStackBase.Tests.csproj
+│   ├── WebStackBase.Util
+│   │   ├── Converter
+│   │   │   ├── DateOnlyJsonConverter.cs
+│   │   │   └── TimeOnlyJsonConverter.cs
+│   │   ├── Hashing.cs
+│   │   ├── JwtToken.cs
+│   │   ├── Serialization.cs
+│   │   ├── StringExtension.cs
+│   │   └── WebStackBase.Util.csproj
+│   └── WebStackBase.WebAPI
+│       ├── Authorization
+│       │   ├── ClaimFinder.cs
+│       │   ├── IdentifiedUser.cs
+│       │   └── UserIdentityHandler.cs
+│       ├── Configuration
+│       │   ├── ApiVersioningConfigurationExtension.cs
+│       │   ├── AuthenticationExtension.cs
+│       │   ├── AutoMapperConfiguration.cs
+│       │   ├── BaseReservationAuthorizeAttribute.cs
+│       │   ├── DBConfigurationExtension.cs
+│       │   ├── ErrorHandling.cs
+│       │   ├── ExceptionHandlingConfigurationExtension.cs
+│       │   ├── FluentValidationConfiguration.cs
+│       │   ├── HealthCheckConfiguration.cs
+│       │   └── IoCConfiguration.cs
+│       ├── Endpoints
+│       │   ├── CustomerFeedbackEndpoints.cs
+│       │   ├── HealthCheckEndpoints.cs
+│       │   ├── ReservationEndpoints.cs
+│       │   ├── ResourceEndpoints.cs
+│       │   ├── ServiceEndpoints.cs
+│       │   └── ServiceServiceResourceEndpoints.cs
+│       ├── ErrorDetailsBaseReservation.cs
+│       ├── Program.cs
+│       ├── Properties
+│       │   └── launchSettings.json
+│       ├── Swagger
+│       │   ├── AuthorizeOperationFilter.cs
+│       │   ├── CleanOperationFilter.cs
+│       │   ├── DefaultApiVersionHeaderOperationFilter.cs
+│       │   ├── SwaggerConfiguration.cs
+│       │   └── SwaggerOptionConfiguration.cs
+│       ├── WebStackBase.WebAPI.csproj
+│       ├── appsettings.Development.json
+│       └── appsettings.json
+├── estructura.txt
+├── site-admin
+├── site-public
+└── structure.txt
+
+50 directories, 140 files

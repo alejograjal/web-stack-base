@@ -1,0 +1,58 @@
+name: CI/CD - WebStackBase
+
+on:
+  push:
+    branches:
+      - principal
+  pull_request:
+    branches:
+      - principal
+
+jobs:
+  build-and-test:
+    name: 🔨 Build & ✅ Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🧰 Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: 📦 Restore dependencies
+        run: dotnet restore ./api/WebStackBase.Api.sln
+
+      - name: 🛠️ Build
+        run: dotnet build ./api/WebStackBase.Api.sln --configuration Release --no-restore
+
+      - name: 🧪 Run tests
+        run: dotnet test ./api/WebStackBase.Tests/WebStackBase.Tests.csproj --no-build --verbosity normal
+
+      - name: 📤 Publish WebAPI
+        run: dotnet publish ./api/WebStackBase.WebAPI/WebStackBase.WebAPI.csproj --configuration Release --output ./api/WebStackBase.WebAPI/publish
+
+      # - name: 🚀 Deploy to VPS via SCP and SSH
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     VPS_USER: ${{ secrets.VPS_USER }}
+      #     VPS_HOST: ${{ secrets.VPS_HOST }}
+      #     VPS_PORT: ${{ secrets.VPS_PORT }}
+      #   run: |
+      #     echo "$SSH_PRIVATE_KEY" > private_key
+      #     chmod 600 private_key
+
+      #     echo "📦 Copying files to VPS..."
+      #     scp -i private_key -P $VPS_PORT -r ./api/WebStackBase.WebAPI/publish $VPS_USER@$VPS_HOST:/var/www/webstackbase-temp
+
+      #     echo "🚀 Deploying to production..."
+      #     ssh -i private_key -p $VPS_PORT $VPS_USER@$VPS_HOST << 'EOF'
+      #       sudo systemctl stop webstackbase-api
+      #       rm -rf /var/www/webstackbase/*
+      #       mv /var/www/webstackbase-temp/* /var/www/webstackbase/
+      #       rm -rf /var/www/webstackbase-temp
+      #       sudo systemctl start webstackbase-api
+      #     EOF
+      #     rm private_key
