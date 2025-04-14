@@ -29,7 +29,7 @@ jobs:
         run: dotnet build ./api/WebStackBase.Api.sln --configuration Release --no-restore
 
       - name: 🧪 Run tests
-        run: dotnet test ./api/WebStackBase.Tests/WebStackBase.Tests.csproj --no-build --verbosity normal
+        run: dotnet test ./api/WebStackBase.Tests/WebStackBase.Tests.csproj --verbosity normal
 
       - name: 📤 Publish WebAPI
         run: dotnet publish ./api/WebStackBase.WebAPI/WebStackBase.WebAPI.csproj --configuration Release --output ./api/WebStackBase.WebAPI/publish
