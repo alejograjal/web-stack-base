@@ -47,6 +47,7 @@ public static class SwaggerConfiguration
 
             opts.OperationFilter<AuthorizeOperationFilter>();
             opts.OperationFilter<CleanOperationFilter>();
+
             opts.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
         });
 
@@ -73,7 +74,10 @@ public static class SwaggerConfiguration
                 opts.SwaggerEndpoint($"/swagger/{groupName}/swagger.json", groupName.ToUpperInvariant());
             }
 
-            opts.UseRequestInterceptor("request => { request.headers['x-api-version'] = '1.0'; return request; }");
+            opts.RoutePrefix = "swagger";
+
+            opts.UseRequestInterceptor("function(request) { request.headers['x-api-version'] = '1.0'; return request; }");
+
         });
     }
 }

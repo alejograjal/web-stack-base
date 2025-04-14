@@ -28,7 +28,6 @@ public class SwaggerOptionConfiguration(IApiVersionDescriptionProvider apiVersio
         foreach (var apiDescription in apiVersionDescriptionProvider.ApiVersionDescriptions)
         {
             options.SwaggerDoc(apiDescription.GroupName, CreateVersionInfo(apiDescription));
-            options.TagActionsBy(api => new[] { api.GroupName });
         }
     }
 

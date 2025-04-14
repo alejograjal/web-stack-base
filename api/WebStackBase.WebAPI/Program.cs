@@ -1,8 +1,8 @@
 using Serilog;
 using WebStackBase.WebAPI.Swagger;
+using WebStackBase.WebAPI.Endpoints;
 using WebStackBase.WebAPI.Authorization;
 using WebStackBase.WebAPI.Configuration;
-using WebStackBase.WebAPI.Endpoints;
 
 var WebStackBaseSpecificOrigins = "_WebStackBaseSpecificOrigins";
 
@@ -72,13 +72,16 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.LoadSwagger();
-app.UseSwaggerUI();
 
 app.ConfigureExceptionHandler(Log.Logger);
 
 app.MapControllers();
 
-app.MapHealthCheckEndpoints();
 app.MapCustomerFeedbackEndpoints();
+app.MapHealthCheckEndpoints();
+app.MapReservationEndpoints();
+app.MapResourceEndpoints();
+app.MapServiceEndpoints();
+app.MapServiceServiceResourceEndpoints();
 
 await app.RunAsync();
