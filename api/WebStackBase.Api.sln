@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStackBase.Database", "We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStackBase.Util", "WebStackBase.Util\WebStackBase.Util.csproj", "{9CDFE261-73F7-4ADA-A5E0-946C64D964FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStackBase.Tests", "WebStackBase.Tests\WebStackBase.Tests.csproj", "{F8D8790F-51D0-4F17-BECA-DD1203067979}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,18 @@ Global
 		{9CDFE261-73F7-4ADA-A5E0-946C64D964FA}.Release|x64.Build.0 = Release|Any CPU
 		{9CDFE261-73F7-4ADA-A5E0-946C64D964FA}.Release|x86.ActiveCfg = Release|Any CPU
 		{9CDFE261-73F7-4ADA-A5E0-946C64D964FA}.Release|x86.Build.0 = Release|Any CPU
+		{F8D8790F-51D0-4F17-BECA-DD1203067979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8D8790F-51D0-4F17-BECA-DD1203067979}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8D8790F-51D0-4F17-BECA-DD1203067979}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F8D8790F-51D0-4F17-BECA-DD1203067979}.Debug|x64.Build.0 = Debug|Any CPU
+		{F8D8790F-51D0-4F17-BECA-DD1203067979}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F8D8790F-51D0-4F17-BECA-DD1203067979}.Debug|x86.Build.0 = Debug|Any CPU
+		{F8D8790F-51D0-4F17-BECA-DD1203067979}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8D8790F-51D0-4F17-BECA-DD1203067979}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8D8790F-51D0-4F17-BECA-DD1203067979}.Release|x64.ActiveCfg = Release|Any CPU
+		{F8D8790F-51D0-4F17-BECA-DD1203067979}.Release|x64.Build.0 = Release|Any CPU
+		{F8D8790F-51D0-4F17-BECA-DD1203067979}.Release|x86.ActiveCfg = Release|Any CPU
+		{F8D8790F-51D0-4F17-BECA-DD1203067979}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
