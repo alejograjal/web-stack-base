@@ -66,6 +66,13 @@
 │   │   │       ├── IServiceService.cs
 │   │   │       ├── IServiceServiceResource.cs
 │   │   │       └── IServiceUser.cs
+│   │   ├── Validations
+│   │   │   ├── CustomerFeedbackValidator.cs
+│   │   │   ├── ReservationDetailValidator.cs
+│   │   │   ├── ReservationValidator.cs
+│   │   │   ├── ResourceValidator.cs
+│   │   │   ├── ServiceResourceValidator.cs
+│   │   │   └── ServiceValidator.cs
 │   │   └── WebStackBase.Application.csproj
 │   ├── WebStackBase.Common
 │   │   ├── Extensions
@@ -108,13 +115,6 @@
 │   │   │   ├── UnAuthorizedException.cs
 │   │   │   ├── ValidationEntityException.cs
 │   │   │   └── WebStackBaseException.cs
-│   │   ├── Validations
-│   │   │   ├── CustomerFeedbackValidator.cs
-│   │   │   ├── ReservationDetailValidator.cs
-│   │   │   ├── ReservationValidator.cs
-│   │   │   ├── ResourceValidator.cs
-│   │   │   ├── ServiceResourceValidator.cs
-│   │   │   └── ServiceValidator.cs
 │   │   └── WebStackBase.Domain.csproj
 │   ├── WebStackBase.Infrastructure
 │   │   ├── Data
@@ -162,7 +162,6 @@
 │       │   ├── DBConfigurationExtension.cs
 │       │   ├── ErrorHandling.cs
 │       │   ├── ExceptionHandlingConfigurationExtension.cs
-│       │   ├── FluentValidationConfiguration.cs
 │       │   ├── HealthCheckConfiguration.cs
 │       │   └── IoCConfiguration.cs
 │       ├── Endpoints
@@ -189,4 +188,4 @@
 ├── site-admin
 └── site-public
 
-50 directories, 140 files
+50 directories, 139 files

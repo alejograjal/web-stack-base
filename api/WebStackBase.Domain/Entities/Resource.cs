@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using WebStackBase.Domain.Core.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using WebStackBase.Domain.Core.Models;
 
 namespace WebStackBase.Infrastructure;
 

@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebStackBase.Domain.Core.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using WebStackBase.Domain.Core.Models;
 
 namespace WebStackBase.Infrastructure;
 
 [Table("User")]
 [Index("RoleId", Name = "IX_User_RoleId")]
-public partial class User: BaseEntity
+public partial class User : BaseEntity
 {
     [StringLength(50)]
     public string CardId { get; set; } = null!;

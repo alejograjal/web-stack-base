@@ -1,10 +1,13 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using WebStackBase.Application.Validations;
 using WebStackBase.Application.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 using WebStackBase.Application.Core.Interfaces;
-using WebStackBase.Application.Services.Interfaces.Authorization;
-using WebStackBase.Application.Services.Implementations.Authorization;
 using WebStackBase.Application.Services.Interfaces;
 using WebStackBase.Application.Services.Implementations;
+using WebStackBase.Application.Services.Interfaces.Authorization;
+using WebStackBase.Application.Services.Implementations.Authorization;
 
 namespace WebStackBase.Application.Configuration;
 
@@ -30,5 +33,18 @@ public static class Configuration
 
         services.AddScoped<IServiceUserContext, ServiceUserContext>();
         services.AddScoped<IServiceUserAuthorization, ServiceUserAuthorization>();
+    }
+
+    /// <summary>
+    /// Add configuration for fluent validations
+    /// </summary>
+    /// <param name="services">Service collection</param>
+    public static void ConfigureFluentValidation(this IServiceCollection services)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+
+        services.AddValidatorsFromAssemblyContaining<ServiceValidator>();
+
+        services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
     }
 }

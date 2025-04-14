@@ -9,7 +9,7 @@ using WebStackBase.Application.Services.Interfaces;
 
 namespace WebStackBase.Application.Services.Implementations;
 
-public class ServiceUser(ICoreService<User> coreService, IMapper mapper) : IServiceUser
+public class ServiceUser(ICoreService<User> coreService) : IServiceUser
 {
     private readonly string[] UserWithRole = ["RoleIdNavigation"];
 
@@ -20,7 +20,7 @@ public class ServiceUser(ICoreService<User> coreService, IMapper mapper) : IServ
         var user = await coreService.UnitOfWork.Repository<User>().FirstOrDefaultAsync(spec, UserWithRole);
         if (user == null) throw new NotFoundException("User not found.");
 
-        return mapper.Map<ResponseUserDto>(user);
+        return coreService.AutoMapper.Map<ResponseUserDto>(user);
     }
 
     /// <inheritdoc />
@@ -30,7 +30,7 @@ public class ServiceUser(ICoreService<User> coreService, IMapper mapper) : IServ
         var user = await coreService.UnitOfWork.Repository<User>().FirstOrDefaultAsync(spec);
         if (user == null) throw new NotFoundException("Usuario not found.");
 
-        return mapper.Map<ResponseUserDto>(user);
+        return coreService.AutoMapper.Map<ResponseUserDto>(user);
     }
 
     /// <inheritdoc />
@@ -39,7 +39,7 @@ public class ServiceUser(ICoreService<User> coreService, IMapper mapper) : IServ
         if (role == null)
         {
             var list = await coreService.UnitOfWork.Repository<User>().ListAllAsync();
-            return mapper.Map<ICollection<ResponseUserDto>>(list);
+            return coreService.AutoMapper.Map<ICollection<ResponseUserDto>>(list);
         }
 
         RoleApplication roleEnum;
@@ -47,7 +47,7 @@ public class ServiceUser(ICoreService<User> coreService, IMapper mapper) : IServ
 
         var spec = new BaseSpecification<User>(x => x.RoleId == (long)roleEnum);
         var listFilter = await coreService.UnitOfWork.Repository<User>().ListAsync(spec);
-        var collection = mapper.Map<ICollection<ResponseUserDto>>(listFilter);
+        var collection = coreService.AutoMapper.Map<ICollection<ResponseUserDto>>(listFilter);
 
         return collection;
     }
@@ -65,6 +65,6 @@ public class ServiceUser(ICoreService<User> coreService, IMapper mapper) : IServ
         var user = await coreService.UnitOfWork.Repository<User>().FirstOrDefaultAsync(spec, UserWithRole);
         if (user == null) throw new NotFoundException("Email or password incorrect.");
 
-        return mapper.Map<ResponseUserDto>(user);
+        return coreService.AutoMapper.Map<ResponseUserDto>(user);
     }
 }

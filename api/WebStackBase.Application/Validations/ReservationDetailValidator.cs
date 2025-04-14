@@ -1,7 +1,7 @@
 using FluentValidation;
 using WebStackBase.Infrastructure;
 
-namespace WebStackBase.Domain.Validations;
+namespace WebStackBase.Application.Validations;
 
 public class ReservationDetailValidator : AbstractValidator<ReservationDetail>
 {

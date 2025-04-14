@@ -3,6 +3,7 @@ using WebStackBase.WebAPI.Swagger;
 using WebStackBase.WebAPI.Endpoints;
 using WebStackBase.WebAPI.Authorization;
 using WebStackBase.WebAPI.Configuration;
+using WebStackBase.Application.Configuration;
 
 var WebStackBaseSpecificOrigins = "_WebStackBaseSpecificOrigins";
 

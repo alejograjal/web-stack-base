@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using WebStackBase.Domain.Core.Models;
 using System.ComponentModel.DataAnnotations.Schema;
-using WebStackBase.Domain.Core.Models;
 
 namespace WebStackBase.Infrastructure;
 
 [Table("ServiceResource")]
-public partial class ServiceResource: BaseSimpleEntity
+public partial class ServiceResource : BaseSimpleEntity
 {
     public long ServiceId { get; set; }
 
