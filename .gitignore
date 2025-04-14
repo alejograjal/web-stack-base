@@ -1,0 +1,65 @@
+## Build results
+bin/
+obj/
+out/
+[Dd]ebug*/
+[Rr]elease*/
+
+## Rider
+.idea/
+*.sln.iml
+
+## User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+## Visual Studio Code
+.vscode/
+
+## ASP.NET Core
+appsettings.Local.json
+appsettings.Production.json
+.env
+
+## Logs
+*.log
+logs/
+**/logs/
+
+## dotCover
+.idea/.dotCover
+
+## Dotnet watch
+**/node_modules/
+**/dist/
+
+## NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## OS junk
+*.DS_Store
+Thumbs.db
+
+## Test Results
+TestResults/
+
+## Others
+*.db
+*.sqlite
+*.pdb
+*.mdb
+*.cache
+*.bak
+*.orig
+*.rej
+
+# Optional: prevent secrets accidentally committed
+secrets.json

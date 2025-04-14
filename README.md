@@ -45,7 +45,7 @@ web-stack-base/
 2. **Set up the API:**
    cd api
    dotnet restore
-   dotnet run
+   dotnet run or click run option from left bar menu and select .Net Core Launch (web API)
 
 3. **Run the public site:**
    cd site-public
