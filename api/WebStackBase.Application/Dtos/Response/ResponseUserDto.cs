@@ -14,13 +14,9 @@ public record ResponseUserDto : BaseEntity
 
     public string Email { get; set; } = null!;
 
-    public DateOnly Birthday { get; set; }
-
     public string Password { get; set; } = null!;
-
-    public string? ProfilePictureUrl { get; set; }
 
     public long RoleId { get; set; }
 
-    public virtual ResponseRoleDto Role { get; set; } = null!;
+    public ResponseRoleDto Role { get; set; } = null!;
 }
