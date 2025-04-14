@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using WebStackBase.Domain.Core.Models;
-using WebStackBase.Application.RequestDTOs;
-using WebStackBase.Application.RequestDtos;
+using WebStackBase.Application.Dtos.Request;
 using WebStackBase.Application.ValueResolvers;
 
 namespace WebStackBase.Infrastructure.Mappings.Mappers;

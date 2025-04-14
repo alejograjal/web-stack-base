@@ -1,6 +1,6 @@
 using AutoMapper;
 using WebStackBase.Domain.Exceptions;
-using WebStackBase.Application.ResponseDTOs;
+using WebStackBase.Application.Dtos.Response;
 using WebStackBase.Application.Services.Interfaces;
 using WebStackBase.Application.Services.Interfaces.Authorization;
 

@@ -1,5 +1,5 @@
-﻿using WebStackBase.Application.RequestDTOs;
-using WebStackBase.Application.ResponseDTOs.Authentication;
+﻿using WebStackBase.Application.Dtos.Request;
+using WebStackBase.Application.Dtos.Response.Authentication;
 
 namespace WebStackBase.Application.Services.Interfaces;
 

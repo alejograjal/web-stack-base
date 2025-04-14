@@ -5,12 +5,12 @@ using WebStackBase.Infrastructure;
 using WebStackBase.Domain.Exceptions;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using WebStackBase.Application.RequestDTOs;
-using WebStackBase.Application.ResponseDTOs;
+using WebStackBase.Application.Dtos.Request;
+using WebStackBase.Application.Dtos.Response;
 using WebStackBase.Domain.Core.Specifications;
 using WebStackBase.Application.Core.Interfaces;
 using WebStackBase.Application.Services.Interfaces;
-using WebStackBase.Application.ResponseDTOs.Authentication;
+using WebStackBase.Application.Dtos.Response.Authentication;
 using WebStackBase.Application.Configuration.Authentication;
 
 namespace WebStackBase.Application.Services.Implementations;

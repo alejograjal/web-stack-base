@@ -1,4 +1,4 @@
-namespace WebStackBase.Application.ResponseDTOs.Base;
+namespace WebStackBase.Application.Dtos.Response.Base;
 
 public record BaseSimpleEntity
 {

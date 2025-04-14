@@ -1,6 +1,6 @@
-﻿using WebStackBase.Application.ResponseDTOs.Base;
+﻿using WebStackBase.Application.Dtos.Response.Base;
 
-namespace WebStackBase.Application.ResponseDTOs;
+namespace WebStackBase.Application.Dtos.Response;
 
 public record ResponseUserDto : BaseEntity
 {

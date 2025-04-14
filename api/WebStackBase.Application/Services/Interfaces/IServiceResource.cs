@@ -1,5 +1,5 @@
-using WebStackBase.Application.RequestDtos;
-using WebStackBase.Application.ResponseDtos;
+using WebStackBase.Application.Dtos.Request;
+using WebStackBase.Application.Dtos.Response;
 
 namespace WebStackBase.Application.Services.Interfaces;
 

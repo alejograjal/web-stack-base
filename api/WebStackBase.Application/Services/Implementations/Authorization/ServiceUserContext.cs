@@ -1,6 +1,6 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
-using WebStackBase.Application.ResponseDTOs.Authentication;
+using WebStackBase.Application.Dtos.Response.Authentication;
 using WebStackBase.Application.Services.Interfaces.Authorization;
 
 namespace WebStackBase.Application.Services.Implementations.Authorization;

@@ -1,4 +1,4 @@
-﻿using WebStackBase.Application.ResponseDTOs;
+﻿using WebStackBase.Application.Dtos.Response;
 
 namespace WebStackBase.Application.Services.Interfaces;
 

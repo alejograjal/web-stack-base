@@ -1,8 +1,8 @@
 using FluentValidation;
 using WebStackBase.Infrastructure;
 using WebStackBase.Domain.Exceptions;
-using WebStackBase.Application.RequestDtos;
-using WebStackBase.Application.ResponseDtos;
+using WebStackBase.Application.Dtos.Request;
+using WebStackBase.Application.Dtos.Response;
 using WebStackBase.Application.Core.Interfaces;
 using WebStackBase.Application.Services.Interfaces;
 

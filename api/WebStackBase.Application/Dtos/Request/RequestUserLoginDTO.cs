@@ -1,4 +1,4 @@
-namespace WebStackBase.Application.RequestDTOs;
+namespace WebStackBase.Application.Dtos.Request;
 
 public class RequestUserLoginDto
 {

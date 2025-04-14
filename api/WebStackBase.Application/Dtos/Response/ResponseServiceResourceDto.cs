@@ -1,6 +1,6 @@
-using WebStackBase.Application.ResponseDTOs.Base;
+using WebStackBase.Application.Dtos.Response.Base;
 
-namespace WebStackBase.Application.ResponseDtos;
+namespace WebStackBase.Application.Dtos.Response;
 
 public record ResponseServiceResourceDto : BaseSimpleEntity
 {
@@ -9,6 +9,6 @@ public record ResponseServiceResourceDto : BaseSimpleEntity
     public long ResourceId { get; set; }
 
     public virtual ResponseResourceDto Resource { get; set; } = null!;
-    
+
     public virtual ResponseServiceDto Service { get; set; } = null!;
 }

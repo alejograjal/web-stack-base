@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using WebStackBase.Application.ResponseDtos;
-using WebStackBase.Application.ResponseDTOs;
+using WebStackBase.Application.Dtos.Response;
 
 namespace WebStackBase.Infrastructure.Mappings.Mappers;
 

@@ -1,6 +1,7 @@
 using WebStackBase.Util;
 using Microsoft.AspNetCore.Authorization;
-using WebStackBase.Application.ResponseDTOs.Enums;
+using WebStackBase.Application.Dtos.Response.
+Enums;
 
 namespace WebStackBase.WebAPI.Configuration;
 

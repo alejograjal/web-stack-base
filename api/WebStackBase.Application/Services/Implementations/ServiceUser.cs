@@ -1,10 +1,9 @@
-﻿using AutoMapper;
-using WebStackBase.Infrastructure;
+﻿using WebStackBase.Infrastructure;
 using WebStackBase.Domain.Exceptions;
-using WebStackBase.Application.ResponseDTOs;
+using WebStackBase.Application.Dtos.Response;
 using WebStackBase.Domain.Core.Specifications;
 using WebStackBase.Application.Core.Interfaces;
-using WebStackBase.Application.ResponseDTOs.Enums;
+using WebStackBase.Application.Dtos.Response.Enums;
 using WebStackBase.Application.Services.Interfaces;
 
 namespace WebStackBase.Application.Services.Implementations;

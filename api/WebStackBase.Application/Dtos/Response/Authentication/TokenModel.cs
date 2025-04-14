@@ -1,4 +1,4 @@
-namespace WebStackBase.Application.ResponseDTOs.Authentication;
+namespace WebStackBase.Application.Dtos.Response.Authentication;
 
 public class TokenModel
 {

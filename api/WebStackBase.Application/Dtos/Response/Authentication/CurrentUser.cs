@@ -1,6 +1,6 @@
-using WebStackBase.Application.ResponseDTOs.Enums;
+using WebStackBase.Application.Dtos.Response.Enums;
 
-namespace WebStackBase.Application.ResponseDTOs.Authentication;
+namespace WebStackBase.Application.Dtos.Response.Authentication;
 
 public record CurrentUser
 {

@@ -1,6 +1,4 @@
-using WebStackBase.Application.RequestDTOs;
-
-namespace WebStackBase.Application.RequestDtos;
+namespace WebStackBase.Application.Dtos.Request;
 
 public record RequestResourceDto : RequestBaseDto
 {

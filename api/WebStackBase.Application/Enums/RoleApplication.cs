@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace WebStackBase.Application.ResponseDTOs.Enums;
+namespace WebStackBase.Application.Dtos.Response.Enums;
 
 public enum RoleApplication
 {

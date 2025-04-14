@@ -1,8 +1,8 @@
-using WebStackBase.Application.RequestDTOs;
+using WebStackBase.Application.Dtos.Response.Base;
 
-namespace WebStackBase.Application.RequestDtos;
+namespace WebStackBase.Application.Dtos.Response;
 
-public record RequestReservationDto : RequestBaseDto
+public record ResponseReservationDto : BaseEntity
 {
     public string CustomerName { get; set; } = null!;
 
@@ -15,4 +15,6 @@ public record RequestReservationDto : RequestBaseDto
     public string Comment { get; set; } = null!;
 
     public string Status { get; set; } = null!;
+
+    public ICollection<ResponseReservationDetailDto> ReservationDetails { get; set; } = new List<ResponseReservationDetailDto>();
 }
