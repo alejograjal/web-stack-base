@@ -19,34 +19,30 @@
 │   │   │   │   └── PageResultDto.cs
 │   │   │   └── Services
 │   │   │       └── CoreService.cs
+│   │   ├── Dtos
+│   │   │   ├── Request
+│   │   │   │   ├── RequestBaseDto.cs
+│   │   │   │   ├── RequestCustomerFeedbackDto.cs
+│   │   │   │   ├── RequestReservationDetailDto.cs
+│   │   │   │   ├── RequestReservationDto.cs
+│   │   │   │   ├── RequestResourceDto.cs
+│   │   │   │   ├── RequestServiceDto.cs
+│   │   │   │   ├── RequestServiceResourceDto.cs
+│   │   │   │   └── RequestUserLoginDTO.cs
+│   │   │   └── Response
+│   │   │       ├── Authentication
+│   │   │       ├── Base
+│   │   │       ├── ResponseCustomerFeedbackDto.cs
+│   │   │       ├── ResponseReservationDetailDto.cs
+│   │   │       ├── ResponseReservationDto.cs
+│   │   │       ├── ResponseResourceDto.cs
+│   │   │       ├── ResponseResourceTypeDto.cs
+│   │   │       ├── ResponseRoleDto.cs
+│   │   │       ├── ResponseServiceDto.cs
+│   │   │       ├── ResponseServiceResourceDto.cs
+│   │   │       └── ResponseUserDto.cs
 │   │   ├── Enums
 │   │   │   └── RoleApplication.cs
-│   │   ├── RequestDtos
-│   │   │   ├── RequestBaseDto.cs
-│   │   │   ├── RequestCustomerFeedbackDto.cs
-│   │   │   ├── RequestReservationDetailDto.cs
-│   │   │   ├── RequestReservationDto.cs
-│   │   │   ├── RequestResourceDto.cs
-│   │   │   ├── RequestServiceDto.cs
-│   │   │   ├── RequestServiceResourceDto.cs
-│   │   │   └── RequestUserLoginDTO.cs
-│   │   ├── ResponseDtos
-│   │   │   ├── Authentication
-│   │   │   │   ├── AuthenticationResult.cs
-│   │   │   │   ├── CurrentUser.cs
-│   │   │   │   └── TokenModel.cs
-│   │   │   ├── Base
-│   │   │   │   ├── BaseEntity.cs
-│   │   │   │   └── BaseSimpleEntity.cs
-│   │   │   ├── ResponseCustomerFeedbackDto.cs
-│   │   │   ├── ResponseReservationDetailDto.cs
-│   │   │   ├── ResponseReservationDto.cs
-│   │   │   ├── ResponseResourceDto.cs
-│   │   │   ├── ResponseResourceTypeDto.cs
-│   │   │   ├── ResponseRoleDto.cs
-│   │   │   ├── ResponseServiceDto.cs
-│   │   │   ├── ResponseServiceResourceDto.cs
-│   │   │   └── ResponseUserDto.cs
 │   │   ├── Services
 │   │   │   ├── Implementations
 │   │   │   │   ├── Authorization
@@ -188,4 +184,4 @@
 ├── site-admin
 └── site-public
 
-50 directories, 139 files
+51 directories, 134 files
