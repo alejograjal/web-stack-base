@@ -13,4 +13,6 @@ public record ResponseCustomerFeedbackDto : BaseSimpleEntity
     public byte Rating { get; set; }
 
     public DateTime Created { get; set; }
+
+    public bool ShowInWeb { get; set; }
 }

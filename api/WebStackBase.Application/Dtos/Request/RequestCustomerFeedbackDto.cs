@@ -9,4 +9,6 @@ public record RequestCustomerFeedbackDto : RequestBaseDto
     public string Comment { get; set; } = null!;
 
     public byte Rating { get; set; }
+
+    public bool ShowInWeb { get; set; }
 }

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace WebStackBase.Infrastructure;
 
 [Table("CustomerFeedback")]
-public partial class CustomerFeedback: BaseSimpleEntity
+public partial class CustomerFeedback : BaseSimpleEntity
 {
     [StringLength(100)]
     public string CustomerName { get; set; } = null!;
@@ -19,4 +19,6 @@ public partial class CustomerFeedback: BaseSimpleEntity
     public byte Rating { get; set; }
 
     public DateTime Created { get; set; }
+
+    public bool ShowInWeb { get; set; }
 }

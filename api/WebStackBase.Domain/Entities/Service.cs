@@ -5,12 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace WebStackBase.Infrastructure;
 
 [Table("Service")]
-public partial class Service: BaseEntity
+public partial class Service : BaseEntity
 {
     [StringLength(80)]
     public string Name { get; set; } = null!;
 
-    [StringLength(350)]
+    [StringLength(1500)]
     public string Description { get; set; } = null!;
 
     [Column(TypeName = "money")]

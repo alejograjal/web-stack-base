@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebStackBase.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using WebStackBase.Infrastructure.Data;
 namespace WebStackBase.Infrastructure.Migrations
 {
     [DbContext(typeof(WebStackBaseContext))]
-    partial class WebStackBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250415032822_CustomerFeedback_Property")]
+    partial class CustomerFeedback_Property
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,8 +265,8 @@ namespace WebStackBase.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
