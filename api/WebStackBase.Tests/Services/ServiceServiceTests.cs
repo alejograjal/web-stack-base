@@ -51,7 +51,7 @@ public class ServiceServiceTests
     )
     {
         _mockCoreService.Setup(m => m.AutoMapper.Map<Service>(request)).Returns(serviceEntity);
-        _mockCoreService.Setup(m => m.UnitOfWork.Repository<Service>().AddAsync(serviceEntity, true)).ReturnsAsync((Service?)null);
+        _mockCoreService.Setup(m => m.UnitOfWork.Repository<Service>().AddAsync(serviceEntity, true)).ReturnsAsync((Service)null!);
 
         Func<Task> act = async () => await _service.CreateAsync(request);
 

@@ -71,7 +71,7 @@ public class ServiceReservationTests
     public async Task GetByIdAsync_ShouldThrowNotFound_WhenNotFound(long id)
     {
         _mockCoreService.Setup(repo => repo.UnitOfWork.Repository<Reservation>().FirstOrDefaultAsync(It.IsAny<BaseSpecification<Reservation>>()))
-            .ReturnsAsync((Reservation)null);
+            .ReturnsAsync((Reservation)null!);
 
         // Act
         Func<Task> act = async () => await _service.GetByIdAsync(id);

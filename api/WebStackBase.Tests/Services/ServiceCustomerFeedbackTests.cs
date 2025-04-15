@@ -74,7 +74,7 @@ public class ServiceCustomerFeedbackTests
     public async Task GetByIdAsync_ShouldThrowNotFound_WhenNotFound(long id)
     {
         _mockCoreService.Setup(repo => repo.UnitOfWork.Repository<CustomerFeedback>().FirstOrDefaultAsync(It.IsAny<BaseSpecification<CustomerFeedback>>()))
-            .ReturnsAsync((CustomerFeedback)null);
+            .ReturnsAsync((CustomerFeedback)null!);
 
         // Act
         Func<Task> action = async () => await _service.GetByIdAsync(id);

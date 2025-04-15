@@ -63,7 +63,7 @@ public class ServiceIdentityTests
         // Assert
         result.Token.Should().NotBeNullOrWhiteSpace();
         result.RefreshToken.Should().NotBeNullOrWhiteSpace();
-        result.Token.Should().MatchRegex(@"^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$"); // JWT format
+        result.Token.Should().MatchRegex(@"^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$");
         result.RefreshToken.Should().MatchRegex(@"^[a-f0-9\-]{36}$");
         _mockServiceUser.Verify(s => s.LoginAsync(loginDto.Email, Hashing.HashMd5(loginDto.Password)), Times.Once);
         _mockCoreService.Verify(c => c.UnitOfWork.Repository<TokenMaster>().AddAsync(It.IsAny<TokenMaster>(), true), Times.Once);
@@ -76,7 +76,7 @@ public class ServiceIdentityTests
     {
         // Arrange
         _mockCoreService.Setup(c => c.UnitOfWork.Repository<TokenMaster>().FirstOrDefaultAsync(It.IsAny<BaseSpecification<TokenMaster>>()))
-                       .ReturnsAsync((TokenMaster)null); // Simulate invalid token
+                       .ReturnsAsync((TokenMaster)null!);
 
         // Act
         Func<Task> act = async () => await _serviceIdentity.RefreshTokenAsync(tokenRequest);
