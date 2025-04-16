@@ -27,6 +27,7 @@ namespace WebStackBase.WebAPI.Endpoints
                 var result = await service.GetAllAsync();
                 return Results.Ok(result);
             })
+            .AllowAnonymous()
             .WithMetadata(new SwaggerOperationAttribute("Get all services", "Retrieve all services"))
             .Produces<List<ResponseServiceDto>>(StatusCodes.Status200OK)
             .Produces<ErrorDetailsWebStackBase>(StatusCodes.Status500InternalServerError);
