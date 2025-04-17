@@ -56,7 +56,7 @@ jobs:
 
           # Copy files to VPS temporary folder
           echo "📦 Copying files to VPS..."
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./api/WebStackBase.WebAPI/publish ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/webstackbase-temp
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./api/WebStackBase.WebAPI/publish/* ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/webstackbase-temp
 
           # Move files from temporary folder to final folder
           echo "🔄 Moving files from temporary folder to final folder..."
@@ -101,7 +101,7 @@ jobs:
             # Run migrations
             echo "🔄 Running database migrations..."
             cd /var/www/webstackbase
-            dotnet ef database update --connection "${{secrets.DB_CONNECTION_STRING}}"
+            dotnet ef database update --project /var/www/webstackbase/WebStackBase.Infrastructure.dll --startup-project /var/www/webstackbase/WebStackBase.WebAPI.dll--connection "${{secrets.DB_CONNECTION_STRING}}"
           EOF
 
           # Clean up the private key
