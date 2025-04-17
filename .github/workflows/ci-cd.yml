@@ -101,7 +101,7 @@ jobs:
             # Run migrations
             echo "🔄 Running database migrations..."
             cd /var/www/webstackbase
-            dotnet ef database update --connection "${DB_CONNECTION_STRING}"
+            dotnet ef database update --connection "${{secrets.DB_CONNECTION_STRING}}"
           EOF
 
           # Clean up the private key
