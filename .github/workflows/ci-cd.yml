@@ -22,6 +22,12 @@ jobs:
         with:
           dotnet-version: '9.0.x'
 
+      - name: 🧩 Install dotnet-ef
+        run: dotnet tool install --global dotnet-ef --version 9.0.0
+  
+      - name: 🛠️ Add dotnet tools to PATH
+        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
       - name: 📦 Restore dependencies
         run: dotnet restore ./api/WebStackBase.Api.sln
 
