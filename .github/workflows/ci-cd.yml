@@ -43,7 +43,7 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           JWT_LIFETIME: ${{ secrets.JWT_LIFETIME }}
         run: |
-          echo "$SSH_PRIVATE_KEY" > private_key
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
       
           # Copy files to VPS
