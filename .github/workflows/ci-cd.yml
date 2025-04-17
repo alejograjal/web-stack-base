@@ -73,7 +73,7 @@ jobs:
     
       - name: Copy docker-compose.sqlserver.yml to VPS
         run: |
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null infra/docker-compose.sqlserver.yml ${VPS_USER}@${VPS_HOST}:/opt/sqlserver/docker-compose.sqlserver.yml
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "infra/docker-compose.sqlserver.yml" "${{secrets.VPS_USER}}@${{secrets.VPS_HOST}}:/opt/sqlserver/docker-compose.sqlserver.yml"
     
       - name: Verify the file on the VPS
         run: |
