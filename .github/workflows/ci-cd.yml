@@ -48,11 +48,11 @@ jobs:
       
           # Copy files to VPS
           echo "📦 Copying files to VPS..."
-          scp -i private_key -r ./api/WebStackBase.WebAPI/publish ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/webstackbase-temp
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./api/WebStackBase.WebAPI/publish ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/webstackbase-temp
       
           # Check if the service file already exists
           echo "📝 Checking if systemd service already exists..."
-          ssh -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
             if [ ! -f /etc/systemd/system/web-stack-base-api.service ]; then
               # Create systemd service file for the API if it doesn't exist
               echo "[Unit]
