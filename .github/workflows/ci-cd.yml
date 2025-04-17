@@ -35,7 +35,7 @@ jobs:
         run: dotnet build ./api/WebStackBase.Api.sln --configuration Release --no-restore
 
       - name: 🔄 Run EF Core migrations
-        run: dotnet ef database update --project ./api/WebStackBase.Infrastructure --startup-project ./api/WebStackBase.WebAPI --connection "$DB_CONNECTION_STRING"
+        run: dotnet ef database update --project ./api/WebStackBase.Infrastructure --startup-project ./api/WebStackBase.WebAPI
         env:
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
 
