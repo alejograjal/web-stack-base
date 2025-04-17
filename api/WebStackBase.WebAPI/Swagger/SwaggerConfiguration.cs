@@ -62,7 +62,19 @@ public static class SwaggerConfiguration
     /// <param name="app">WebApplication builder</param>
     public static void LoadSwagger(this WebApplication app)
     {
-        app.UseSwagger();
+        app.UseSwagger(opt =>
+        {
+            var environment = app.Services.GetRequiredService<IHostEnvironment>();
+            if (environment.IsProduction())
+            {
+                opt.RouteTemplate = "api/swagger/{documentName}/swagger.json";
+            }
+            else
+            {
+                opt.RouteTemplate = "swagger/{documentName}/swagger.json";
+            }
+        });
+
         app.UseSwaggerUI(opts =>
         {
             var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
@@ -71,13 +83,22 @@ public static class SwaggerConfiguration
 
             foreach (var groupName in groupNames)
             {
-                opts.SwaggerEndpoint($"/swagger/{groupName}/swagger.json", groupName.ToUpperInvariant());
+                var environment = app.Services.GetRequiredService<IHostEnvironment>();
+                if (environment.IsProduction())
+                {
+                    // Production: Swagger under /api/swagger
+                    opts.SwaggerEndpoint($"/api/swagger/{groupName}/swagger.json", groupName.ToUpperInvariant());
+                    opts.RoutePrefix = "api/swagger";
+                }
+                else
+                {
+                    // Local: Swagger under /swagger
+                    opts.SwaggerEndpoint($"/swagger/{groupName}/swagger.json", groupName.ToUpperInvariant());
+                    opts.RoutePrefix = "swagger";
+                }
             }
 
-            opts.RoutePrefix = "swagger";
-
             opts.UseRequestInterceptor("function(request) { request.headers['x-api-version'] = '1.0'; return request; }");
-
         });
     }
 }

@@ -13,6 +13,20 @@ jobs:
     name: 🔨 Build & ✅ Test
     runs-on: ubuntu-latest
 
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          SA_PASSWORD: "${{ secrets.SQL_SA_PASSWORD }}"
+          ACCEPT_EULA: "Y"
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd "exit 0"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: ⬇️ Checkout code
         uses: actions/checkout@v3
@@ -22,11 +36,22 @@ jobs:
         with:
           dotnet-version: '9.0.x'
 
+      - name: 🧩 Install dotnet-ef
+        run: dotnet tool install --global dotnet-ef --version 9.0.4
+  
+      - name: 🛠️ Add dotnet tools to PATH
+        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
       - name: 📦 Restore dependencies
         run: dotnet restore ./api/WebStackBase.Api.sln
 
       - name: 🛠️ Build
         run: dotnet build ./api/WebStackBase.Api.sln --configuration Release --no-restore
+
+      - name: 🔄 Run EF Core migrations
+        run: dotnet ef database update --project ./api/WebStackBase.Infrastructure --startup-project ./api/WebStackBase.WebAPI
+        env:
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
 
       - name: 🧪 Run tests
         run: dotnet test ./api/WebStackBase.Tests/WebStackBase.Tests.csproj --verbosity normal
@@ -34,25 +59,101 @@ jobs:
       - name: 📤 Publish WebAPI
         run: dotnet publish ./api/WebStackBase.WebAPI/WebStackBase.WebAPI.csproj --configuration Release --output ./api/WebStackBase.WebAPI/publish
 
-      # - name: 🚀 Deploy to VPS via SCP and SSH
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     VPS_USER: ${{ secrets.VPS_USER }}
-      #     VPS_HOST: ${{ secrets.VPS_HOST }}
-      #     VPS_PORT: ${{ secrets.VPS_PORT }}
-      #   run: |
-      #     echo "$SSH_PRIVATE_KEY" > private_key
-      #     chmod 600 private_key
+      - name: 🚀 Setup and deploy API to VPS
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          JWT_LIFETIME: ${{ secrets.JWT_LIFETIME }}
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+          chmod 600 private_key
 
-      #     echo "📦 Copying files to VPS..."
-      #     scp -i private_key -P $VPS_PORT -r ./api/WebStackBase.WebAPI/publish $VPS_USER@$VPS_HOST:/var/www/webstackbase-temp
+          # Create the destination directory on VPS if it doesn't exist
+          echo "📂 Creating destination directory on VPS..."
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/webstackbase"
 
-      #     echo "🚀 Deploying to production..."
-      #     ssh -i private_key -p $VPS_PORT $VPS_USER@$VPS_HOST << 'EOF'
-      #       sudo systemctl stop webstackbase-api
-      #       rm -rf /var/www/webstackbase/*
-      #       mv /var/www/webstackbase-temp/* /var/www/webstackbase/
-      #       rm -rf /var/www/webstackbase-temp
-      #       sudo systemctl start webstackbase-api
-      #     EOF
-      #     rm private_key
+          # Create the temporary directory on VPS if it doesn't exist
+          echo "📂 Creating temporary directory on VPS..."
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/webstackbase-temp"
+
+          # Copy files to VPS temporary folder
+          echo "📦 Copying files to VPS..."
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./api/WebStackBase.WebAPI/publish/* ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/webstackbase-temp
+
+          # Move files from temporary folder to final folder
+          echo "🔄 Moving files from temporary folder to final folder..."
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << EOF
+            mv /var/www/webstackbase-temp/* /var/www/webstackbase/
+            echo "✅ Files moved to /var/www/webstackbase/"
+          EOF
+      
+          # Check if the service file already exists
+          echo "📝 Checking if systemd service already exists..."
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            if [ ! -f /etc/systemd/system/web-stack-base-api.service ]; then
+              # Create systemd service file for the API if it doesn't exist
+              echo "[Unit]
+              Description=WebStackBase API
+              After=network.target
+      
+              [Service]
+              Environment=ASPNETCORE_ENVIRONMENT=Production
+              Environment=\"ConnectionStrings__WebStackBase=${{secrets.DB_CONNECTION_STRING}}\"
+              Environment=\"AuthenticationConfiguration__JwtSettings_Secret=${{secrets.JWT_SECRET}}\"
+              Environment=\"AuthenticationConfiguration__JwtSettings_TokenLifetime=${{secrets.JWT_LIFETIME}}\"
+              ExecStart=/usr/bin/dotnet /var/www/webstackbase/WebStackBase.WebAPI.dll
+              WorkingDirectory=/var/www/webstackbase
+              Restart=always
+              User=www-data
+              Group=www-data
+      
+              [Install]
+              WantedBy=multi-user.target" | sudo tee /etc/systemd/system/web-stack-base-api.service
+      
+              # Enable and start the service
+              sudo systemctl daemon-reload
+              sudo systemctl enable web-stack-base-api
+              sudo systemctl start web-stack-base-api
+              echo "🚀 Systemd service created and started."
+            else
+              sudo systemctl restart web-stack-base-api
+              echo "✅ Systemd service already exists, skipping creation."
+            fi
+
+          EOF
+
+          # Clean up the private key
+          rm private_key
+
+  deploy-docker-compose:
+    name: 🚚 Copy Docker Compose to VPS
+    runs-on: ubuntu-latest
+    needs: build-and-test 
+    
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+    
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    
+      - name: Create directory if not exists
+        run: |
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} 'mkdir -p /opt/sqlserver'
+        
+      - name: Ensure proper permissions for /opt/sqlserver
+        run: |
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} 'sudo chown -R ${{ secrets.VPS_USER }}:${{ secrets.VPS_USER }} /opt/sqlserver && sudo chmod -R 755 /opt/sqlserver'
+    
+      - name: Copy docker-compose.sqlserver.yml to VPS
+        run: |
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "infra/docker-compose.sqlserver.yml" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/opt/sqlserver/docker-compose.sqlserver.yml"
+        
+      - name: Verify the file on the VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} 'ls /opt/sqlserver/docker-compose.sqlserver.yml'

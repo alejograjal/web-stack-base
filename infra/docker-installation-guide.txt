@@ -1,0 +1,39 @@
+# Install Docker
+sudo apt-get update
+sudo apt-get install -y docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Instalar Docker Compose v2 (as plugin)
+sudo apt install -y docker-compose-plugin
+
+#If fails
+    # Install dependencies
+    sudo apt install -y ca-certificates curl gnupg lsb-release
+
+    # Add Docker's official GCP key
+    sudo mkdir -p /etc/apt/keyrings 
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+    # Add Docker's repository
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    # Re-update and install again
+    sudo apt update
+    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+# Verify the installation of Docker
+docker --version
+docker compose version
+
+# Verify Docker is running
+sudo systemctl status docker
+
+# Check running containers
+docker ps
+
+# View logs of a container
+docker logs sqlserver
+
+# Bring up the container with Docker Compose
+docker compose -f docker-compose.sqlserver.yml up -d
