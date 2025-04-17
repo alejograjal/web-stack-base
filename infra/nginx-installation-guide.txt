@@ -11,6 +11,10 @@ server {
 
     server_name 187.33.146.62;
 
+    location = /api {
+        return 301 /api/swagger/index.html;
+    }
+
     location /api {
         proxy_pass http://localhost:5000;
         proxy_no_cache 1;
@@ -44,3 +48,24 @@ sudo ufw allow 'Nginx Full'
 
 # Restart Service
 sudo systemctl restart web-stack-base-api
+
+# Gzip enable
+nano /etc/nginx/nginx.conf
+
+# add on http:
+#gzip on;
+#   gzip_comp_level 5;  # Sets the compression level (from 1 to 9, 5 is a good middle ground)
+#   gzip_min_length 256;  # Compress only if the size is greater than 256 bytes
+#   gzip_proxied any;  # Compress even when serving content behind a proxy
+#   gzip_vary on;  # Send "Vary: Accept-Encoding" header so that proxies don't cache the compressed content
+#	gzip_types
+#		text/plain
+#		text/css
+#		application/json
+#		application/javascript
+#		text/javascript
+#		application/xml
+#		application/xml+rss
+#		font/ttf
+#		font/otf
+#		image/svg+xml;
