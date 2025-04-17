@@ -28,6 +28,11 @@ jobs:
       - name: 🛠️ Build
         run: dotnet build ./api/WebStackBase.Api.sln --configuration Release --no-restore
 
+      - name: 🔄 Run EF Core migrations
+        run: dotnet ef database update --project ./api/WebStackBase.Infrastructure --startup-project ./api/WebStackBase.WebAPI --connection "$DB_CONNECTION_STRING"
+        env:
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+
       - name: 🧪 Run tests
         run: dotnet test ./api/WebStackBase.Tests/WebStackBase.Tests.csproj --verbosity normal
 
@@ -98,10 +103,6 @@ jobs:
               echo "✅ Systemd service already exists, skipping creation."
             fi
 
-            # Run migrations
-            echo "🔄 Running database migrations..."
-            cd /var/www/webstackbase
-            dotnet ef database update --project /var/www/webstackbase/WebStackBase.Infrastructure.dll --startup-project /var/www/webstackbase/WebStackBase.WebAPI.dll--connection "${{secrets.DB_CONNECTION_STRING}}"
           EOF
 
           # Clean up the private key
