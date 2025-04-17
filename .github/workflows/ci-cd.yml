@@ -56,3 +56,25 @@ jobs:
       #       sudo systemctl start webstackbase-api
       #     EOF
       #     rm private_key
+
+  deploy-docker-compose:
+    name: 🚚 Copy Docker Compose to VPS
+    runs-on: ubuntu-latest
+    needs: build-and-test 
+    
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+    
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    
+      - name: Copy docker-compose.sqlserver.yml to VPS
+        run: |
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null infra/docker-compose.sqlserver.yml ${VPS_USER}@${VPS_HOST}:/opt/sqlserver/docker-compose.sqlserver.yml
+    
+      - name: Verify the file on the VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no ${VPS_USER}@${VPS_HOST} 'ls /opt/sqlserver/docker-compose.sqlserver.yml'
