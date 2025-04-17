@@ -34,28 +34,64 @@ jobs:
       - name: 📤 Publish WebAPI
         run: dotnet publish ./api/WebStackBase.WebAPI/WebStackBase.WebAPI.csproj --configuration Release --output ./api/WebStackBase.WebAPI/publish
 
-      # - name: 🚀 Deploy to VPS via SCP and SSH
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     VPS_USER: ${{ secrets.VPS_USER }}
-      #     VPS_HOST: ${{ secrets.VPS_HOST }}
-      #     VPS_PORT: ${{ secrets.VPS_PORT }}
-      #   run: |
-      #     echo "$SSH_PRIVATE_KEY" > private_key
-      #     chmod 600 private_key
+      - name: 🚀 Setup and deploy API to VPS
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_PORT: ${{ secrets.VPS_PORT }}
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          JWT_LIFETIME: ${{ secrets.JWT_LIFETIME }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > private_key
+          chmod 600 private_key
+      
+          # Copy files to VPS
+          echo "📦 Copying files to VPS..."
+          scp -i private_key -P $VPS_PORT -r ./api/WebStackBase.WebAPI/publish $VPS_USER@$VPS_HOST:/var/www/webstackbase-temp
+      
+          # Check if the service file already exists
+          echo "📝 Checking if systemd service already exists..."
+          ssh -i private_key -p $VPS_PORT $VPS_USER@$VPS_HOST << 'EOF'
+            if [ ! -f /etc/systemd/system/web-stack-base-api.service ]; then
+              # Create systemd service file for the API if it doesn't exist
+              echo "[Unit]
+              Description=WebStackBase API
+              After=network.target
+      
+              [Service]
+              Environment=ASPNETCORE_ENVIRONMENT=Production
+              Environment=\"ConnectionStrings__WebStackBase=${{secrets.DB_CONNECTION_STRING}}\"
+              Environment=\"AuthenticationConfiguration__JwtSettings_Secret=${{secrets.JWT_SECRET}}\"
+              Environment=\"AuthenticationConfiguration__JwtSettings_TokenLifetime=${{secrets.JWT_LIFETIME}}\"
+              ExecStart=/usr/bin/dotnet /var/www/webstackbase/WebStackBase.WebAPI.dll
+              WorkingDirectory=/var/www/webstackbase
+              Restart=always
+              User=www-data
+              Group=www-data
+      
+              [Install]
+              WantedBy=multi-user.target" | sudo tee /etc/systemd/system/web-stack-base-api.service
+      
+              # Enable and start the service
+              sudo systemctl daemon-reload
+              sudo systemctl enable web-stack-base-api
+              sudo systemctl start web-stack-base-api
+              echo "🚀 Systemd service created and started."
+            else
+              sudo systemctl restart web-stack-base-api
+              echo "✅ Systemd service already exists, skipping creation."
+            fi
 
-      #     echo "📦 Copying files to VPS..."
-      #     scp -i private_key -P $VPS_PORT -r ./api/WebStackBase.WebAPI/publish $VPS_USER@$VPS_HOST:/var/www/webstackbase-temp
+            # Run migrations
+            echo "🔄 Running database migrations..."
+            cd /var/www/webstackbase
+            dotnet ef database update --connection "${DB_CONNECTION_STRING}"
+          EOF
 
-      #     echo "🚀 Deploying to production..."
-      #     ssh -i private_key -p $VPS_PORT $VPS_USER@$VPS_HOST << 'EOF'
-      #       sudo systemctl stop webstackbase-api
-      #       rm -rf /var/www/webstackbase/*
-      #       mv /var/www/webstackbase-temp/* /var/www/webstackbase/
-      #       rm -rf /var/www/webstackbase-temp
-      #       sudo systemctl start webstackbase-api
-      #     EOF
-      #     rm private_key
+          # Clean up the private key
+          rm private_key
 
   deploy-docker-compose:
     name: 🚚 Copy Docker Compose to VPS

@@ -1,0 +1,34 @@
+Ubuntu version 20.04
+
+# Install required dependencies
+sudo add-apt-repository ppa:dotnet/backports
+
+# Install the .NET SDk (needed for CI/CD migrations apply)
+sudo apt-get update && \
+  sudo apt-get install -y dotnet-sdk-9.0
+
+# If only needs runtime
+sudo apt-get update && \
+  sudo apt-get install -y aspnetcore-runtime-9.0
+
+sudo apt-get install -y wget apt-transport-https software-properties-common
+
+# Download and add the Microsoft signing key
+wget https://packages.microsoft.com/keys/microsoft.asc
+sudo apt-key add microsoft.asc
+
+# Add the .NET repository
+sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/$(lsb_release -r | awk '{print $2}')/prod.list)"
+
+# Update the package list
+sudo apt-get update
+
+# Install the .NET Runtime
+sudo apt-get install -y dotnet-runtime-9.0
+
+# Install runtime
+sudo apt-get update
+sudo apt-get install -y dotnet-runtime-9.0
+
+# Install migrations support
+sudo dotnet tool install --global dotnet-ef
