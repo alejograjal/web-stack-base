@@ -23,7 +23,7 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: 🧩 Install dotnet-ef
-        run: dotnet tool install --global dotnet-ef --version 9.0.0
+        run: dotnet tool install --global dotnet-ef --version 9.0.4
   
       - name: 🛠️ Add dotnet tools to PATH
         run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
