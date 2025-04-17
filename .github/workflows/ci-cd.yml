@@ -13,6 +13,20 @@ jobs:
     name: 🔨 Build & ✅ Test
     runs-on: ubuntu-latest
 
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          SA_PASSWORD: "${{ secrets.DB_CONNECTION_STRING }}"
+          ACCEPT_EULA: "Y"
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd "exit 0"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: ⬇️ Checkout code
         uses: actions/checkout@v3
