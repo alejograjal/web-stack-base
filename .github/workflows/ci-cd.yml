@@ -198,9 +198,9 @@ jobs:
             export SMTPSETTINGS_FROM="${{ secrets.SMTPSETTINGS_FROM }}"
             export TEMPLATESETTINGS_BASEPATH="${{ secrets.TEMPLATESETTINGS_BASEPATH }}"
 
-            if [ ! -f /etc/systemd/system/web-stack-base-api.service ]; then
+            if [ ! -f /etc/systemd/system/manuel-antonio-explorer-api.service ]; then
               echo "⚙️ Creating systemd service..."
-              cat <<EOT | envsubst | sudo tee /etc/systemd/system/web-stack-base-api.service > /dev/null
+              cat <<EOT | envsubst | sudo tee /etc/systemd/system/manuel-antonio-explorer-api.service > /dev/null
             
           # Create systemd service file for the API if it doesn't exist
           echo "[Unit]
@@ -227,11 +227,11 @@ jobs:
 
           EOT
             sudo systemctl daemon-reload
-            sudo systemctl enable web-stack-base-api
-            sudo systemctl start web-stack-base-api
+            sudo systemctl enable manuel-antonio-explorer-api
+            sudo systemctl start manuel-antonio-explorer-api
             echo "🚀 Systemd service created and started."
             else
-              sudo systemctl restart web-stack-base-api
+              sudo systemctl restart manuel-antonio-explorer-api
               echo "✅ Systemd service already exists, skipping creation."
             fi
           EOF
@@ -253,7 +253,6 @@ jobs:
             cd site-public
             npm install
             npm run build
-            npm run export
         
       - name: 🚀 Deploy Manuel Antonio Explorer to VPS
         run: |
@@ -276,8 +275,9 @@ jobs:
           # Clean the directory
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $SITE_DIR"
   
-          # Copy the compiled and exported site files to the directory (from the out folder)
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/out/* ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
+          # Copy the compiled site files (from the .next folder) to the VPS
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/.next ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/public ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
           
           # Delete the previous backup
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $BACKUP_DIR"
@@ -312,7 +312,6 @@ jobs:
       - name: Clean up
         run: rm private_key
         
-
   deploy-docker-compose:
     name: 🚚 Copy Docker Compose to VPS
     runs-on: ubuntu-latest
