@@ -1,5 +1,31 @@
-node_modules
+# Exclude node_modules (they will be installed inside the container)
+node_modules/
+
+# Exclude logs
 npm-debug.log
-.git
-.dockerignore
-Dockerfile
+yarn-debug.log
+yarn-error.log
+
+# Exclude version control files
+.git/
+.gitignore
+
+# Exclude markdown files and other documentation
+*.md
+
+# Exclude test files and coverage reports
+tests/
+*.test.js
+coverage/
+
+# Exclude system files
+.DS_Store
+
+# Exclude tarball files
+*.tgz
+
+# Optional: Exclude build or temp files
+dist/
+build/
+*.bak
+*.swp
