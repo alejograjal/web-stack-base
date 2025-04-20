@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./site-public/Dockerfile
+      dockerfile: ./Dockerfile
       args:
         NEXT_PUBLIC_API_WEB_STACK_BASE_URL: ${NEXT_PUBLIC_API_WEB_STACK_BASE_URL}
     ports:
