@@ -292,7 +292,7 @@ jobs:
   
           echo "🧽 Removing last backup..."
           if [ -f /tmp/last_backup_path ]; then
-            BACKUP_TO_DELETE=\$(cat /tmp/last_backup_path)
+            BACKUP_TO_DELETE=$(cat /tmp/last_backup_path)
             rm -rf "\$BACKUP_TO_DELETE"
             rm /tmp/last_backup_path
           fi
