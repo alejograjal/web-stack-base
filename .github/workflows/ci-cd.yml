@@ -253,6 +253,7 @@ jobs:
             cd site-public
             npm install
             npm run build
+            npm run export
         
       - name: 🚀 Deploy Manuel Antonio Explorer to VPS
         run: |
@@ -265,6 +266,7 @@ jobs:
             
           # Create the destination directory if it doesn't exist
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p $SITE_DIR"
+
           # Verify and assign the proper permissions
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo chown -R www-data:www-data $SITE_DIR && sudo chmod -R 755 $SITE_DIR"
 
@@ -274,9 +276,8 @@ jobs:
           # Clean the directory
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $SITE_DIR"
   
-          # Copy the compiled site files to the directory
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/.next ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/public ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
+          # Copy the compiled and exported site files to the directory (from the out folder)
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/out/* ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
           
           # Delete the previous backup
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $BACKUP_DIR"
@@ -289,7 +290,7 @@ jobs:
               After=network.target
 
               [Service]
-              ExecStart=/usr/bin/node start
+              ExecStart=/usr/bin/npm run start
               WorkingDirectory=/var/www/manuel-antonio-explorer
               Restart=always
               User=www-data
