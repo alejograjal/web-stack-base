@@ -290,6 +290,7 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
           cd /var/www/manuel-antonio-explorer
           echo "NEXT_PUBLIC_API_WEB_STACK_BASE_URL=${NEXT_PUBLIC_API_WEB_STACK_BASE_URL}" > .env
+          echo "NEXT_PUBLIC_IMAGE_BASE_URL=${NEXT_PUBLIC_IMAGE_BASE_URL}" > .env
   
           echo "🛑 Stopping existing containers (if any)..."
           docker-compose down || true
