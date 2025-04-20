@@ -253,7 +253,7 @@ jobs:
             cd site-public
             npm install
             npm run build
-        
+
       - name: 🚀 Deploy Manuel Antonio Explorer to VPS
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
@@ -275,9 +275,8 @@ jobs:
           # Clean the directory
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $SITE_DIR"
   
-          # Copy the compiled site files (from the .next folder) to the VPS
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/.next ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/public ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
+          # Copy the site
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
           
           # Delete the previous backup
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $BACKUP_DIR"
