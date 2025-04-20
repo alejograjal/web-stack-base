@@ -265,14 +265,20 @@ jobs:
           cp -r /var/www/manuel-antonio-explorer/* \$BACKUP_FOLDER 2>/dev/null || echo "Nothing to backup"
           rm -rf /var/www/manuel-antonio-explorer/*
 
-          rsync -e "ssh -o StrictHostKeyChecking=no -i private_key" -avz \
-            site-public/ \
-            ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/manuel-antonio-explorer/
-
-
           echo \$BACKUP_FOLDER > /tmp/last_backup_path
         EOF
       
+        rm private_key
+    
+    - name: 📂 Copy site-public folder to VPS
+      run: |
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+        chmod 600 private_key
+  
+        rsync -e "ssh -o StrictHostKeyChecking=no -i private_key" -avz \
+          site-public/ \
+          ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/manuel-antonio-explorer/
+  
         rm private_key
 
     - name: 🐳 Run Docker Compose on VPS
