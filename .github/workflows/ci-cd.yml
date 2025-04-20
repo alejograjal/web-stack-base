@@ -199,40 +199,41 @@ jobs:
             export TEMPLATESETTINGS_BASEPATH="${{ secrets.TEMPLATESETTINGS_BASEPATH }}"
 
             if [ ! -f /etc/systemd/system/web-stack-base-api.service ]; then
-              cat <<EOT | envsubst | sudo tee /etc/systemd/system/web-stack-base-api.service
-              # Create systemd service file for the API if it doesn't exist
-              echo "[Unit]
-              Description=WebStackBase API
-              After=network.target
-      
-              [Service]
-              Environment=ASPNETCORE_ENVIRONMENT=Production
-              Environment=ConnectionStrings__WebStackBase=\$DB_CONNECTION_STRING
-              Environment=AuthenticationConfiguration__JwtSettings_Secret=\$JWT_SECRET
-              Environment=AuthenticationConfiguration__JwtSettings_TokenLifetime=\$JWT_LIFETIME
-              Environment=SmtpSettings__Username=\$SMTPSETTINGS_USERNAME
-              Environment=SmtpSettings__Password=\$SMTPSETTINGS_PASSWORD
-              Environment=SmtpSettings__From=\$SMTPSETTINGS_FROM
-              Environment=TemplateSettings__BasePath=\$TEMPLATESETTINGS_BASEPATH
-              ExecStart=/usr/bin/dotnet /var/www/webstackbase/WebStackBase.WebAPI.dll
-              WorkingDirectory=/var/www/webstackbase
-              Restart=always
-              User=www-data
-              Group=www-data
-      
-              [Install]
-              WantedBy=multi-user.target" | sudo tee /etc/systemd/system/web-stack-base-api.service
-      
-              # Enable and start the service
-              sudo systemctl daemon-reload
-              sudo systemctl enable web-stack-base-api
-              sudo systemctl start web-stack-base-api
-              echo "🚀 Systemd service created and started."
+              echo "⚙️ Creating systemd service..."
+              cat <<EOT | envsubst | sudo tee /etc/systemd/system/web-stack-base-api.service > /dev/null
+            
+          # Create systemd service file for the API if it doesn't exist
+          echo "[Unit]
+          Description=WebStackBase API
+          After=network.target
+  
+          [Service]
+          Environment=ASPNETCORE_ENVIRONMENT=Production
+          Environment=ConnectionStrings__WebStackBase=\$DB_CONNECTION_STRING
+          Environment=AuthenticationConfiguration__JwtSettings_Secret=\$JWT_SECRET
+          Environment=AuthenticationConfiguration__JwtSettings_TokenLifetime=\$JWT_LIFETIME
+          Environment=SmtpSettings__Username=\$SMTPSETTINGS_USERNAME
+          Environment=SmtpSettings__Password=\$SMTPSETTINGS_PASSWORD
+          Environment=SmtpSettings__From=\$SMTPSETTINGS_FROM
+          Environment=TemplateSettings__BasePath=\$TEMPLATESETTINGS_BASEPATH
+          ExecStart=/usr/bin/dotnet /var/www/webstackbase/WebStackBase.WebAPI.dll
+          WorkingDirectory=/var/www/webstackbase
+          Restart=always
+          User=www-data
+          Group=www-data
+  
+          [Install]
+          WantedBy=multi-user.target"
+
+          EOT
+            sudo systemctl daemon-reload
+            sudo systemctl enable web-stack-base-api
+            sudo systemctl start web-stack-base-api
+            echo "🚀 Systemd service created and started."
             else
               sudo systemctl restart web-stack-base-api
               echo "✅ Systemd service already exists, skipping creation."
             fi
-
           EOF
 
           # Clean up the private key
