@@ -17,6 +17,7 @@ public class ServiceResourceTests
     private readonly Mock<ICoreService<E.Resource>> _mockCoreService;
     private readonly Mock<IValidator<E.Resource>> _mockValidator;
     private readonly ServiceResource _service;
+    static readonly string[] defaultIncludes = { "ServiceResources" };
 
     public ServiceResourceTests()
     {
@@ -98,7 +99,7 @@ public class ServiceResourceTests
         ICollection<ResponseResourceDto> responseDtos
     )
     {
-        _mockCoreService.Setup(m => m.UnitOfWork.Repository<E.Resource>().ListAsync(It.IsAny<BaseSpecification<E.Resource>>()))
+        _mockCoreService.Setup(m => m.UnitOfWork.Repository<E.Resource>().ListAsync(It.IsAny<BaseSpecification<E.Resource>>(), defaultIncludes))
             .ReturnsAsync(resources);
         _mockCoreService.Setup(m => m.AutoMapper.Map<ICollection<ResponseResourceDto>>(resources))
             .Returns(responseDtos);
