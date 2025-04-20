@@ -1,10 +1,10 @@
 using Serilog;
 using WebStackBase.WebAPI.Swagger;
 using WebStackBase.WebAPI.Endpoints;
+using Microsoft.AspNetCore.Http.Json;
 using WebStackBase.WebAPI.Authorization;
 using WebStackBase.WebAPI.Configuration;
 using WebStackBase.Application.Configuration;
-using Microsoft.Extensions.FileProviders;
 
 var WebStackBaseSpecificOrigins = "_WebStackBaseSpecificOrigins";
 
@@ -55,6 +55,11 @@ builder.Services.AddCors(options =>
 
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
+
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+});
 
 var app = builder.Build();
 
