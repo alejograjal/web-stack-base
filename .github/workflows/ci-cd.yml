@@ -247,69 +247,97 @@ jobs:
     steps:
       - name: ⬇️ Checkout code
         uses: actions/checkout@v3
-        
-      - name: 📦 Build Next.js site
-        run: |
-            cd site-public
-            npm install
-            npm run build
 
-      - name: 🚀 Deploy Manuel Antonio Explorer to VPS
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Docker image
+        run: |
+          docker build -t manuel-antonio-explorer .
+
+      - name: Copy Dockerfile and docker-compose.yml to server
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
 
-          # Define directories of VPS
-          SITE_DIR="/var/www/manuel-antonio-explorer"
-          BACKUP_DIR="/var/www/manuel-antonio-explorer-backup-$(date +%Y%m%d%H%M%S)"
-            
-          # Create the destination directory if it doesn't exist
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p $SITE_DIR"
-
-          # Verify and assign the proper permissions
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo chown -R www-data:www-data $SITE_DIR && sudo chmod -R 755 $SITE_DIR"
-
-          # Move the current site directory to a backup folder
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mv $SITE_DIR $BACKUP_DIR || true"
-
-          # Clean the directory
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $SITE_DIR"
-  
-          # Copy the site
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
-          
-          # Delete the previous backup
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $BACKUP_DIR"
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/.next/standalone ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/manuel-antonio-explorer/
+          rm private_key
         
-          # Crear el archivo systemd para Next.js (si es necesario)
+      - name: Run Docker container on VPS
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+          chmod 600 private_key
+
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            if [ ! -f /etc/systemd/system/manuel-antonio-explorer.service ]; then
-              echo "[Unit]
-              Description=Manuel Antonio Explorer Site
-              After=network.target
-
-              [Service]
-              ExecStart=/usr/bin/npm run start
-              WorkingDirectory=/var/www/manuel-antonio-explorer
-              Restart=always
-              User=www-data
-              Group=www-data
-
-              [Install]
-              WantedBy=multi-user.target" | sudo tee /etc/systemd/system/manuel-antonio-explorer.service
-              
-              sudo systemctl daemon-reload
-              sudo systemctl enable manuel-antonio-explorer
-              sudo systemctl start manuel-antonio-explorer
-            else
-              sudo systemctl restart manuel-antonio-explorer
-            fi
+            cd /var/www/manuel-antonio-explorer
+            docker build -t manuel-antonio-explorer .
+            docker run -d -p 3000:3000 --name manuel-antonio-explorer manuel-antonio-explorer
           EOF
-        env:
-          NEXT_PUBLIC_API_WEB_STACK_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_WEB_STACK_BASE_URL }}
+
+          rm private_key
+
+      # - name: 📦 Build Next.js site
+      #   run: |
+      #       cd site-public
+      #       npm install
+      #       npm run build
+
+      # - name: 🚀 Deploy Manuel Antonio Explorer to VPS
+      #   run: |
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+      #     chmod 600 private_key
+
+      #     # Define directories of VPS
+      #     SITE_DIR="/var/www/manuel-antonio-explorer"
+      #     BACKUP_DIR="/var/www/manuel-antonio-explorer-backup-$(date +%Y%m%d%H%M%S)"
+            
+      #     # Create the destination directory if it doesn't exist
+      #     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p $SITE_DIR"
+
+      #     # Verify and assign the proper permissions
+      #     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo chown -R www-data:www-data $SITE_DIR && sudo chmod -R 755 $SITE_DIR"
+
+      #     # Move the current site directory to a backup folder
+      #     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mv $SITE_DIR $BACKUP_DIR || true"
+
+      #     # Clean the directory
+      #     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $SITE_DIR"
+  
+      #     # Copy the site
+      #     scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
+          
+      #     # Delete the previous backup
+      #     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $BACKUP_DIR"
+        
+      #     # Crear el archivo systemd para Next.js (si es necesario)
+      #     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+      #       if [ ! -f /etc/systemd/system/manuel-antonio-explorer.service ]; then
+      #         echo "[Unit]
+      #         Description=Manuel Antonio Explorer Site
+      #         After=network.target
+
+      #         [Service]
+      #         ExecStart=/usr/bin/npm run start
+      #         WorkingDirectory=/var/www/manuel-antonio-explorer
+      #         Restart=always
+      #         User=www-data
+      #         Group=www-data
+
+      #         [Install]
+      #         WantedBy=multi-user.target" | sudo tee /etc/systemd/system/manuel-antonio-explorer.service
+              
+      #         sudo systemctl daemon-reload
+      #         sudo systemctl enable manuel-antonio-explorer
+      #         sudo systemctl start manuel-antonio-explorer
+      #       else
+      #         sudo systemctl restart manuel-antonio-explorer
+      #       fi
+      #     EOF
+      #   env:
+      #     NEXT_PUBLIC_API_WEB_STACK_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_WEB_STACK_BASE_URL }}
       
-      - name: Clean up
-        run: rm private_key
+      # - name: Clean up
+      #   run: rm private_key
         
   deploy-docker-compose:
     name: 🚚 Copy Docker Compose to VPS
