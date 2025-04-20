@@ -29,6 +29,7 @@ const GalleryHome = () => {
                                 src={item.url!}
                                 alt={item.name!}
                                 fill
+                                sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                 className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                             />
                         </motion.div>
@@ -40,7 +41,7 @@ const GalleryHome = () => {
 
     return (
         <Box className="bg-[#eef6f9] py-16 px-4">
-            <Typography variant="h4" align="center" fontWeight="bold" gutterBottom>
+            <Typography variant="h2" align="center" fontWeight="bold" gutterBottom>
                 Explore, Discover, and Enjoy
             </Typography>
 

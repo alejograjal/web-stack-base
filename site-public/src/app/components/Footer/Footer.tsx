@@ -59,10 +59,10 @@ const Footer = () => {
                         Follow Us
                     </Typography>
                     <Box sx={{ display: 'flex', gap: 2 }}>
-                        <Link href="https://facebook.com" color="inherit">
+                        <Link href="https://facebook.com" color="inherit" aria-label='Go toFacebook'>
                             <Facebook fontSize="large" />
                         </Link>
-                        <Link href="https://instagram.com" color="inherit">
+                        <Link href="https://instagram.com" color="inherit" aria-label='Go to Instagram'>
                             <Instagram fontSize="large" />
                         </Link>
                     </Box>

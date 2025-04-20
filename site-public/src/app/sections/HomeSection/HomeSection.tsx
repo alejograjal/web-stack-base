@@ -32,7 +32,7 @@ const HomeSection = () => {
                 />
 
                 <Box sx={{ position: 'relative', zIndex: 10, textAlign: 'center', }}>
-                    <Typography variant="h2" sx={{ fontWeight: 'bold', mb: 2, fontSize: { xs: '2rem', md: '3.75rem' } }}>
+                    <Typography variant="h1" sx={{ fontWeight: 'bold', mb: 2, fontSize: { xs: '2rem', md: '3.75rem' } }}>
                         Experience Costa Rica’s natural beauty like never before
                     </Typography>
 

@@ -95,7 +95,7 @@ const ReviewsSection = () => {
 
     return (
         <Box id="reviews" component="section" sx={{ py: 10, px: { xs: 4, md: 30 }, scrollMarginTop: '5rem' }}>
-            <Typography variant="h4" fontWeight="bold" textAlign="center" gutterBottom>
+            <Typography variant="h2" fontWeight="bold" textAlign="center" gutterBottom>
                 Our Explorers Can’t Stop Raving About Us
             </Typography>
 

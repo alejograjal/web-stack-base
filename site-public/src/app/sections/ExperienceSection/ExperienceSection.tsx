@@ -43,7 +43,7 @@ const ExperienceSection = () => {
     return (
         <Box id='experience' component="section" sx={{ backgroundColor: '#eef6f9', py: 12, px: { xs: 5, sm: 10, md: 10, lg: 30 } }}>
             <Typography
-                variant="h4"
+                variant="h2"
                 align="center"
                 fontWeight="bold"
                 gutterBottom

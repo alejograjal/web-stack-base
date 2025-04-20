@@ -37,3 +37,9 @@ body {
 .masonry-column>div {
   margin-bottom: 5px;
 }
+
+.swiper-pagination-bullet {
+  width: 48px;
+  height: 48px;
+  margin: 0 8px;
+}

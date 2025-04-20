@@ -76,7 +76,7 @@ const GallerySection = () => {
 
     return (
         <Box id="gallery" className="bg-[#eef6f9] py-20 px-4">
-            <Typography variant="h4" align="center" fontWeight="bold" gutterBottom>
+            <Typography variant="h2" align="center" fontWeight="bold" gutterBottom>
                 A Visual Journey Through Costa Rica’s Beauty
             </Typography>
 
