@@ -289,7 +289,7 @@ jobs:
               After=network.target
 
               [Service]
-              ExecStart=/usr/bin/node /var/www/manuel-antonio-explorer/.next/production-server.js
+              ExecStart=/usr/bin/node start
               WorkingDirectory=/var/www/manuel-antonio-explorer
               Restart=always
               User=www-data
