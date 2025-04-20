@@ -143,11 +143,11 @@ jobs:
 
           # Create the destination directory on VPS if it doesn't exist
           echo "📂 Creating destination directory on VPS..."
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/webstackbase"
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/manuel-antonio-explorer-api"
 
           # Create the temporary directory on VPS if it doesn't exist
           echo "📂 Creating temporary directory on VPS..."
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/webstackbase-temp"
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/manuel-antonio-explorer-api-temp"
 
           # Zip the published files
           echo "📦 Zipping published files..."
@@ -157,17 +157,17 @@ jobs:
 
           # Copy the zip file to VPS
           echo "📤 Copying zip to VPS..."
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ./api/WebStackBase.WebAPI/webstackbase-publish.zip ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/webstackbase-temp/webstackbase-publish.zip
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ./api/WebStackBase.WebAPI/webstackbase-publish.zip ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/manuel-antonio-explorer-api-temp/webstackbase-publish.zip
 
           # Backup, clean, and unzip on VPS 
           echo "🔄 Backing up, cleaning, and unzipping on VPS..."
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
             set -e
 
-            DEPLOY_DIR="/var/www/webstackbase"
-            BACKUP_DIR="/var/www/webstackbase-backup-$(date +%Y%m%d%H%M%S)"
-            TEMP_DIR="/var/www/webstackbase-temp"
-            TEMP_ZIP="/var/www/webstackbase-temp/webstackbase-publish.zip"
+            DEPLOY_DIR="/var/www/manuel-antonio-explorer-api"
+            BACKUP_DIR="/var/www/manuel-antonio-explorer-api-backup-$(date +%Y%m%d%H%M%S)"
+            TEMP_DIR="/var/www/manuel-antonio-explorer-api-temp"
+            TEMP_ZIP="/var/www/manuel-antonio-explorer-api-temp/webstackbase-publish.zip"
 
             # Backup existing deployment 
             echo "🗂️ Backing up existing deployment to $BACKUP_DIR"
@@ -199,6 +199,7 @@ jobs:
             export TEMPLATESETTINGS_BASEPATH="${{ secrets.TEMPLATESETTINGS_BASEPATH }}"
 
             if [ ! -f /etc/systemd/system/web-stack-base-api.service ]; then
+              cat <<EOT | envsubst | sudo tee /etc/systemd/system/web-stack-base-api.service
               # Create systemd service file for the API if it doesn't exist
               echo "[Unit]
               Description=WebStackBase API
