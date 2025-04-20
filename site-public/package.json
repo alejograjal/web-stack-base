@@ -1,0 +1,49 @@
+{
+  "name": "site-public",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "api-web-stack-base:generate": "openapi-typescript ./src/api/clients/web-stack-base/spec.json -o ./src/api/clients/web-stack-base/api.d.ts",
+    "api-web-stack-base:update-local": "curl -s http://localhost:5191/swagger/v1/swagger.json -o ./src/api/clients/web-stack-base/spec.json && sed -i '' 's/; x-api-version=[0-9]*//' ./src/api/clients/web-stack-base/spec.json && npx openapi-typescript ./src/api/clients/web-stack-base/spec.json -o ./src/api/clients/web-stack-base/api.d.ts --bare"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@hookform/resolvers": "^5.0.1",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
+    "@tanstack/react-query": "^5.74.3",
+    "framer-motion": "^12.7.3",
+    "js-cookie": "^3.0.5",
+    "lodash": "^4.17.21",
+    "next": "15.3.0",
+    "openapi-typescript": "^7.6.1",
+    "openapi-typescript-fetch": "^2.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "react-masonry-css": "^1.0.16",
+    "react-scroll": "^1.9.3",
+    "swiper": "^11.2.6",
+    "yet-another-react-lightbox": "^3.22.0",
+    "yup": "^1.6.1",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/js-cookie": "^3.0.6",
+    "@types/lodash": "^4.17.16",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

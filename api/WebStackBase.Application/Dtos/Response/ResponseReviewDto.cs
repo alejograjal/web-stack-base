@@ -2,15 +2,15 @@ using WebStackBase.Application.Dtos.Response.Base;
 
 namespace WebStackBase.Application.Dtos.Response;
 
-public record ResponseCustomerFeedbackDto : BaseSimpleEntity
+public record ResponseReviewDto : BaseSimpleEntity
 {
-    public string CustomerName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public string CustomerEmail { get; set; } = null!;
+    public string Email { get; set; } = null!;
 
     public string Comment { get; set; } = null!;
 
-    public byte Rating { get; set; }
+    public byte Rate { get; set; }
 
     public DateTime Created { get; set; }
 

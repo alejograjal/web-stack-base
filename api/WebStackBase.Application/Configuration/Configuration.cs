@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Configuration;
 using WebStackBase.Application.Validations;
 using WebStackBase.Application.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,14 +23,15 @@ public static class Configuration
     /// Configure all elements of Application layer
     /// </summary>
     /// <param name="services">Service collection configuration</param>
-    public static void ConfigureApplication(this IServiceCollection services)
+    public static void ConfigureApplication(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IServiceCustomerFeedback, ServiceCustomerFeedback>();
+        services.AddScoped<IServiceReview, ServiceReview>();
         services.AddScoped<IServiceReservation, ServiceReservation>();
         services.AddScoped<IServiceResource, ServiceResource>();
         services.AddScoped<IServiceService, ServiceService>();
         services.AddScoped<IServiceServiceResource, ServiceServiceResource>();
         services.AddScoped<IServiceUser, ServiceUser>();
+        services.AddScoped<IServiceContact, ServiceContact>();
 
         services.AddScoped<IServiceUserContext, ServiceUserContext>();
         services.AddScoped<IServiceUserAuthorization, ServiceUserAuthorization>();

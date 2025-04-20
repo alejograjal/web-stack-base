@@ -4,11 +4,13 @@ using WebStackBase.WebAPI.Endpoints;
 using WebStackBase.WebAPI.Authorization;
 using WebStackBase.WebAPI.Configuration;
 using WebStackBase.Application.Configuration;
+using Microsoft.Extensions.FileProviders;
 
 var WebStackBaseSpecificOrigins = "_WebStackBaseSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddStandardConfiguration();
 
 builder.Services.AddAuthorization(opts =>
 {
@@ -28,13 +30,15 @@ builder.Services.ConfigureApiVersioning();
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.ConfigureIoC();
+builder.Services.ConfigureIoC(builder.Configuration);
 
 builder.Services.ConfigureAutoMapper();
 
 builder.Services.ConfigureFluentValidation();
 
 builder.Services.ConfigureSwaggerAPI();
+
+builder.Services.ConfigureNotificationServices(builder.Configuration);
 
 builder.Services.AddHealthChecks();
 
@@ -43,14 +47,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: WebStackBaseSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:44378",
-                                             "http://localhost:5000",
-                                             "https://localhost:44378",
-                                             "https://localhost:5000",
-                                             "https://localhost:5191",
-                                             "http://localhost:5191",
-                                             "http://localhost:5173",
-                                             "https://localhost:5173")
+                          policy.WithOrigins("http://localhost:3000")
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
                       });
@@ -78,11 +75,14 @@ app.ConfigureExceptionHandler(Log.Logger);
 
 app.MapControllers();
 
-app.MapCustomerFeedbackEndpoints();
+app.UseStaticFilesForDevelopment();
+
+app.MapReviewEndpoints();
 app.MapHealthCheckEndpoints();
 app.MapReservationEndpoints();
 app.MapResourceEndpoints();
 app.MapServiceEndpoints();
 app.MapServiceServiceResourceEndpoints();
+app.MapContactEndpoints();
 
 await app.RunAsync();

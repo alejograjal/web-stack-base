@@ -3,17 +3,17 @@ using WebStackBase.Infrastructure;
 
 namespace WebStackBase.Application.Validations;
 
-public class CustomerFeedbackValidator : AbstractValidator<CustomerFeedback>
+public class ReviewValidator : AbstractValidator<Review>
 {
-    public CustomerFeedbackValidator()
+    public ReviewValidator()
     {
-        RuleFor(x => x.CustomerName)
+        RuleFor(x => x.Name)
            .NotEmpty()
            .WithMessage("Customer name is required.")
            .Length(1, 100)
            .WithMessage("Customer name must be between 1 and 100 characters.");
 
-        RuleFor(x => x.CustomerEmail)
+        RuleFor(x => x.Email)
             .NotEmpty()
             .WithMessage("Customer email is required.")
             .EmailAddress()
@@ -27,7 +27,7 @@ public class CustomerFeedbackValidator : AbstractValidator<CustomerFeedback>
             .Length(1, 500)
             .WithMessage("Comment must be between 1 and 500 characters.");
 
-        RuleFor(x => x.Rating)
+        RuleFor(x => x.Rate)
             .InclusiveBetween((byte)1, (byte)5)
             .WithMessage("Rating must be between 1 and 5.");
 

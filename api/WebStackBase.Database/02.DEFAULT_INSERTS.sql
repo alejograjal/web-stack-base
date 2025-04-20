@@ -13,10 +13,10 @@ VALUES
 
 SET IDENTITY_INSERT [Service] OFF;
 
-SET IDENTITY_INSERT [CustomerFeedback] ON;
+SET IDENTITY_INSERT [Review] ON;
 
-INSERT INTO [CustomerFeedback]
-(Id, CustomerName, CustomerEmail, [Comment], Rating, Created, ShowInWeb)
+INSERT INTO [Review]
+(Id, Name, Email, [Comment], Rate, Created, ShowInWeb)
 VALUES
 (1,'Melissa Rodriguez', 'melirl86@gmail.com', 'Excellent, highly recommended. Allan is very professional and an excellent person.', 5, GETDATE(), 1),
 (2,'Curt Block', 'curtblock28@gmail.com', 'This was the best boat tour ever! I’m from Texas and I got to have monkeys on my shoulders eating out my hands! I got to see huge snakes and gorgeous birds!! Big Lizards! Great experience choose Alan he’s the best!!', 5, GETDATE(), 1),
@@ -32,4 +32,15 @@ VALUES
 (12,'Carlie Guthrie', 'carlieg98@yahoo.com', 'I’m from the US and we did the boat touring and we had a blast! Got to see so many cool animals, also had monkeys and birds eating out of our hands. Super cool to experience and our tour guide was wonderful and fun! 10/10 would go again.', 5, GETDATE(), 1),
 (13,'Karen Keating', 'kbkid55@gmail.com', 'Excellent tour. Alan was a great guide!  We saw a huge numbers of animals with him we could never have seen otherwise!!!!', 5, GETDATE(), 1)
 
-SET IDENTITY_INSERT [CustomerFeedback] OFF;
+SET IDENTITY_INSERT [Review] OFF;
+
+SET IDENTITY_INSERT [ResourceType] ON;
+
+INSERT INTO [ResourceType]
+(Id, [Name])
+VALUES
+(1, 'Home'),
+(2, 'Gallery'),
+(3, 'Tour');
+
+SET IDENTITY_INSERT [ResourceType] OFF;

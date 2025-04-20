@@ -3,28 +3,28 @@ using WebStackBase.Application.Dtos.Response;
 
 namespace WebStackBase.Application.Services.Interfaces;
 
-public interface IServiceCustomerFeedback
+public interface IServiceReview
 {
 
     /// <summary>
     /// Get all customer feedbacks
     /// </summary>
     /// <returns>List of customer feedbacks</returns>
-    Task<ICollection<ResponseCustomerFeedbackDto>> GetAllAsync();
+    Task<ICollection<ResponseReviewDto>> GetAllAsync();
 
     /// <summary>
     /// Get customer feedback by id
     /// </summary>
     /// <param name="id">Id of the customer feedback</param>
     /// <returns>Customer feedback</returns>
-    Task<ResponseCustomerFeedbackDto> GetByIdAsync(long id);
+    Task<ResponseReviewDto> GetByIdAsync(long id);
 
     /// <summary>
     /// Create a new customer feedback
     /// </summary>
     /// <param name="request">Customer feedback request</param>
     /// <returns>Created customer feedback</returns>
-    Task<ResponseCustomerFeedbackDto> CreateAsync(RequestCustomerFeedbackDto request);
+    Task<ResponseReviewDto> CreateAsync(RequestReviewDto request);
 
     /// <summary>
     /// Update an existing customer feedback
@@ -32,7 +32,7 @@ public interface IServiceCustomerFeedback
     /// <param name="id">Id of the customer feedback</param>
     /// <param name="request">Customer feedback request</param>
     /// <returns>Created customer feedback</returns>
-    Task<ResponseCustomerFeedbackDto> UpdateAsync(long id, RequestCustomerFeedbackDto request);
+    Task<ResponseReviewDto> UpdateAsync(long id, RequestReviewDto request);
 
     /// <summary>
     /// Delete a customer feedback 

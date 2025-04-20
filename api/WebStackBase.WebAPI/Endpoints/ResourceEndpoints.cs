@@ -22,9 +22,9 @@ namespace WebStackBase.WebAPI.Endpoints
                        .RequireAuthorization("WebStackBase");
 
             // Get all resources
-            group.MapGet("/", async ([FromServices] IServiceResource service, bool onlyEnabled = true) =>
+            group.MapGet("/", async ([FromServices] IServiceResource service, bool onlyEnabled = true, int? resourceTypeId = null) =>
             {
-                var result = await service.GetAllAsync(onlyEnabled);
+                var result = resourceTypeId.HasValue ? await service.GetAllByResourceTypeIdAsync(resourceTypeId.Value) : await service.GetAllAsync(onlyEnabled);
                 return Results.Ok(result);
             })
             .AllowAnonymous()

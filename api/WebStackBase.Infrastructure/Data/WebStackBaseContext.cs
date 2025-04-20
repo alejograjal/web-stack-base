@@ -9,7 +9,7 @@ public partial class WebStackBaseContext(DbContextOptions<WebStackBaseContext> o
     const string CREATEDNAME = "Created";
     const string UPDATEDNAME = "Updated";
 
-    public virtual DbSet<CustomerFeedback> CustomerFeedbacks { get; set; }
+    public virtual DbSet<Review> Reviews { get; set; }
 
     public virtual DbSet<Reservation> Reservations { get; set; }
 
