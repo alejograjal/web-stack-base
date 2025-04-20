@@ -216,8 +216,8 @@ jobs:
           Environment=SmtpSettings__Password=\$SMTPSETTINGS_PASSWORD
           Environment=SmtpSettings__From=\$SMTPSETTINGS_FROM
           Environment=TemplateSettings__BasePath=\$TEMPLATESETTINGS_BASEPATH
-          ExecStart=/usr/bin/dotnet /var/www/webstackbase/WebStackBase.WebAPI.dll
-          WorkingDirectory=/var/www/webstackbase
+          ExecStart=/usr/bin/dotnet /var/www/manuel-antonio-explorer-api/WebStackBase.WebAPI.dll
+          WorkingDirectory=/var/www/manuel-antonio-explorer-api
           Restart=always
           User=www-data
           Group=www-data
