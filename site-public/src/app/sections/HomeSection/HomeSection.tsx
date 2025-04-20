@@ -2,7 +2,7 @@ import { Box, Typography, Button } from '@mui/material';
 import GalleryHome from '@app/sections/HomeSection/GalleryHome';
 
 const HomeSection = () => {
-    const imageUrl = `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/site/Travel_Moments.webp`;
+    const imageUrl = `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/Travel_Moments.webp`;
     return (
         <Box id="home">
             <Box

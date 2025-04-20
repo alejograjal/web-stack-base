@@ -63,4 +63,4 @@ TestResults/
 secrets.json
 
 # Ignore uploaded files
-/**/wwwroot/uploads/tours/
+/**/wwwroot/*

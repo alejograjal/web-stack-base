@@ -17,7 +17,7 @@ public static class StaticFilesExtensions
     {
         if (app.Environment.IsDevelopment())
         {
-            var staticFilePath = Path.Combine(Directory.GetCurrentDirectory(), "api", "WebStackBase.WebAPI", "wwwroot", "uploads");
+            var staticFilePath = Path.Combine(Directory.GetCurrentDirectory(), "api", "WebStackBase.WebAPI", "wwwroot", "gallery");
 
             if (!Directory.Exists(staticFilePath))
             {
@@ -27,7 +27,7 @@ public static class StaticFilesExtensions
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(staticFilePath),
-                RequestPath = "/resources"
+                RequestPath = "/gallery"
             });
         }
 
