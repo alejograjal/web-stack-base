@@ -251,13 +251,12 @@ jobs:
             cd site-public
             npm install
             npm run build
-      
-      - name: Set up SSH key
-        run: echo "${{ secrets.PRIVATE_KEY }}" > private_key
-        shell: bash
         
       - name: 🚀 Deploy Manuel Antonio Explorer to VPS
         run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+          chmod 600 private_key
+
           # Define directories of VPS
           SITE_DIR="/var/www/manuel-antonio-explorer"
           TEMP_DIR="/var/www/manuel-antonio-explorer-temp"
