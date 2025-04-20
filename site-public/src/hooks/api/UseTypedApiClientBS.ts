@@ -46,8 +46,6 @@ export const UseTypedApiClientBS = <
         use: [arrayWrapperMiddleware]
     });
 
-
-
     return fetcher.path(path).method(method).create({}) as TypedFetch<paths[PathT][MethodT]>;
 }
 

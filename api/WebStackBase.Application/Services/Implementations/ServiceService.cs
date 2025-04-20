@@ -10,6 +10,8 @@ namespace WebStackBase.Application.Services.Implementations;
 
 public class ServiceService(ICoreService<Service> coreService, IValidator<Service> serviceValidator) : IServiceService
 {
+    static readonly string[] defaultIncludes = { "ServiceResources", "ServiceResources.Resource" };
+
     /// <inheritdoc />
     public async Task<ResponseServiceDto> CreateAsync(RequestServiceDto request)
     {
@@ -40,7 +42,7 @@ public class ServiceService(ICoreService<Service> coreService, IValidator<Servic
     /// <inheritdoc />
     public async Task<ICollection<ResponseServiceDto>> GetAllAsync()
     {
-        var list = await coreService.UnitOfWork.Repository<Service>().ListAllAsync();
+        var list = await coreService.UnitOfWork.Repository<Service>().ListAllAsync(defaultIncludes);
 
         return coreService.AutoMapper.Map<ICollection<ResponseServiceDto>>(list);
     }

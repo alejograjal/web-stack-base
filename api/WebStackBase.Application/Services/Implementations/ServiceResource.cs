@@ -11,8 +11,6 @@ namespace WebStackBase.Application.Services.Implementations;
 
 public class ServiceResource(ICoreService<Resource> coreService, IValidator<Resource> resourceValidator) : IServiceResource
 {
-    static readonly string[] defaultIncludes = { "ServiceResources" };
-
     /// <inheritdoc />
     public async Task<ResponseResourceDto> CreateAsync(RequestResourceDto request)
     {
@@ -46,7 +44,7 @@ public class ServiceResource(ICoreService<Resource> coreService, IValidator<Reso
     {
         var spec = new BaseSpecification<Resource>(x => !onlyEnabled || x.IsEnabled);
 
-        var list = await coreService.UnitOfWork.Repository<Resource>().ListAsync(spec, defaultIncludes);
+        var list = await coreService.UnitOfWork.Repository<Resource>().ListAsync(spec);
 
         return coreService.AutoMapper.Map<ICollection<ResponseResourceDto>>(list);
     }

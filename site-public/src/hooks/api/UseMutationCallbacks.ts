@@ -10,7 +10,6 @@ export const UseMutationCallbacks = (successMessage: string, onSettledCallback?:
             setSnackbarMessage(successMessage);
         },
         onError: (data: ErrorDetailsWebStackBase) => {
-            console.error('Error:', data);
             setSnackbarMessage(`${data.message}`, 'error');
         },
         onSettled: () => {

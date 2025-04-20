@@ -58,7 +58,7 @@ builder.Host.UseSerilog((context, configuration) =>
 
 builder.Services.Configure<JsonOptions>(options =>
 {
-    options.SerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+    options.SerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
 
 var app = builder.Build();

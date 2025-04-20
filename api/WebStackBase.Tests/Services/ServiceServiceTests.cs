@@ -16,6 +16,7 @@ public class ServiceServiceTests
     private readonly Mock<ICoreService<Service>> _mockCoreService;
     private readonly Mock<IValidator<Service>> _mockValidator;
     private readonly ServiceService _service;
+    static readonly string[] defaultIncludes = { "ServiceResources", "ServiceResources.Resource" };
 
     public ServiceServiceTests()
     {
@@ -94,7 +95,7 @@ public class ServiceServiceTests
         ICollection<ResponseServiceDto> expectedDtos
     )
     {
-        _mockCoreService.Setup(m => m.UnitOfWork.Repository<Service>().ListAllAsync()).ReturnsAsync(services);
+        _mockCoreService.Setup(m => m.UnitOfWork.Repository<Service>().ListAllAsync(defaultIncludes)).ReturnsAsync(services);
         _mockCoreService.Setup(m => m.AutoMapper.Map<ICollection<ResponseServiceDto>>(services)).Returns(expectedDtos);
 
         var result = await _service.GetAllAsync();

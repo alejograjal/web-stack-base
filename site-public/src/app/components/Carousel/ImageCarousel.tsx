@@ -23,6 +23,9 @@ const ImageCarousel = ({
   delay = 4000,
   radius = 16,
 }: ImageCarouselProps) => {
+  const slidesPerView = 1;
+  const canLoop = images.length > slidesPerView;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -35,7 +38,8 @@ const ImageCarousel = ({
         navigation
         pagination={{ clickable: true }}
         autoplay={{ delay }}
-        loop
+        slidesPerView={slidesPerView}
+        loop={canLoop}
         style={{
           borderRadius: radius,
           overflow: 'hidden',
