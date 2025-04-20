@@ -190,13 +190,13 @@ jobs:
           # Check if the service file already exists
           echo "📝 Checking if systemd service already exists..."
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            export DB_CONNECTION_STRING=${{secrets.DB_CONNECTION_STRING}}
-            export JWT_SECRET=${{secrets.JWT_SECRET}}
-            export JWT_LIFETIME=${{secrets.JWT_LIFETIME}}
-            export SMTPSETTINGS_USERNAME=${{secrets.SMTPSETTINGS_USERNAME}}
-            export SMTPSETTINGS_PASSWORD=${{secrets.SMTPSETTINGS_PASSWORD}}
-            export SMTPSETTINGS_FROM=${{secrets.SMTPSETTINGS_FROM}}
-            export TEMPLATESETTINGS_BASEPATH=${{secrets.TEMPLATESETTINGS_BASEPATH}}
+            export DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}"
+            export JWT_SECRET="${{ secrets.JWT_SECRET }}"
+            export JWT_LIFETIME="${{ secrets.JWT_LIFETIME }}"
+            export SMTPSETTINGS_USERNAME="${{ secrets.SMTPSETTINGS_USERNAME }}"
+            export SMTPSETTINGS_PASSWORD="${{ secrets.SMTPSETTINGS_PASSWORD }}"
+            export SMTPSETTINGS_FROM="${{ secrets.SMTPSETTINGS_FROM }}"
+            export TEMPLATESETTINGS_BASEPATH="${{ secrets.TEMPLATESETTINGS_BASEPATH }}"
 
             if [ ! -f /etc/systemd/system/web-stack-base-api.service ]; then
               # Create systemd service file for the API if it doesn't exist
