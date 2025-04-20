@@ -30,11 +30,5 @@ public class ReviewValidator : AbstractValidator<Review>
         RuleFor(x => x.Rate)
             .InclusiveBetween((byte)1, (byte)5)
             .WithMessage("Rating must be between 1 and 5.");
-
-        RuleFor(x => x.Created)
-            .NotEmpty()
-            .WithMessage("Creation date is required.")
-            .LessThanOrEqualTo(DateTime.UtcNow)
-            .WithMessage("Creation date cannot be in the future.");
     }
 }
