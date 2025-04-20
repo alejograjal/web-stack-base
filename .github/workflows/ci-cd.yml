@@ -59,6 +59,76 @@ jobs:
       - name: 📤 Publish WebAPI
         run: dotnet publish ./api/WebStackBase.WebAPI/WebStackBase.WebAPI.csproj --configuration Release --output ./api/WebStackBase.WebAPI/publish
 
+      - name: 📁 Create resource manager directory on the VPS if not exists
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+          chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+            if [ ! -d '/var/www/resource-manager' ]; then
+              mkdir -p /var/www/resource-manager;
+              echo 'Directory /var/www/resource-manager created.';
+            else
+              echo 'Directory /var/www/resource-manager already exists.';
+            fi
+      
+            # Create the email-templates directory if it doesn't exist
+            if [ ! -d '/var/www/resource-manager/email-templates' ]; then
+              mkdir -p /var/www/resource-manager/email-templates;
+              echo 'Directory /var/www/resource-manager/email-templates created.';
+            else
+              echo 'Directory /var/www/resource-manager/email-templates already exists.';
+            fi
+      
+            # Create the gallery directory if it doesn't exist
+            if [ ! -d '/var/www/resource-manager/gallery' ]; then
+              mkdir -p /var/www/resource-manager/gallery;
+              echo 'Directory /var/www/resource-manager/gallery created.';
+            else
+              echo 'Directory /var/www/resource-manager/gallery already exists.';
+            fi
+      
+            # Change ownership of the directories to www-data
+            chown -R www-data:www-data /var/www/resource-manager
+            # Set read, write, and execute permissions for www-data
+            chmod -R 755 /var/www/resource-manager
+          "
+
+      - name: 📁 Copy email templates to VPS
+        run: |
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+            chmod 600 private_key
+        
+            # Define template folder on VPS
+            TEMPLATE_DIR="/var/www/resource-manager/email-templates"
+            BACKUP_DIR="/var/www/resource-manager/email-templates-backup-$(date +%Y%m%d%H%M%S)"
+            TEMP_DIR="/var/www/resource-manager/email-templates-temp"
+        
+            # Backup current templates
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+              mv $TEMPLATE_DIR $BACKUP_DIR || exit 1
+            "
+        
+            # Clean temp folder
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+              rm -rf $TEMP_DIR
+            "
+        
+            # Copy new templates to temp folder
+            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./api/WebStackBase.WebAPI/publish/EmailTemplates/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$TEMP_DIR
+        
+            # Move new templates to the final location
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+              mv $TEMP_DIR $TEMPLATE_DIR
+            "
+
+            # Remove backup folder
+            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+              rm -rf $BACKUP_DIR
+            "
+        
+            # Clean up
+            rm private_key
+
       - name: 🚀 Setup and deploy API to VPS
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -120,6 +190,10 @@ jobs:
           # Check if the service file already exists
           echo "📝 Checking if systemd service already exists..."
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            export DB_CONNECTION_STRING=${{secrets.DB_CONNECTION_STRING}}
+            export JWT_SECRET=${{secrets.JWT_SECRET}}
+            export JWT_LIFETIME=${{secrets.JWT_LIFETIME}}
+
             if [ ! -f /etc/systemd/system/web-stack-base-api.service ]; then
               # Create systemd service file for the API if it doesn't exist
               echo "[Unit]
@@ -128,9 +202,9 @@ jobs:
       
               [Service]
               Environment=ASPNETCORE_ENVIRONMENT=Production
-              Environment=\"ConnectionStrings__WebStackBase=${{secrets.DB_CONNECTION_STRING}}\"
-              Environment=\"AuthenticationConfiguration__JwtSettings_Secret=${{secrets.JWT_SECRET}}\"
-              Environment=\"AuthenticationConfiguration__JwtSettings_TokenLifetime=${{secrets.JWT_LIFETIME}}\"
+              Environment=ConnectionStrings__WebStackBase=\$DB_CONNECTION_STRING
+              Environment=AuthenticationConfiguration__JwtSettings_Secret=\$JWT_SECRET
+              Environment=AuthenticationConfiguration__JwtSettings_TokenLifetime=\$JWT_LIFETIME
               ExecStart=/usr/bin/dotnet /var/www/webstackbase/WebStackBase.WebAPI.dll
               WorkingDirectory=/var/www/webstackbase
               Restart=always
@@ -154,6 +228,77 @@ jobs:
 
           # Clean up the private key
           rm private_key
+
+  deploy-next-site:
+    name: 🚚 Deploy Manuel Antonio Explorer Site
+    runs-on: ubuntu-latest
+    needs: build-and-test
+      
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+        
+      - name: 📦 Build Next.js site
+        run: |
+            cd site-public
+            npm install
+            npm run build
+        
+      - name: 🚀 Deploy Manuel Antonio Explorer to VPS
+        run: |
+          # Define directories of VPS
+          SITE_DIR="/var/www/manuel-antonio-explorer"
+          TEMP_DIR="/var/www/manuel-antonio-explorer-temp"
+          BACKUP_DIR="/var/www/manuel-antonio-explorer-backup-$(date +%Y%m%d%H%M%S)"
+            
+          # Create the destination directory if it doesn't exist
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p $SITE_DIR"
+          # Verify and assign the proper permissions
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo chown -R www-data:www-data $SITE_DIR && sudo chmod -R 755 $SITE_DIR"
+          # Clean the temporary directory
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $TEMP_DIR"
+  
+          # Move the current site directory to a backup folder
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mv $SITE_DIR $BACKUP_DIR || true"
+          # Copy the compiled site files to the temporary directory
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/.next ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$TEMP_DIR
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/public ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$TEMP_DIR
+          # Move the files from the temporary directory to the final site directory
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mv $TEMP_DIR/* $SITE_DIR"
+
+          # Delete the previous backup
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $BACKUP_DIR"
+        
+          # Crear el archivo systemd para Next.js (si es necesario)
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            if [ ! -f /etc/systemd/system/manuel-antonio-explorer.service ]; then
+              echo "[Unit]
+              Description=Manuel Antonio Explorer Site
+              After=network.target
+
+              [Service]
+              ExecStart=/usr/local/bin/node /var/www/manuel-antonio-explorer/.next/production-server.js
+              WorkingDirectory=/var/www/manuel-antonio-explorer
+              Restart=always
+              User=www-data
+              Group=www-data
+
+              [Install]
+              WantedBy=multi-user.target" | sudo tee /etc/systemd/system/manuel-antonio-explorer.service
+              
+              sudo systemctl daemon-reload
+              sudo systemctl enable manuel-antonio-explorer
+              sudo systemctl start manuel-antonio-explorer
+            else
+              sudo systemctl restart manuel-antonio-explorer
+            fi
+          EOF
+        env:
+          NEXT_PUBLIC_API_WEB_STACK_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_WEB_STACK_BASE_URL }}
+      
+      - name: Clean up
+        run: rm private_key
+        
 
   deploy-docker-compose:
     name: 🚚 Copy Docker Compose to VPS
