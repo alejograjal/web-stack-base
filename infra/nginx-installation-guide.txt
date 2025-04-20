@@ -79,6 +79,8 @@ server {
     location / {
         root /var/www/resource-manager;
         try_files $uri $uri/ =404;
+
+        autoindex on;
     }
 
     # Opcional: habilitar encabezados de CORS si lo necesitas
