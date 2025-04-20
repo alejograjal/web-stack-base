@@ -50,7 +50,7 @@ const ToursSection = () => {
                                                     {tour.name}
                                                 </Typography>
                                                 <Typography variant="body1" color="text.secondary">
-                                                    {tour.description ||
+                                                    {tour.description ??
                                                         "Explore Costa Rica like never before. Adventure, nature, and unforgettable memories await you."}
                                                 </Typography>
                                             </CardContent>
