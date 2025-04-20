@@ -15,8 +15,6 @@ out/
 *.suo
 *.sln.docstates
 
-## Visual Studio Code
-.vscode/
 
 ## ASP.NET Core
 appsettings.Local.json
