@@ -259,24 +259,23 @@ jobs:
 
           # Define directories of VPS
           SITE_DIR="/var/www/manuel-antonio-explorer"
-          TEMP_DIR="/var/www/manuel-antonio-explorer-temp"
           BACKUP_DIR="/var/www/manuel-antonio-explorer-backup-$(date +%Y%m%d%H%M%S)"
             
           # Create the destination directory if it doesn't exist
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p $SITE_DIR"
           # Verify and assign the proper permissions
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "sudo chown -R www-data:www-data $SITE_DIR && sudo chmod -R 755 $SITE_DIR"
-          # Clean the temporary directory
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $TEMP_DIR"
-  
+
           # Move the current site directory to a backup folder
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mv $SITE_DIR $BACKUP_DIR || true"
-          # Copy the compiled site files to the temporary directory
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/.next ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$TEMP_DIR
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/public ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$TEMP_DIR
-          # Move the files from the temporary directory to the final site directory
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mv $TEMP_DIR/* $SITE_DIR"
 
+          # Clean the directory
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $SITE_DIR"
+  
+          # Copy the compiled site files to the directory
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/.next ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./site-public/public ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:$SITE_DIR
+          
           # Delete the previous backup
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "rm -rf $BACKUP_DIR"
         
