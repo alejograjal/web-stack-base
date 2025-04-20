@@ -12,12 +12,13 @@ public static class IoCConfiguration
     /// Extension method to configure the IoC container
     /// </summary>
     /// <param name="services">Collection of services</param>
-    public static void ConfigureIoC(this IServiceCollection services)
+    /// <param name="configuration">Configuration settings</param>
+    public static void ConfigureIoC(this IServiceCollection services, IConfiguration configuration)
     {
         ArgumentNullException.ThrowIfNull(services);
 
         services.ConfigureGeneralServicesIoc();
-        services.ConfigureApplication();
+        services.ConfigureApplication(configuration);
         services.ConfigureInfrastructureIoC();
     }
 }

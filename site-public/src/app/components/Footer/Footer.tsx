@@ -1,36 +1,78 @@
-export default function Footer() {
+"use client";
+
+import { Facebook, Instagram } from '@mui/icons-material';
+import { Typography, Grid, Box, Link } from '@mui/material';
+
+const Footer = () => {
+    const handleScrollTo = (id: string) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
-        <footer className="bg-[#101828] text-white py-10 px-4 md:px-12">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h4 className="text-xl font-semibold mb-4">Wander</h4>
-                    <p className="text-gray-400 text-sm">Discover story-worthy travel moments and join our global community of explorers.</p>
-                </div>
-                <div>
-                    <h5 className="text-lg font-semibold mb-3">Company</h5>
-                    <ul className="space-y-2 text-sm text-gray-300">
-                        <li>About us</li>
-                        <li>Careers</li>
-                        <li>Contact</li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 className="text-lg font-semibold mb-3">Support</h5>
-                    <ul className="space-y-2 text-sm text-gray-300">
-                        <li>Help Center</li>
-                        <li>Terms of Service</li>
-                        <li>Privacy Policy</li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 className="text-lg font-semibold mb-3">Stay up to date</h5>
-                    <input type="email" placeholder="Enter your email" className="w-full px-3 py-2 rounded-md bg-[#1F2A37] text-sm text-white placeholder-gray-400" />
-                    <button className="mt-2 w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-md text-sm font-semibold">Subscribe</button>
-                </div>
-            </div>
-            <div className="mt-10 text-center text-gray-500 text-sm">
-                &copy; {new Date().getFullYear()} Wander. All rights reserved.
-            </div>
-        </footer>
+        <Box sx={{ backgroundColor: '#101828', color: 'white', py: 5, px: 4 }}>
+            <Grid container spacing={8} maxWidth="lg" sx={{ margin: '0 auto' }}>
+                <Grid size={{ xs: 12, md: 3 }}>
+                    <Typography variant="h6" component="h4" sx={{ fontWeight: 600, mb: 4 }}>
+                        Manuel Antonio Explorer
+                    </Typography>
+                    <Typography sx={{ color: '#A0A0A0', fontSize: 14 }}>
+                        Discover unforgettable tours in Manuel Antonio and join our community of explorers.
+                    </Typography>
+                </Grid>
+                <Grid size={{ xs: 12, md: 3 }}>
+                    <Typography variant="h6" component="h5" sx={{ fontWeight: 600, mb: 3 }}>
+                        Explore
+                    </Typography>
+                    <Box sx={{ listStyleType: 'none', pl: 0 }}>
+                        <Link component='button' onClick={() => handleScrollTo('home')} color="inherit" sx={{ display: 'block', mb: 2, fontSize: 14, textDecoration: 'none' }}>
+                            Home
+                        </Link>
+                        <Link component='button' onClick={() => handleScrollTo('tours')} color="inherit" sx={{ display: 'block', mb: 2, fontSize: 14, textDecoration: 'none' }}>
+                            Tours
+                        </Link>
+                        <Link component='button' onClick={() => handleScrollTo('experience')} color="inherit" sx={{ display: 'block', mb: 2, fontSize: 14, textDecoration: 'none' }}>
+                            Experience
+                        </Link>
+                        <Link component='button' onClick={() => handleScrollTo('gallery')} color="inherit" sx={{ display: 'block', mb: 2, fontSize: 14, textDecoration: 'none' }}>
+                            Gallery
+                        </Link>
+                    </Box>
+                </Grid>
+                <Grid size={{ xs: 12, md: 3 }}>
+                    <Typography variant="h6" component="h5" sx={{ fontWeight: 600, mb: 3 }}>
+                        Contact Us
+                    </Typography>
+                    <Box sx={{ listStyleType: 'none', pl: 0 }}>
+                        <Link component='button' onClick={() => handleScrollTo('contact')} color="inherit" sx={{ display: 'block', mb: 2, fontSize: 14, textDecoration: 'none' }}>
+                            Contact
+                        </Link>
+                        <Link component='button' onClick={() => handleScrollTo('review')} color="inherit" sx={{ display: 'block', mb: 2, fontSize: 14, textDecoration: 'none' }}>
+                            Leave a Review
+                        </Link>
+                    </Box>
+                </Grid>
+                <Grid size={{ xs: 12, md: 3 }}>
+                    <Typography variant="h6" component="h5" sx={{ fontWeight: 600, mb: 3 }}>
+                        Follow Us
+                    </Typography>
+                    <Box sx={{ display: 'flex', gap: 2 }}>
+                        <Link href="https://facebook.com" color="inherit">
+                            <Facebook fontSize="large" />
+                        </Link>
+                        <Link href="https://instagram.com" color="inherit">
+                            <Instagram fontSize="large" />
+                        </Link>
+                    </Box>
+                </Grid>
+            </Grid>
+            <Box sx={{ mt: 8, textAlign: 'center', color: '#A0A0A0', fontSize: 14 }}>
+                &copy; {new Date().getFullYear()} Manuel Antonio Explorer. All rights reserved.
+            </Box>
+        </Box>
     );
 }
+
+export default Footer;

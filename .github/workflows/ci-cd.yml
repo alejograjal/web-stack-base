@@ -79,15 +79,42 @@ jobs:
           echo "📂 Creating temporary directory on VPS..."
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/webstackbase-temp"
 
-          # Copy files to VPS temporary folder
-          echo "📦 Copying files to VPS..."
-          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key -r ./api/WebStackBase.WebAPI/publish/* ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/webstackbase-temp
+          # Zip the published files
+          echo "📦 Zipping published files..."
+          cd ./api/WebStackBase.WebAPI/publish
+          zip -r ../webstackbase-publish.zip .
+          cd -
 
-          # Move files from temporary folder to final folder
-          echo "🔄 Moving files from temporary folder to final folder..."
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << EOF
-            mv /var/www/webstackbase-temp/* /var/www/webstackbase/
-            echo "✅ Files moved to /var/www/webstackbase/"
+          # Copy the zip file to VPS
+          echo "📤 Copying zip to VPS..."
+          scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ./api/WebStackBase.WebAPI/webstackbase-publish.zip ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/webstackbase-temp/webstackbase-publish.zip
+
+          # Backup, clean, and unzip on VPS 
+          echo "🔄 Backing up, cleaning, and unzipping on VPS..."
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            set -e
+
+            DEPLOY_DIR="/var/www/webstackbase"
+            BACKUP_DIR="/var/www/webstackbase-backup-$(date +%Y%m%d%H%M%S)"
+            TEMP_DIR="/var/www/webstackbase-temp"
+            TEMP_ZIP="/var/www/webstackbase-temp/webstackbase-publish.zip"
+
+            # Backup existing deployment 
+            echo "🗂️ Backing up existing deployment to $BACKUP_DIR"
+            mv "$DEPLOY_DIR" "$BACKUP_DIR"
+
+            # Clean up old deployment folder
+            rm -rf "$DEPLOY_DIR"
+
+            # Unzipping new files
+            echo "📦 Unzipping new files..."
+            unzip -o "$TEMP_ZIP" -d "$DEPLOY_DIR"
+
+            # Clean up old temp folder and backup
+            rm -rf "$TEMP_DIR"
+            rm -rf "$BACKUP_DIR"
+
+            echo "✅ Deployment completed at $DEPLOY_DIR"
           EOF
       
           # Check if the service file already exists

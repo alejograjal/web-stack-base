@@ -15,6 +15,13 @@ public interface IServiceResource
     Task<ICollection<ResponseResourceDto>> GetAllAsync(bool onlyEnabled = true);
 
     /// <summary>
+    /// Get all resources by resource type id
+    /// </summary>
+    /// <param name="id">Resource type id</param>
+    /// <returns>List of resources</returns>
+    Task<ICollection<ResponseResourceDto>> GetAllByResourceTypeIdAsync(long resource);
+
+    /// <summary>
     /// Get resource by id
     /// </summary>
     /// <param name="id">Id of the resource</param>

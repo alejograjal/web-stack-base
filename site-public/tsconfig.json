@@ -24,7 +24,10 @@
     ],
     "paths": {
       "@components/*": [
-        "./src/components/*"
+        "./src/app/components/*"
+      ],
+      "@sections/*": [
+        "./src/app/sections/*"
       ],
       "@hooks/*": [
         "./src/hooks/*"
@@ -39,7 +42,10 @@
         "./public/assets/*"
       ],
       "@generalTypes/*": [
-        "./src/types/*"
+        "./src/api/types/*"
+      ],
+      "@src/*": [
+        "./src/*"
       ],
     }
   },

@@ -4,11 +4,13 @@ using WebStackBase.WebAPI.Endpoints;
 using WebStackBase.WebAPI.Authorization;
 using WebStackBase.WebAPI.Configuration;
 using WebStackBase.Application.Configuration;
+using Microsoft.Extensions.FileProviders;
 
 var WebStackBaseSpecificOrigins = "_WebStackBaseSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddStandardConfiguration();
 
 builder.Services.AddAuthorization(opts =>
 {
@@ -28,13 +30,15 @@ builder.Services.ConfigureApiVersioning();
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.ConfigureIoC();
+builder.Services.ConfigureIoC(builder.Configuration);
 
 builder.Services.ConfigureAutoMapper();
 
 builder.Services.ConfigureFluentValidation();
 
 builder.Services.ConfigureSwaggerAPI();
+
+builder.Services.ConfigureNotificationServices(builder.Configuration);
 
 builder.Services.AddHealthChecks();
 
@@ -71,11 +75,14 @@ app.ConfigureExceptionHandler(Log.Logger);
 
 app.MapControllers();
 
-app.MapCustomerFeedbackEndpoints();
+app.UseStaticFilesForDevelopment();
+
+app.MapReviewEndpoints();
 app.MapHealthCheckEndpoints();
 app.MapReservationEndpoints();
 app.MapResourceEndpoints();
 app.MapServiceEndpoints();
 app.MapServiceServiceResourceEndpoints();
+app.MapContactEndpoints();
 
 await app.RunAsync();

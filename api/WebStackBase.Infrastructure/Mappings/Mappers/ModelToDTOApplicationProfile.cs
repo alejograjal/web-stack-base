@@ -7,7 +7,7 @@ public class ModelToDtoApplicationProfile : Profile
 {
     public ModelToDtoApplicationProfile()
     {
-        CreateMap<CustomerFeedback, ResponseCustomerFeedbackDto>();
+        CreateMap<Review, ResponseReviewDto>();
 
         CreateMap<Reservation, ResponseReservationDto>();
 

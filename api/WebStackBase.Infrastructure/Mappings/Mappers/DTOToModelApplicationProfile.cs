@@ -19,7 +19,7 @@ public class DtoToModelApplicationProfile : Profile
                 opts.MapFrom<CurrentUserIdResolverModify>();
             });
 
-        CreateMap<RequestCustomerFeedbackDto, CustomerFeedback>();
+        CreateMap<RequestReviewDto, Review>();
 
         CreateMap<RequestReservationDto, Reservation>();
 
