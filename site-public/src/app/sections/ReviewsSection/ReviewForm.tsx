@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { BaseContact } from "@components/BaseContact/BaseContact";
 import { ReviewDefaultValues, ReviewSchema } from "./ReviewSchema";
 import { UseMutationCallbacks } from "@hooks/api/UseMutationCallbacks";
+import { Box, Button, Container, Rating, Typography } from "@mui/material";
 import { UsePostReview } from "@hooks/api/web-stack-base/review/UsePostReview";
-import { Box, Button, Container, Rating, TextField, Typography } from "@mui/material";
 import { FormFieldErrorMessage } from "@components/FormFieldErrorMessage/FormFieldErrorMessage";
 
 
@@ -52,48 +53,8 @@ const ReviewForm = () => {
             <FormProvider {...formMethods}>
                 <form onSubmit={createReviewWrapper} noValidate>
                     <Box display="flex" flexDirection="column" gap={3}>
-                        <Box>
-                            <TextField
-                                required
-                                error={!!errors.name}
-                                label="Name"
-                                placeholder="Full name"
-                                fullWidth
-                                {...register('name')}
-                            />
-                            {errors.name?.message && (
-                                <FormFieldErrorMessage message={errors.name.message} />
-                            )}
-                        </Box>
 
-                        <Box>
-                            <TextField
-                                required
-                                error={!!errors.email}
-                                label="Email"
-                                placeholder="Email"
-                                fullWidth
-                                {...register('email')}
-                            />
-                            {errors.email?.message && (
-                                <FormFieldErrorMessage message={errors.email.message} />
-                            )}
-                        </Box>
-
-                        <Box>
-                            <TextField
-                                multiline
-                                minRows={3}
-                                error={!!errors.message}
-                                label="Comments"
-                                placeholder="Write your review here"
-                                fullWidth
-                                {...register('message')}
-                            />
-                            {errors.message?.message && (
-                                <FormFieldErrorMessage message={errors.message.message} />
-                            )}
-                        </Box>
+                        <BaseContact register={register} errors={errors} />
 
                         <Box>
                             <Typography fontWeight="bold" gutterBottom>
@@ -101,7 +62,7 @@ const ReviewForm = () => {
                             </Typography>
                             <Rating
                                 value={currentRate}
-                                onChange={(_, value) => setValue('rate', value || 0)}
+                                onChange={(_, value) => setValue('rate', value ?? 0)}
                             />
                             {errors.rate?.message && (
                                 <FormFieldErrorMessage message={errors.rate.message} />

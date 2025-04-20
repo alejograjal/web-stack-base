@@ -27,7 +27,6 @@ namespace WebStackBase.WebAPI.Endpoints
                 var result = await service.GetAllAsync();
                 return Results.Ok(result);
             })
-            .WithTags("Review")
             .AllowAnonymous()
             .WithMetadata(new SwaggerOperationAttribute("Get all review", "Retrieve all review"))
             .Produces<List<ResponseReviewDto>>(StatusCodes.Status200OK)
@@ -38,7 +37,6 @@ namespace WebStackBase.WebAPI.Endpoints
                 var result = await service.GetByIdAsync(id);
                 return Results.Ok(result);
             })
-            .WithTags("Review")
             .WithMetadata(new SwaggerOperationAttribute("Get review by ID", "Retrieve a specific review based on the ID"))
             .Produces<ResponseReviewDto>(StatusCodes.Status200OK)
             .Produces<ErrorDetailsWebStackBase>(StatusCodes.Status500InternalServerError);
@@ -48,7 +46,6 @@ namespace WebStackBase.WebAPI.Endpoints
                 var result = await service.CreateAsync(request);
                 return Results.Created($"/api/review/{result.Id}", result);
             })
-            .WithTags("Review")
             .AllowAnonymous()
             .WithMetadata(new SwaggerOperationAttribute("Create review", "Create a new review"))
             .Produces<ResponseReviewDto>(StatusCodes.Status201Created)
@@ -59,7 +56,6 @@ namespace WebStackBase.WebAPI.Endpoints
                 var result = await service.UpdateAsync(id, request);
                 return Results.Ok(result);
             })
-            .WithTags("Review")
             .WithMetadata(new SwaggerOperationAttribute("Update review", "Update existing review"))
             .Produces<ResponseReviewDto>(StatusCodes.Status200OK)
             .Produces<ErrorDetailsWebStackBase>(StatusCodes.Status404NotFound)

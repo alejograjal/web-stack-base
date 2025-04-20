@@ -25,7 +25,6 @@ public static class ContactEndpoints
                 var result = await service.SendContactEmailAsync(request);
                 return Results.Ok(result);
             })
-            .WithTags("Contact")
             .AllowAnonymous()
             .WithMetadata(new SwaggerOperationAttribute("Create review", "Create a new review"))
             .Produces<bool>(StatusCodes.Status200OK)

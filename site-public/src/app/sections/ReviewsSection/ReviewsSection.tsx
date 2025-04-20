@@ -32,8 +32,8 @@ const ReviewsSection = () => {
                 }}
                 style={{ padding: '2rem 3rem' }}
             >
-                {visibleReviews.map((review, index) => (
-                    <SwiperSlide key={review.id || index}>
+                {visibleReviews?.map((review) => (
+                    <SwiperSlide key={review.id}>
                         <Box sx={{ height: '100%', display: 'flex', }}>
                             <Card
                                 sx={{
@@ -50,23 +50,23 @@ const ReviewsSection = () => {
                                 <CardHeader
                                     avatar={
                                         <Avatar sx={{ bgcolor: 'primary.main' }}>
-                                            {review.name?.charAt(0) || 'U'}
+                                            {review.name?.charAt(0) ?? 'U'}
                                         </Avatar>
                                     }
                                     title={
                                         <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
                                             <Typography variant="subtitle1" fontWeight={600}>
-                                                {review.name || 'Anonymous'}
+                                                {review.name ?? 'Anonymous'}
                                             </Typography>
                                             <Rating
-                                                value={review.rate || 0}
+                                                value={review.rate ?? 0}
                                                 readOnly
                                                 size="small"
                                                 sx={{ ml: 2 }}
                                             />
                                         </Box>
                                     }
-                                    subheader={new Date(review.created || '').toLocaleDateString()}
+                                    subheader={new Date(review.created ?? '').toLocaleDateString()}
                                 />
                                 <CardContent sx={{ flexGrow: 1 }}>
                                     <Typography

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import Masonry from 'react-masonry-css';
@@ -52,18 +53,14 @@ const GallerySection = () => {
                     columnClassName="masonry-column"
                 >
                     {resources?.map((item, index) => (
-                        <div
-                            key={item.id || index}
-                            onClick={() => handleImageClick(index)}
-                            className="cursor-pointer"
-                        >
+                        <Box component='button' onClick={() => handleImageClick(index)} key={item.id} className="cursor-pointer">
                             <img
                                 src={item.url!}
                                 alt={item.name!}
                                 className="w-full h-auto object-contain"
                                 loading="lazy"
                             />
-                        </div>
+                        </Box>
                     ))}
                 </Masonry>
 

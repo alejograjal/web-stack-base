@@ -33,7 +33,7 @@ public class NotificationTemplateService : INotificationTemplateService
         return template;
     }
 
-    private string GenerateStarsSvg(int rating)
+    private static string GenerateStarsSvg(int rating)
     {
         return $"<svg xmlns='http://www.w3.org/2000/svg' width='100' height='20' viewBox='0 0 100 20'><g>{new string('★', rating).PadRight(5, '☆')}</g></svg>";
     }

@@ -20,7 +20,7 @@ const ToursSection = () => {
                 {tours?.map((tour: Service, index: number) => {
                     const isEven = index % 2 === 0;
 
-                    const images = tour.serviceResources?.map(r => r.resource?.url) || [];
+                    const images = tour.serviceResources?.map(r => r.resource?.url) ?? [];
 
                     return (
                         <Box key={`${tour.id}-${index}`} mb={2}>

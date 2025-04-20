@@ -17,9 +17,9 @@ public interface IServiceResource
     /// <summary>
     /// Get all resources by resource type id
     /// </summary>
-    /// <param name="id">Resource type id</param>
+    /// <param name="resourceTypeId">Resource type id</param>
     /// <returns>List of resources</returns>
-    Task<ICollection<ResponseResourceDto>> GetAllByResourceTypeIdAsync(long resource);
+    Task<ICollection<ResponseResourceDto>> GetAllByResourceTypeIdAsync(long resourceTypeId);
 
     /// <summary>
     /// Get resource by id

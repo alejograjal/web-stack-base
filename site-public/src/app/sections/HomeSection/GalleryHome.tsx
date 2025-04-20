@@ -18,9 +18,9 @@ const GalleryHome = () => {
         return (
             <Box className="overflow-hidden">
                 <Box className="grid grid-cols-1 md:grid-cols-3 gap-3 auto-rows-[200px] max-w-6xl mx-auto">
-                    {resources.map((item, index) => (
+                    {resources?.map((item) => (
                         <motion.div
-                            key={item.id || index}
+                            key={item.id}
                             className="relative group overflow-hidden rounded-xl"
                             whileHover={{ scale: 1.02 }}
                             transition={{ duration: 0.3 }}

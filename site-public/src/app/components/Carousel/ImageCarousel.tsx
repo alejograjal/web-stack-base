@@ -42,7 +42,7 @@ const ImageCarousel = ({
         }}
       >
         {images.map((src, i) => (
-          <SwiperSlide key={i}>
+          <SwiperSlide key={`carousel-image-${i}`}>
             <Box
               component="img"
               src={src}

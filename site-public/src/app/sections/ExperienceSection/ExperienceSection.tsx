@@ -6,6 +6,7 @@ import { Box, Card, CardContent, Grid, List, ListItem, ListItemText, Typography 
 const ExperienceSection = () => {
     const sections = [
         {
+            id: 1,
             title: 'Experience Excellence in Adventure and Relaxation',
             items: [
                 'Soar through the treetops on exhilarating zip lines',
@@ -15,6 +16,7 @@ const ExperienceSection = () => {
             ],
         },
         {
+            id: 2,
             title: 'Full Description',
             items: [
                 'Horseback Riding Adventure',
@@ -27,6 +29,7 @@ const ExperienceSection = () => {
                 'Embark on an unforgettable day of adventure perfect for both adrenaline seekers and nature lovers:',
         },
         {
+            id: 3,
             title: "What's Included",
             items: [
                 'Expert guide for your adventure',
@@ -51,7 +54,7 @@ const ExperienceSection = () => {
 
             <Grid container spacing={4}>
                 {sections.map((section, index) => (
-                    <Grid key={index} sx={{ display: 'flex' }} size={{ xs: 12, md: 4 }}>
+                    <Grid key={section.id} sx={{ display: 'flex' }} size={{ xs: 12, md: 4 }}>
                         <motion.div
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -82,7 +85,7 @@ const ExperienceSection = () => {
                                     )}
                                     <List dense sx={{ listStyleType: 'disc', pl: 3, '& li': { display: 'list-item' } }}>
                                         {section.items.map((item, i) => (
-                                            <ListItem key={i} disableGutters disablePadding>
+                                            <ListItem key={`item-${i}`} disableGutters disablePadding>
                                                 <ListItemText
                                                     primary={
                                                         section.isBold ? (
