@@ -68,7 +68,7 @@ public class ServiceReview(ICoreService<Review> coreService, IEmailService email
     private async Task<Review> ValidateServiceReviewAsync(RequestReviewDto requestServiceReviewDto, long id = 0)
     {
         var serviceReview = coreService.AutoMapper.Map<Review>(requestServiceReviewDto);
-        serviceReview.Created = DateTime.Now;
+        serviceReview.Created = DateTime.UtcNow;
         await serviceReviewValidator.ValidateAndThrowAsync(serviceReview);
         serviceReview.Id = id;
 
