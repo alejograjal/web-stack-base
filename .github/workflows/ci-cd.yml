@@ -253,6 +253,7 @@ jobs:
 
       - name: Build Docker image
         run: |
+          ls -la
           docker build -t manuel-antonio-explorer .
 
       - name: Copy Dockerfile and docker-compose.yml to server
