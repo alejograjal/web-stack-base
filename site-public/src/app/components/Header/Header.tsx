@@ -1,35 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 import FullScreenMenu from "./FullScreenMenu";
 import MenuIcon from '@mui/icons-material/Menu';
 import Logo from "@assets/Manuel_Antonio_Explorer.webp";
+import { useOverlayMenu } from "@hooks/ui/useOverlayMenu";
 import { AppBar, Toolbar, Box, Typography, Link, Container, IconButton } from "@mui/material";
 
 export default function Header() {
-    const [openMenu, setOpenMenu] = useState(false);
-
-    const toggleOverlayMenu = (open: boolean) => {
-        setOpenMenu(open);
-    };
-
-    const handleScrollTo = (id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+    const { openMenu, toggleOverlayMenu, handleScrollTo } = useOverlayMenu();
 
     return (
         <AppBar position="sticky" color="default" elevation={1}>
             <Container maxWidth="xl">
-                <Toolbar sx={{ px: { xs: 1, md: 1 } }}>
-                    <Box display="flex" alignItems="center" flexGrow={1}
-                        sx={{
-                            justifyContent: { xs: "center", md: "flex-start" },
-                            textAlign: { xs: "center", md: "left" },
-                        }}>
+                <Toolbar className="!px-1 md:!px-1">
+                    <Box display="flex" alignItems="center" flexGrow={1} className="justify-center text-center md:justify-start md:text-left">
                         <Link href="#home" color="inherit" underline="none" sx={{ display: 'flex', alignItems: 'center' }}>
                             <Image src={Logo} alt="Manuel Antonio Explorer Logo" className="h-20 w-auto" />
                             <Typography variant="h6" color="dark" fontWeight="bold" ml={2}>
@@ -38,12 +23,7 @@ export default function Header() {
                         </Link>
                     </Box>
 
-                    <IconButton
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ display: { xs: "block", md: "none" } }}
-                        onClick={() => toggleOverlayMenu(true)}
-                    >
+                    <IconButton color="inherit" aria-label="menu" className="!block md:!hidden" onClick={() => toggleOverlayMenu(true)}>
                         <MenuIcon fontSize="large" />
                     </IconButton>
 

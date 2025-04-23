@@ -19,19 +19,8 @@ const GalleryHome = () => {
             <Box className="overflow-hidden">
                 <Box className="grid grid-cols-1 md:grid-cols-3 gap-3 auto-rows-[200px] max-w-6xl mx-auto">
                     {resources?.map((item) => (
-                        <motion.div
-                            key={item.id}
-                            className="relative group overflow-hidden rounded-xl"
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            <Image
-                                src={item.url!}
-                                alt={item.name!}
-                                fill
-                                sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-                            />
+                        <motion.div key={item.id} className="relative group overflow-hidden rounded-xl" whileHover={{ scale: 1.02 }} transition={{ duration: 0.3 }}>
+                            <Image src={item.url!} alt={item.name!} fill sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
                         </motion.div>
                     ))}
                 </Box>
