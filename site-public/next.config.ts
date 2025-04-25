@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
     ],
   },
   output: 'standalone',
-  swcMinify: true,
   reactStrictMode: true,
 };
 
