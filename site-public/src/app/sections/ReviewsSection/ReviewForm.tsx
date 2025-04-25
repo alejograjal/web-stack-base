@@ -1,15 +1,19 @@
 'use client';
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { BaseContact } from "@components/BaseContact/BaseContact";
 import { ReviewDefaultValues, ReviewSchema } from "./ReviewSchema";
 import { UseMutationCallbacks } from "@hooks/api/UseMutationCallbacks";
 import { Box, Button, Container, Rating, Typography } from "@mui/material";
 import { UsePostReview } from "@hooks/api/web-stack-base/review/UsePostReview";
 import { FormFieldErrorMessage } from "@components/FormFieldErrorMessage/FormFieldErrorMessage";
 
+
+const BaseContact = dynamic(() => import('@components/BaseContact/BaseContactForReview'), {
+    ssr: false,
+});
 
 const ReviewForm = () => {
     const [loading, setLoading] = useState(false);

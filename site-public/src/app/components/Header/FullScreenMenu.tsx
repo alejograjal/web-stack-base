@@ -18,6 +18,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ open, onClose }) => {
         { label: 'Home', href: 'home' },
         { label: 'Tours', href: 'tours' },
         { label: 'Experience', href: 'experience' },
+        { label: 'Reviews', href: 'review' },
         { label: 'Gallery', href: 'gallery' },
         { label: 'Contact us', href: 'contact' },
     ];

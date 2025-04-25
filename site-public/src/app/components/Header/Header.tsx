@@ -37,6 +37,9 @@ export default function Header() {
                         <Link component="button" onClick={() => handleScrollTo('experience')} color="textPrimary" underline="hover">
                             Experience
                         </Link>
+                        <Link component="button" onClick={() => handleScrollTo('review')} color="textPrimary" underline="hover">
+                            Reviews
+                        </Link>
                         <Link component="button" onClick={() => handleScrollTo('gallery')} color="textPrimary" underline="hover">
                             Gallery
                         </Link>

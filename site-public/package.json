@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "analyze": "cross-env ANALYZE=true next build",
     "api-web-stack-base:generate": "openapi-typescript ./src/api/clients/web-stack-base/spec.json -o ./src/api/clients/web-stack-base/api.d.ts",
     "api-web-stack-base:update-local": "curl -s http://localhost:5191/swagger/v1/swagger.json -o ./src/api/clients/web-stack-base/spec.json && sed -i '' 's/; x-api-version=[0-9]*//' ./src/api/clients/web-stack-base/spec.json && npx openapi-typescript ./src/api/clients/web-stack-base/spec.json -o ./src/api/clients/web-stack-base/api.d.ts --bare"
   },
@@ -35,12 +36,14 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.3.1",
     "@tailwindcss/postcss": "^4",
     "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.17.16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "15.3.0",
     "tailwindcss": "^4",

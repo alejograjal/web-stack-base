@@ -6,7 +6,7 @@ import { Box, Container, Typography } from '@mui/material';
 const ContactSection = () => {
     return (
         <Box id="contact" bgcolor="white" py={10}>
-            < Container maxWidth="sm" >
+            <Container maxWidth="sm">
                 <Typography variant="h2" align="center" fontWeight={700} gutterBottom>
                     Contact Us
                 </Typography>
@@ -18,21 +18,21 @@ const ContactSection = () => {
 
                     <Box display="flex" justifyContent="center" alignItems="center" gap={1} mb={1}>
                         <EmailIcon />
-                        <Typography component="a">
+                        <Typography component="a" href="mailto:manuelantonioexplorer@gmail.com">
                             manuelantonioexplorer@gmail.com
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
                         <PhoneIcon />
-                        <Typography component="a">
+                        <Typography component="a" href="tel:+50663459999">
                             +506 6345 9999
                         </Typography>
                     </Box>
                 </Box>
 
                 <ContactForm />
-            </Container >
-        </Box >
+            </Container>
+        </Box>
     );
 }
 
