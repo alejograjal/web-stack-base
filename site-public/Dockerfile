@@ -25,11 +25,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Define ARG variables for build-time environment
-ARG NEXT_PUBLIC_IMAGE_BASE_URL
 ARG NEXT_PUBLIC_API_WEB_STACK_BASE_URL
 
 # Make the ARG values available as ENV variables
-ENV NEXT_PUBLIC_IMAGE_BASE_URL=$NEXT_PUBLIC_IMAGE_BASE_URL
 ENV NEXT_PUBLIC_API_WEB_STACK_BASE_URL=$NEXT_PUBLIC_API_WEB_STACK_BASE_URL
 
 RUN \
