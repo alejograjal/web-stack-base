@@ -289,11 +289,14 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
           cd /var/www/manuel-antonio-explorer
 
+          # Build Docker image with no cache
+          docker build --no-cache -t manuel-antonio-explorer .
+
           echo "🛑 Stopping existing containers (if any)..."
           docker-compose down || true
   
           echo "🚀 Starting new containers..."
-          docker-compose up -d --build --no-cache
+          docker-compose up -d
   
           echo "🧽 Removing last backup..."
           if [ -f /tmp/last_backup_path ]; then
