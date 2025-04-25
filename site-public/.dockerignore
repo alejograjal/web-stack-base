@@ -29,3 +29,6 @@ dist/
 build/
 *.bak
 *.swp
+
+# Exclude environment files
+.env

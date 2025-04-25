@@ -13,8 +13,6 @@ services:
       - NEXT_PUBLIC_API_WEB_STACK_BASE_URL=${NEXT_PUBLIC_API_WEB_STACK_BASE_URL}
     networks:
       - webnet
-    env_file:
-      - .env
 
 networks:
   webnet:

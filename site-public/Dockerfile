@@ -11,12 +11,11 @@ WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
 
 RUN \
-    if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-    elif [ -f package-lock.json ]; then npm ci; \
-    elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+    if [ -f yarn.lock ]; then yarn --frozen-lockfile && rm -rf /root/.cache; \
+    elif [ -f package-lock.json ]; then npm ci && npm cache clean --force; \
+    elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile && pnpm store prune; \
     else echo "Lockfile not found." && exit 1; \
     fi
-
 
 # Rebuild the source code only when needed
 FROM base AS builder

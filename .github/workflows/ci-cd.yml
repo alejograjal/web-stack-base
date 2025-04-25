@@ -289,13 +289,11 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
           cd /var/www/manuel-antonio-explorer
 
-          echo "NEXT_PUBLIC_API_WEB_STACK_BASE_URL=${{ secrets.NEXT_PUBLIC_API_WEB_STACK_BASE_URL }}" > .env
-
           echo "🛑 Stopping existing containers (if any)..."
           docker-compose down || true
   
           echo "🚀 Starting new containers..."
-          docker-compose up -d --build
+          docker-compose up -d --build --no-cache
   
           echo "🧽 Removing last backup..."
           if [ -f /tmp/last_backup_path ]; then
@@ -303,6 +301,9 @@ jobs:
             rm -rf "\$BACKUP_TO_DELETE"
             rm /tmp/last_backup_path
           fi
+
+          echo "Cleaning up Docker..."
+          docker system prune -af --volumes
         EOF
   
         rm private_key
