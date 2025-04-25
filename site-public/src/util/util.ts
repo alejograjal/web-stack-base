@@ -23,3 +23,5 @@ export const getErrorMessage = (error: ApiError) => {
     const errorDetail = transformErrorKeys(error.data as ErrorDetailsWebStackBase);
     return errorDetail.message;
 }
+
+export const isNil = (value: unknown): value is null | undefined => value === null || value === undefined;

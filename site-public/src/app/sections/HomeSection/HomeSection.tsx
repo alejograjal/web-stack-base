@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-no-undef */
 "use client";
 
+import Image from 'next/image';
 import { Box, Typography, Button } from '@mui/material';
 import { useOverlayMenu } from '@hooks/ui/useOverlayMenu';
 import GalleryHome from '@app/sections/HomeSection/GalleryHome';
@@ -10,13 +12,17 @@ const HomeSection = () => {
 
     return (
         <Box id="home">
-            <Box className="relative w-full min-h-[94vh] flex items-center justify-center text-white scroll-mt-20"
-                sx={{
-                    backgroundImage: `url('${imageUrl}')`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                }}
-            >
+            <Box className="relative w-full min-h-[94vh] flex items-center justify-center text-white scroll-mt-20 overflow-hidden">
+                <Image
+                    src={imageUrl}
+                    alt="Manuel Antonio"
+                    fill
+                    priority
+                    className="object-cover z-0"
+                    placeholder="blur"
+                    blurDataURL="/assets/Manuel-Antonio-Lowres.jpg"
+                />
+
                 <Box className="absolute inset-0 bg-black/50" />
 
                 <Box className="relative z-10 text-center space-y-6 !px-4">

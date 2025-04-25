@@ -14,7 +14,8 @@ type ImageCarouselProps = {
   delay?: number;
 };
 
-const ImageCarousel = ({
+/*************  ✨ Windsurf Command ⭐  *************/
+/*******  381d3530-cf67-4e0c-b5f8-a6583f8b2910  *******/const ImageCarousel = ({
   images,
   altPrefix = 'carousel-image',
   delay = 4000,

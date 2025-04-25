@@ -1,4 +1,5 @@
-import { Box, TextField } from '@mui/material';
+import { Box } from '@mui/material';
+import TextField from '@mui/material/TextField';
 import { UseFormRegister, FieldErrors, Path } from 'react-hook-form';
 import { FormFieldErrorMessage } from '@components/FormFieldErrorMessage/FormFieldErrorMessage';
 
