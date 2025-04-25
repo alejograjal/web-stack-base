@@ -1,64 +1,60 @@
 "use client";
 
+import { useOverlayMenu } from '@hooks/ui/useOverlayMenu';
 import { Facebook, Instagram } from '@mui/icons-material';
 import { Typography, Grid, Box, Link } from '@mui/material';
 
 const Footer = () => {
-    const handleScrollTo = (id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+    const { handleScrollTo } = useOverlayMenu();
 
     return (
-        <Box sx={{ backgroundColor: '#101828', color: 'white', py: 5, px: 4 }}>
-            <Grid container spacing={8} maxWidth="lg" sx={{ margin: '0 auto' }}>
+        <Box className="bg-[#101828] text-white py-10 px-8">
+            <Grid container spacing={8} maxWidth="lg" className="mx-auto">
                 <Grid size={{ xs: 12, md: 3 }}>
-                    <Typography variant="h6" component="h4" sx={{ fontWeight: 600, mb: 4 }}>
+                    <Typography variant="h6" component="h4" fontWeight={600} className='!mb-6'>
                         Manuel Antonio Explorer
                     </Typography>
-                    <Typography sx={{ color: '#A0A0A0', fontSize: 14 }}>
+                    <Typography fontSize={14} className="text-[#A0A0A0]">
                         Discover unforgettable tours in Manuel Antonio and join our community of explorers.
                     </Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 3 }}>
-                    <Typography variant="h6" component="h5" sx={{ fontWeight: 600, mb: 3 }}>
+                    <Typography variant="h6" component="h5" fontWeight={600} className='!mb-6'>
                         Explore
                     </Typography>
-                    <Box sx={{ listStyleType: 'none', pl: 0 }}>
-                        <Link component='button' onClick={() => handleScrollTo('home')} color="inherit" sx={{ display: 'block', mb: 2, fontSize: 14, textDecoration: 'none' }}>
+                    <Box className="list-none !pl-0">
+                        <Link component='button' onClick={() => handleScrollTo('home')} color="inherit" fontSize={14} className="block !mb-4 !no-underline">
                             Home
                         </Link>
-                        <Link component='button' onClick={() => handleScrollTo('tours')} color="inherit" sx={{ display: 'block', mb: 2, fontSize: 14, textDecoration: 'none' }}>
+                        <Link component='button' onClick={() => handleScrollTo('tours')} color="inherit" fontSize={14} className="block !mb-4 !no-underline">
                             Tours
                         </Link>
-                        <Link component='button' onClick={() => handleScrollTo('experience')} color="inherit" sx={{ display: 'block', mb: 2, fontSize: 14, textDecoration: 'none' }}>
+                        <Link component='button' onClick={() => handleScrollTo('experience')} color="inherit" fontSize={14} className="block !mb-4 !no-underline">
                             Experience
                         </Link>
-                        <Link component='button' onClick={() => handleScrollTo('gallery')} color="inherit" sx={{ display: 'block', mb: 2, fontSize: 14, textDecoration: 'none' }}>
+                        <Link component='button' onClick={() => handleScrollTo('gallery')} color="inherit" fontSize={14} className="block !mb-4 !no-underline">
                             Gallery
                         </Link>
                     </Box>
                 </Grid>
                 <Grid size={{ xs: 12, md: 3 }}>
-                    <Typography variant="h6" component="h5" sx={{ fontWeight: 600, mb: 3 }}>
+                    <Typography variant="h6" component="h5" fontWeight={600} className='!mb-6'>
                         Contact Us
                     </Typography>
-                    <Box sx={{ listStyleType: 'none', pl: 0 }}>
-                        <Link component='button' onClick={() => handleScrollTo('contact')} color="inherit" sx={{ display: 'block', mb: 2, fontSize: 14, textDecoration: 'none' }}>
+                    <Box className="list-none !pl-0">
+                        <Link component='button' onClick={() => handleScrollTo('contact')} color="inherit" fontSize={14} className="block !mb-4 !no-underline">
                             Contact
                         </Link>
-                        <Link component='button' onClick={() => handleScrollTo('review')} color="inherit" sx={{ display: 'block', mb: 2, fontSize: 14, textDecoration: 'none' }}>
+                        <Link component='button' onClick={() => handleScrollTo('review')} color="inherit" fontSize={14} className="block !mb-4 !no-underline">
                             Leave a Review
                         </Link>
                     </Box>
                 </Grid>
                 <Grid size={{ xs: 12, md: 3 }}>
-                    <Typography variant="h6" component="h5" sx={{ fontWeight: 600, mb: 3 }}>
+                    <Typography variant="h6" component="h5" fontWeight={600} className='!mb-6'>
                         Follow Us
                     </Typography>
-                    <Box sx={{ display: 'flex', gap: 2 }}>
+                    <Box className="flex gap-2">
                         <Link href="https://facebook.com" color="inherit" aria-label='Go toFacebook'>
                             <Facebook fontSize="large" />
                         </Link>
@@ -68,7 +64,7 @@ const Footer = () => {
                     </Box>
                 </Grid>
             </Grid>
-            <Box sx={{ mt: 8, textAlign: 'center', color: '#A0A0A0', fontSize: 14 }}>
+            <Box className="mt-16 text-center text-[#A0A0A0] text-[14px]">
                 &copy; {new Date().getFullYear()} Manuel Antonio Explorer. All rights reserved.
             </Box>
         </Box>

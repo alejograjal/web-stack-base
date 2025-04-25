@@ -1,15 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState } from "react";
+import dynamic from 'next/dynamic';
 import { Box, Button } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { BaseContact } from "@components/BaseContact/BaseContact";
 import { ContactSchema, ContactDefaultValues } from "./ContactSchema";
 import { UseMutationCallbacks } from "@hooks/api/UseMutationCallbacks";
 import { UsePostContact } from "@hooks/api/web-stack-base/contact/UsePostContact";
 
+const BaseContact = dynamic(() => import('@components/BaseContact/BaseContact'), {
+    ssr: false,
+});
+
 const ContactForm = () => {
+
     const [loading, setLoading] = useState(false);
 
     const cleanForm = () => {

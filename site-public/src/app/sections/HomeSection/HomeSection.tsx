@@ -1,47 +1,36 @@
+/* eslint-disable react/jsx-no-undef */
+"use client";
+
+import Image from 'next/image';
 import { Box, Typography, Button } from '@mui/material';
+import { useOverlayMenu } from '@hooks/ui/useOverlayMenu';
 import GalleryHome from '@app/sections/HomeSection/GalleryHome';
 
 const HomeSection = () => {
-    const imageUrl = `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/Travel_Moments.webp`;
+    const imageUrl = `/assets/Manuel-Antonio.webp`;
+    const { handleScrollTo } = useOverlayMenu();
+
     return (
         <Box id="home">
-            <Box
-                sx={{
-                    position: 'relative',
-                    width: '100%',
-                    minHeight: '94vh',
-                    backgroundImage: `url('${imageUrl}')`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    color: '#fff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    scrollMarginTop: '5rem',
-                }}
-            >
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: 'rgba(0,0,0,0.5)',
-                    }}
+            <Box className="relative w-full min-h-[94vh] flex items-center justify-center text-white scroll-mt-20 overflow-hidden">
+                <Image
+                    src={imageUrl}
+                    alt="Manuel Antonio"
+                    fill
+                    priority
+                    className="object-cover z-0"
+                    placeholder="blur"
+                    blurDataURL="/assets/Manuel-Antonio-Lowres.jpg"
                 />
 
-                <Box sx={{ position: 'relative', zIndex: 10, textAlign: 'center', }}>
-                    <Typography variant="h1" sx={{ fontWeight: 'bold', mb: 2, fontSize: { xs: '2rem', md: '3.75rem' } }}>
+                <Box className="absolute inset-0 bg-black/50" />
+
+                <Box className="relative z-10 text-center space-y-6 !px-4">
+                    <Typography variant="h1">
                         Experience Costa Rica’s natural beauty like never before
                     </Typography>
 
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        component="a"
-                        href="#tours"
-                    >
+                    <Button variant="contained" color="primary" component="a" onClick={() => handleScrollTo('tours')}>
                         Explore Now
                     </Button>
                 </Box>

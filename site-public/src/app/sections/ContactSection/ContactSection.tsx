@@ -5,7 +5,7 @@ import { Box, Container, Typography } from '@mui/material';
 
 const ContactSection = () => {
     return (
-        <Box component="section" id="contact" bgcolor="white" py={10}>
+        <Box id="contact" bgcolor="white" py={10}>
             <Container maxWidth="sm">
                 <Typography variant="h2" align="center" fontWeight={700} gutterBottom>
                     Contact Us

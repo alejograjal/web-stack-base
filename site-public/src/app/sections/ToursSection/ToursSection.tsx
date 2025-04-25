@@ -19,37 +19,23 @@ const ToursSection = () => {
             <Box>
                 {tours?.map((tour: Service, index: number) => {
                     const isEven = index % 2 === 0;
-
                     const images = tour.serviceResources?.map(r => r.resource?.url) ?? [];
 
                     return (
                         <Box key={`${tour.id}-${index}`} mb={2}>
-                            <Grid
-                                container
-                                spacing={3}
-                                alignItems="center"
-                                direction={{ xs: 'column-reverse', md: isEven ? 'row' : 'row-reverse' }}
-                                key={`${tour.id}-${index}`}
-                                sx={{ overflowX: 'hidden' }}
-                                mb={2}
-                            >
+                            <Grid container spacing={3} alignItems="center" direction={{ xs: 'column-reverse', md: isEven ? 'row' : 'row-reverse' }} key={`${tour.id}-${index}`} sx={{ overflowX: 'hidden' }} mb={2}>
                                 <Grid size={{ xs: 12, md: 6 }}>
                                     <ImageCarousel images={images.filter((img): img is string => !!img)} altPrefix={`tour-${tour.name}`} />
                                 </Grid>
 
                                 <Grid size={{ xs: 12, md: 6 }}>
-                                    <motion.div
-                                        initial={{ opacity: 0, x: isEven ? 50 : -50 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        transition={{ duration: 0.6 }}
-                                        viewport={{ once: true }}
-                                    >
+                                    <motion.div initial={{ opacity: 0, x: isEven ? 50 : -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
                                         <Card elevation={0} sx={{ backgroundColor: "transparent" }}>
                                             <CardContent sx={{ px: 0, py: 0 }}>
                                                 <Typography variant="h5" fontWeight="bold" gutterBottom>
                                                     {tour.name}
                                                 </Typography>
-                                                <Typography variant="body1" color="text.secondary">
+                                                <Typography variant="body1" color="text.secondary" className='text-justify'>
                                                     {tour.description ??
                                                         "Explore Costa Rica like never before. Adventure, nature, and unforgettable memories await you."}
                                                 </Typography>
@@ -59,7 +45,7 @@ const ToursSection = () => {
                                 </Grid>
                             </Grid>
                             {index < tours.length - 1 && (
-                                <Divider sx={{ my: 3, borderColor: "#ddd" }} />
+                                <Divider className='my-3 border-t border-gray-300' />
                             )}
                         </Box>
                     )
@@ -69,13 +55,13 @@ const ToursSection = () => {
     };
 
     return (
-        <Box id="tours" sx={{ py: 10, px: { xs: 2, md: 30 }, scrollMarginTop: '5rem' }}>
+        <Box id="tours" className="!py-15 !px-4 md:!px-60 !scroll-mt-20">
             <Typography variant="h2" align='center' fontWeight="bold" mb={2}>
                 Adventure activities
             </Typography>
 
-            <Typography variant="body1" fontWeight="light" mb={4}>
-                Embark on an unforgettable horseback adventure through the heart of Costa Rica. Begin your journey at the majestic El Guabo River, where crystal-clear waters flow from the mountains, inviting you to immerse yourself in tranquil pools surrounded by lush vegetation. Continue your exploration across our expansive 50-hectare Nature Forest estate, where you’ll traverse vast mountains and catch breathtaking views of the Pacific Ocean. Finally, dive into the fascinating world of sustainable agriculture with a visit to our palm oil plantation, where you’ll learn about the process from planting to harvest. Whether you’re seeking adventure, connection with nature, or education, this diverse tour offers a truly immersive experience, perfect for making lasting memories with your loved ones!
+            <Typography variant="body1" color="text.secondary" className='text-justify !mb-8'>
+                Embark on an unforgettable horseback adventure through the heart of Costa Rica. Start your journey at the majestic El Guabo River, with crystal-clear waters flowing from the mountains, and continue across our expansive 50-hectare Nature Forest estate with breathtaking views of the Pacific Ocean. End your exploration with a visit to our palm oil plantation and learn about sustainable agriculture from planting to harvest. Whether you&apos;re seeking adventure, nature, or education, this diverse tour provides a truly immersive experience for making lasting memories with your loved ones.
             </Typography>
 
             {renderContent()}

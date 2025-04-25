@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, IconButton, Typography } from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
+import { useOverlayMenu } from '@hooks/ui/useOverlayMenu';
 
 interface FullScreenMenuProps {
     open: boolean;
@@ -10,20 +12,20 @@ interface FullScreenMenuProps {
 }
 
 const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ open, onClose }) => {
+    const { handleScrollTo } = useOverlayMenu();
+
     const navItems = [
         { label: 'Home', href: 'home' },
         { label: 'Tours', href: 'tours' },
         { label: 'Experience', href: 'experience' },
+        { label: 'Reviews', href: 'review' },
         { label: 'Gallery', href: 'gallery' },
         { label: 'Contact us', href: 'contact' },
     ];
 
     const handleNavigation = (href: string) => {
-        const element = document.getElementById(href);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            onClose();
-        }
+        handleScrollTo(href);
+        onClose();
     };
 
     useEffect(() => {
@@ -41,39 +43,23 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ open, onClose }) => {
     if (!open) return null;
 
     return (
-        <Box
-            sx={{
-                position: 'fixed',
-                inset: 0,
-                zIndex: 9999,
-                backgroundColor: 'black',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: 4,
-                boxSizing: 'border-box',
-            }}
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-[9999] bg-black flex flex-col justify-center items-center !gap-4 box-border"
         >
-            <IconButton
-                onClick={onClose}
-                sx={{ position: 'absolute', top: 20, right: 20, color: 'white' }}
-            >
+            <IconButton onClick={onClose} className="!absolute top-5 right-5 !text-white">
                 <CloseIcon />
             </IconButton>
 
             {navItems.map((item) => (
-                <Typography
-                    key={item.href}
-                    variant="h5"
-                    component="span"
-                    sx={{ color: 'white', textDecoration: 'underline', cursor: 'pointer' }}
-                    onClick={() => handleNavigation(item.href)}
-                >
+                <Typography key={item.href} variant="h5" component="span" className="!text-white underline !cursor-pointer" onClick={() => handleNavigation(item.href)}>
                     {item.label}
                 </Typography>
             ))}
-        </Box>
+        </motion.div>
     );
 };
 

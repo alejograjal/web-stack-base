@@ -1,19 +1,20 @@
-import { Box, TextField } from '@mui/material';
+import { Box } from '@mui/material';
+import TextField from '@mui/material/TextField';
 import { UseFormRegister, FieldErrors, Path } from 'react-hook-form';
 import { FormFieldErrorMessage } from '@components/FormFieldErrorMessage/FormFieldErrorMessage';
 
-interface RequiredFields {
+export interface RequiredFields {
     name: string;
     email: string;
     message: string;
 }
 
-interface BaseContactProps<T extends RequiredFields> {
+export interface BaseContactProps<T extends RequiredFields> {
     register: UseFormRegister<T>;
     errors: FieldErrors<T>;
 }
 
-export const BaseContact = <T extends RequiredFields>({
+const BaseContact = <T extends RequiredFields>({
     register,
     errors,
 }: BaseContactProps<T>) => {
@@ -64,3 +65,5 @@ export const BaseContact = <T extends RequiredFields>({
         </>
     );
 };
+
+export default BaseContact;

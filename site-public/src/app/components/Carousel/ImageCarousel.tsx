@@ -11,52 +11,24 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 type ImageCarouselProps = {
   images: string[];
   altPrefix?: string;
-  height?: number | string;
   delay?: number;
-  radius?: number;
 };
 
-const ImageCarousel = ({
+/*************  ✨ Windsurf Command ⭐  *************/
+/*******  381d3530-cf67-4e0c-b5f8-a6583f8b2910  *******/const ImageCarousel = ({
   images,
   altPrefix = 'carousel-image',
-  height = 320,
   delay = 4000,
-  radius = 16,
 }: ImageCarouselProps) => {
   const slidesPerView = 1;
   const canLoop = images.length > slidesPerView;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-    >
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        navigation
-        pagination={{ clickable: true }}
-        autoplay={{ delay }}
-        slidesPerView={slidesPerView}
-        loop={canLoop}
-        style={{
-          borderRadius: radius,
-          overflow: 'hidden',
-        }}
-      >
+    <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+      <Swiper modules={[Navigation, Pagination, Autoplay]} navigation pagination={{ clickable: true }} autoplay={{ delay }} slidesPerView={slidesPerView} loop={canLoop} className="overflow-hidden rounded-[16px]">
         {images.map((src, i) => (
           <SwiperSlide key={`carousel-image-${i}`}>
-            <Box
-              component="img"
-              src={src}
-              alt={`${altPrefix}-${i}`}
-              sx={{
-                width: '100%',
-                height,
-                objectFit: 'cover',
-              }}
-            />
+            <Box component="img" src={src} alt={`${altPrefix}-${i}`} className='w-full h-[320px] object-cover' />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import { paths } from "../../api/clients/web-stack-base/api";
 import { Fetcher, Middleware, type TypedFetch } from "openapi-typescript-fetch";
 
@@ -36,7 +35,7 @@ export const UseTypedApiClientBS = <
     method: MethodT
     disableAuth?: boolean
 }): TypedFetch<paths[PathT][MethodT]> => {
-    const token = Cookies.get('access_token');
+    const token = '';
     const fetcher = Fetcher.for<paths>();
     fetcher.configure({
         baseUrl: process.env.NEXT_PUBLIC_API_WEB_STACK_BASE_URL,
