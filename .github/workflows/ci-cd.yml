@@ -246,7 +246,6 @@ jobs:
 
     env:
       NEXT_PUBLIC_API_WEB_STACK_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_WEB_STACK_BASE_URL }}
-      NEXT_PUBLIC_IMAGE_BASE_URL: ${{ secrets.NEXT_PUBLIC_IMAGE_BASE_URL }}
       
     steps:
     - name: ⬇️ Checkout code
@@ -291,7 +290,6 @@ jobs:
           cd /var/www/manuel-antonio-explorer
 
           echo "NEXT_PUBLIC_API_WEB_STACK_BASE_URL=${{ secrets.NEXT_PUBLIC_API_WEB_STACK_BASE_URL }}" > .env
-          echo "NEXT_PUBLIC_IMAGE_BASE_URL=${{ secrets.NEXT_PUBLIC_IMAGE_BASE_URL }}" >> .env
 
           echo "🛑 Stopping existing containers (if any)..."
           docker-compose down || true

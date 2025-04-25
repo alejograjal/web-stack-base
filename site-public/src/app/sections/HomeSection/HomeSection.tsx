@@ -7,7 +7,7 @@ import { useOverlayMenu } from '@hooks/ui/useOverlayMenu';
 import GalleryHome from '@app/sections/HomeSection/GalleryHome';
 
 const HomeSection = () => {
-    const imageUrl = `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/manuel-antonio.webp`;
+    const imageUrl = `/assets/Manuel-Antonio.webp`;
     const { handleScrollTo } = useOverlayMenu();
 
     return (
