@@ -13,6 +13,7 @@ services:
       - NEXT_PUBLIC_API_WEB_STACK_BASE_URL=${NEXT_PUBLIC_API_WEB_STACK_BASE_URL}
     networks:
       - webnet
+    restart: always
 
 networks:
   webnet:
