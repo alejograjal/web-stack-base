@@ -67,6 +67,7 @@ const ReviewForm = () => {
                             <Rating
                                 value={currentRate}
                                 onChange={(_, value) => setValue('rate', value ?? 0)}
+                                sx={{ transition: 'transform 0.2s ease-in-out' }}
                             />
                             {errors.rate?.message && (
                                 <FormFieldErrorMessage message={errors.rate.message} />

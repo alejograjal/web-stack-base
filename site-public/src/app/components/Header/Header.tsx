@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import Image from "next/image";
 import FullScreenMenu from "./FullScreenMenu";
 import MenuIcon from '@mui/icons-material/Menu';
@@ -7,7 +8,7 @@ import Logo from "@assets/Manuel_Antonio_Explorer.webp";
 import { useOverlayMenu } from "@hooks/ui/useOverlayMenu";
 import { AppBar, Toolbar, Box, Typography, Link, Container, IconButton } from "@mui/material";
 
-export default function Header() {
+const Header = memo(() => {
     const { openMenu, toggleOverlayMenu, handleScrollTo } = useOverlayMenu();
 
     return (
@@ -15,7 +16,7 @@ export default function Header() {
             <Container maxWidth="xl">
                 <Toolbar className="!px-1 md:!px-1">
                     <Box display="flex" alignItems="center" flexGrow={1} className="justify-center text-center md:justify-start md:text-left">
-                        <Link href="#home" color="inherit" underline="none" sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Link component="button" onClick={() => handleScrollTo('home')} color="inherit" underline="none" sx={{ display: 'flex', alignItems: 'center' }}>
                             <Image src={Logo} alt="Manuel Antonio Explorer Logo" className="h-20 w-auto" />
                             <Typography variant="h6" color="dark" fontWeight="bold" ml={2}>
                                 Manuel Antonio Explorer
@@ -23,11 +24,11 @@ export default function Header() {
                         </Link>
                     </Box>
 
-                    <IconButton color="inherit" aria-label="menu" className="!block md:!hidden" onClick={() => toggleOverlayMenu(true)}>
+                    <IconButton color="inherit" aria-label="menu" className="!block lg:!hidden" onClick={() => toggleOverlayMenu(true)}>
                         <MenuIcon fontSize="large" />
                     </IconButton>
 
-                    <Box display={{ xs: "none", md: "flex" }} gap={3}>
+                    <Box className="!hidden lg:!flex" gap={3}>
                         <Link component="button" onClick={() => handleScrollTo('home')} color="textPrimary" underline="hover">
                             Home
                         </Link>
@@ -53,4 +54,8 @@ export default function Header() {
             <FullScreenMenu open={openMenu} onClose={() => toggleOverlayMenu(false)} />
         </AppBar>
     );
-}
+})
+
+Header.displayName = "Header";
+
+export default Header;

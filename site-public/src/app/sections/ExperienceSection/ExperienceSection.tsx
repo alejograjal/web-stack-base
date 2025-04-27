@@ -1,9 +1,10 @@
 'use client';
 
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { Box, Card, CardContent, Grid, List, ListItem, ListItemText, Typography } from '@mui/material';
 
-const ExperienceSection = () => {
+const ExperienceSection = memo(() => {
     const sections = [
         {
             id: 1,
@@ -38,15 +39,15 @@ const ExperienceSection = () => {
     ];
 
     return (
-        <Box id="experience" className="bg-[#eef6f9] py-18 !px-10 sm:!px-20 lg:!px-60">
+        <Box id="experience" className="bg-[#eef6f9] py-18 !px-10 md:!px-20 xl:!px-60">
             <Typography variant="h2" align="center" fontWeight="bold" gutterBottom className='!mb-12'>
                 Ultimate Nature & Adventure Experience
             </Typography>
 
             <Grid container spacing={4}>
                 {sections.map((section, index) => (
-                    <Grid key={section.id} sx={{ display: 'flex' }} size={{ xs: 12, md: 4 }}>
-                        <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.2 }} viewport={{ once: true }} style={{ flex: 1, display: 'flex' }}>
+                    <Grid key={section.id} className="flex" size={{ xs: 12, md: 4 }}>
+                        <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.2 }} viewport={{ once: true }} className='flex !flex-grow'>
                             <Card elevation={6} className="!rounded-[4%] !transition-transform !duration-300 hover:!scale-105 !flex !flex-col !h-full !w-full shadow-lg">
                                 <CardContent className="!flex-grow">
                                     <Typography variant="h6" fontWeight="bold" gutterBottom>
@@ -54,7 +55,7 @@ const ExperienceSection = () => {
                                     </Typography>
                                     <List dense>
                                         {section.items.map((item, i) => (
-                                            <ListItem key={`item-${i}`} disableGutters disablePadding className='!list-item' >
+                                            <ListItem key={`${section.id}-${i}`} disableGutters disablePadding className='!list-item' >
                                                 <ListItemText primary={item} />
                                             </ListItem>
                                         ))}
@@ -68,6 +69,8 @@ const ExperienceSection = () => {
 
         </Box >
     );
-}
+})
+
+ExperienceSection.displayName = 'ExperienceSection';
 
 export default ExperienceSection;

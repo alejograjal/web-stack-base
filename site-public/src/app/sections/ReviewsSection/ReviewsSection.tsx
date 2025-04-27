@@ -1,7 +1,9 @@
 'use client';
 
+import { memo } from "react";
 import ReviewForm from "./ReviewForm";
 import { isNil } from "@src/util/util";
+import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Navigation, Pagination } from "swiper/modules";
 import { ErrorProcess } from "@app/components/Error/ErrorProcess";
@@ -9,7 +11,7 @@ import { UseGetReviews } from "@hooks/api/web-stack-base/review/UseGetReviews";
 import { Avatar, Box, Card, CardContent, CardHeader, Rating, Typography } from "@mui/material";
 import { CircularLoadingProgress } from "@app/components/LoadingProgress/CircularLoadingProcess";
 
-const ReviewsSection = () => {
+const ReviewsSection = memo(() => {
     const { data: reviews, isLoading, isError } = UseGetReviews();
 
     const renderContent = () => {
@@ -22,7 +24,13 @@ const ReviewsSection = () => {
             <Swiper modules={[Navigation, Pagination, A11y]} spaceBetween={55} slidesPerView={1} loop={true} navigation pagination={{ clickable: true }} breakpoints={{ 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }} className="!py-[2rem] !px-[3rem]">
                 {visibleReviews?.map((review) => (
                     <SwiperSlide key={review.id}>
-                        <Box sx={{ height: '100%', display: 'flex', }}>
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.1, delay: 0.2 }}
+                            viewport={{ once: true }}
+                            className="h-full flex"
+                        >
                             <Card className="flex flex-col justify-between !rounded-2xl shadow-mui-3 !h-full !w-full !min-h-[250px]">
                                 <CardHeader
                                     avatar={<Avatar sx={{ bgcolor: 'primary.main' }}>{review.name?.charAt(0) ?? 'U'}</Avatar>}
@@ -47,7 +55,7 @@ const ReviewsSection = () => {
                                     </Typography>
                                 </CardContent>
                             </Card>
-                        </Box>
+                        </motion.div>
                     </SwiperSlide>
 
 
@@ -57,25 +65,34 @@ const ReviewsSection = () => {
     }
 
     return (
-        <Box id="review" component="section" className="py-20 px-8 md:px-60 !scroll-mt-40">
+        <Box id="review" component="section" className="py-20 px-8 xl:!px-60 !scroll-mt-40">
             <Typography variant="h2" fontWeight="bold" textAlign="center" gutterBottom>
                 Our Explorers Can’t Stop Raving About Us
             </Typography>
 
             {renderContent()}
 
-            <Box mt={5}>
-                <Typography variant="h5" fontWeight="bold" textAlign="center" gutterBottom>
-                    Already explored with us?
-                </Typography>
-                <Typography textAlign="center" mb={4}>
-                    Share your experience and help future explorers!
-                </Typography>
+            <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+            >
+                <Box mt={5}>
+                    <Typography variant="h5" fontWeight="bold" textAlign="center" gutterBottom>
+                        Already explored with us?
+                    </Typography>
+                    <Typography textAlign="center" mb={4}>
+                        Share your experience and help future explorers!
+                    </Typography>
 
-                <ReviewForm />
-            </Box>
+                    <ReviewForm />
+                </Box>
+            </motion.div>
         </Box>
     )
-}
+});
+
+ReviewsSection.displayName = "ReviewsSection";
 
 export default ReviewsSection;

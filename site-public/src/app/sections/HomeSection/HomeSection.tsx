@@ -1,9 +1,12 @@
 "use client";
 
 import Image from 'next/image';
+import React, { Suspense } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { useOverlayMenu } from '@hooks/ui/useOverlayMenu';
-import GalleryHome from '@app/sections/HomeSection/GalleryHome';
+import { CircularLoadingProgress } from '@components/LoadingProgress/CircularLoadingProcess';
+
+const GalleryHome = React.lazy(() => import('@app/sections/HomeSection/GalleryHome'));
 
 const HomeSection = () => {
     const imageUrl = `/assets/Manuel-Antonio.webp`;
@@ -35,7 +38,9 @@ const HomeSection = () => {
                 </Box>
             </Box>
 
-            <GalleryHome />
+            <Suspense fallback={<CircularLoadingProgress />}>
+                <GalleryHome />
+            </Suspense>
         </Box>
     );
 }

@@ -1,11 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
+import { motion } from 'framer-motion';
 import Masonry from 'react-masonry-css';
-import { useEffect, useState } from 'react';
 import 'yet-another-react-lightbox/styles.css';
 import Lightbox from 'yet-another-react-lightbox';
 import { Box, Typography, Button } from '@mui/material';
+import { Resource } from '@api/types/api-web-stack-base';
+import { useCallback, useEffect, useState } from 'react';
 import { useOverlayMenu } from '@hooks/ui/useOverlayMenu';
 import { ErrorProcess } from '@components/Error/ErrorProcess';
 import { UseGetResources } from '@hooks/api/web-stack-base/resource/UseGetResource';
@@ -14,15 +16,44 @@ import { CircularLoadingProgress } from '@components/LoadingProgress/CircularLoa
 const GallerySection = () => {
     const { handleScrollTo } = useOverlayMenu();
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [shouldFetch, setShouldFetch] = useState(false);
     const [openLightbox, setOpenLightbox] = useState(false);
-
-    useEffect(() => {
-        setShouldFetch(true);
-    }, []);
+    const [loadedImages, setLoadedImages] = useState<Resource[]>([]);
+    const [loading, setLoading] = useState(false);
 
     const resourceTypeId = 2;
-    const { data: resources, isLoading, isError } = UseGetResources(resourceTypeId, shouldFetch);
+    const { data: resources, isLoading, isError } = UseGetResources(resourceTypeId, true);
+
+    useEffect(() => {
+        if (resources) {
+            setLoadedImages(resources.slice(0, 12));
+        }
+    }, [resources]);
+
+    const loadMoreImages = useCallback(() => {
+        if (loading) return;
+        setLoading(true);
+        const nextImages = resources?.slice(loadedImages.length, loadedImages.length + 12) ?? [];
+        setLoadedImages((prev) => [...prev, ...nextImages]);
+        setLoading(false);
+    }, [loading, resources, loadedImages]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    loadMoreImages();
+                }
+            },
+            { threshold: 1.0 }
+        );
+
+        const target = document.querySelector('#load-more-trigger');
+        if (target) {
+            observer.observe(target);
+        }
+
+        return () => observer.disconnect();
+    }, [loadMoreImages, loadedImages]);
 
     const handleImageClick = (index: number) => {
         setCurrentIndex(index);
@@ -44,12 +75,21 @@ const GallerySection = () => {
             <>
                 <Masonry breakpointCols={breakpointColumnsObj} className="masonry-grid mt-2" columnClassName="masonry-column"
                 >
-                    {resources?.map((item, index) => (
-                        <Box component='button' onClick={() => handleImageClick(index)} key={item.id} className="cursor-pointer">
+                    {loadedImages?.map((item, index) => (
+                        <motion.div
+                            key={item.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            className="cursor-pointer"
+                            onClick={() => handleImageClick(index)}
+                        >
                             <img src={item.url!} alt={item.name!} className="w-full h-auto object-contain" loading="lazy" />
-                        </Box>
+                        </motion.div>
                     ))}
                 </Masonry >
+
+                <Box id="load-more-trigger" sx={{ height: '20px' }} />
 
                 <Lightbox open={openLightbox} close={() => setOpenLightbox(false)} index={currentIndex} slides={resources.map((item) => ({ src: item.url! }))} />
             </>
@@ -75,9 +115,15 @@ const GallerySection = () => {
             {renderContent()}
 
             <Box sx={{ textAlign: 'center', mt: 6 }}>
-                <Button variant="contained" color="primary" component="a" onClick={() => handleScrollTo('contact')}>
-                    Book Your Tour Now
-                </Button>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <Button variant="contained" color="primary" component="a" onClick={() => handleScrollTo('contact')}>
+                        Book Your Tour Now
+                    </Button>
+                </motion.div>
             </Box>
         </Box >
     );

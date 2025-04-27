@@ -3,6 +3,7 @@
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import React, { memo } from 'react';
 import { Box } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -14,8 +15,8 @@ type ImageCarouselProps = {
   delay?: number;
 };
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/*******  381d3530-cf67-4e0c-b5f8-a6583f8b2910  *******/const ImageCarousel = ({
+
+const ImageCarousel = memo(({
   images,
   altPrefix = 'carousel-image',
   delay = 4000,
@@ -34,6 +35,8 @@ type ImageCarouselProps = {
       </Swiper>
     </motion.div>
   );
-};
+});
+
+ImageCarousel.displayName = 'ImageCarousel';
 
 export default ImageCarousel;

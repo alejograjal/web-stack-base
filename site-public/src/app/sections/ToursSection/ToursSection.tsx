@@ -1,5 +1,6 @@
 "use client";
 
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 import { Service } from '@api/types/api-web-stack-base';
 import { ErrorProcess } from "@app/components/Error/ErrorProcess";
@@ -8,7 +9,7 @@ import { Box, Typography, Grid, Card, CardContent, Divider } from '@mui/material
 import { UseGetServices } from '@hooks/api/web-stack-base/service/UseGetServices';
 import { CircularLoadingProgress } from '@app/components/LoadingProgress/CircularLoadingProcess';
 
-const ToursSection = () => {
+const ToursSection = memo(() => {
     const { data: tours, isLoading, isError } = UseGetServices();
 
     const renderContent = () => {
@@ -55,7 +56,7 @@ const ToursSection = () => {
     };
 
     return (
-        <Box id="tours" className="!py-15 !px-4 md:!px-60 !scroll-mt-20">
+        <Box id="tours" className="!py-15 !px-10 lg:!px-60 !scroll-mt-20">
             <Typography variant="h2" align='center' fontWeight="bold" mb={2}>
                 Adventure activities
             </Typography>
@@ -67,6 +68,8 @@ const ToursSection = () => {
             {renderContent()}
         </Box>
     );
-};
+});
+
+ToursSection.displayName = "ToursSection";
 
 export default ToursSection;
