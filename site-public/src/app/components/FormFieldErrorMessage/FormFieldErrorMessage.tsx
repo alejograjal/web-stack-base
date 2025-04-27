@@ -1,6 +1,6 @@
+import { clsx } from "yet-another-react-lightbox";
 import { Box, Typography, useTheme } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { clsx } from "yet-another-react-lightbox";
 
 interface FormFieldErrorMessageProps {
     message: string

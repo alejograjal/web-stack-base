@@ -14,4 +14,3 @@ export const ReviewSchema = ContactSchema.concat(object().shape({
 }));
 
 export type BranchForm = InferType<typeof ReviewSchema>
-

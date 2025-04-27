@@ -292,7 +292,7 @@ jobs:
           echo "NEXT_PUBLIC_API_WEB_STACK_BASE_URL=${{ secrets.NEXT_PUBLIC_API_WEB_STACK_BASE_URL }}" > .env
 
           echo "🚀 Rebuilding and restarting containers for Manuel Antonio Explorer..."
-          docker compose --project-name manuel-antonio-explorer up -d --build --pull --remove-orphans
+          docker compose --project-name manuel-antonio-explorer up -d --build --remove-orphans
 
           echo "🧹 Cleaning up unused Docker images..."
           docker image prune -af
