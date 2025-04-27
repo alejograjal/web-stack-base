@@ -1,24 +1,21 @@
 version: "3.9"
 
 services:
-  sqlserver:
-    container_name: sqlserver
+  mssql:
+    container_name: manuel-antonio-explorer-mssql
     image: mcr.microsoft.com/mssql/server:2022-latest
-    ports:
-      - "1433:1433"
+    restart: no
     environment:
-      SA_PASSWORD: "${SQL_SA_PASSWORD}"
-      ACCEPT_EULA: "Y"
+      ACCEPT_EULA:"Y"
+      MSSQL_SA_PASSWORD:"${SQL_SA_PASSWORD}"
+      MSSQL_BACKUP_DIR=:"/var/opt/mssql/backups"
+    ports:
+      - 1433:1433
     volumes:
-      - sqlserver_data:/var/opt/mssql
-    restart: always
-    networks:
-      - backend
-
-volumes:
-  sqlserver_data:
-
+      - ./data/mssql/backups:/var/opt/mssql/backups
+      - ./data/mssql/data:/var/opt/mssql/data
+      - ./data/mssql/log:/var/opt/mssql/log
 
 networks:
-  backend:
-    driver: bridge
+  default:
+    name: manuel-antonio-explorer-mssql-net
