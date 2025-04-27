@@ -1,0 +1,23 @@
+# Install certbox
+sudo apt update
+sudo apt install certbot python3-certbot-nginx
+
+# Obtain certificates
+sudo certbot --nginx -d manuelantonioexplorer.com -d www.manuelantonioexplorer.com
+
+# Verify automatic renovation
+sudo systemctl status certbot.timer
+
+# Execute renovation manually
+sudo certbot renew --dry-run
+
+# Add to your config file in nginx/sites-available folder
+    ssl_certificate /etc/letsencrypt/live/manuelantonioexplorer.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/manuelantonioexplorer.com/privkey.pem;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+# Refresh Nginx
+sudo nginx -t
+sudo systemctl reload nginx

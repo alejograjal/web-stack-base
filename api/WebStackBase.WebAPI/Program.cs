@@ -47,7 +47,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: WebStackBaseSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:3000")
+                          policy.WithOrigins("http://localhost:3000",
+                                            "https://manuelantonioexplorer.com/",
+                                            "https://web-stack-base-git-principal-alejograjals-projects.vercel.app")
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
                       });
