@@ -4,6 +4,7 @@ import Providers from "./providers";
 import type { Metadata } from "next";
 import EmotionRegistry from "@src/EmotionRegistry";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -119,6 +120,7 @@ export default function RootLayout({
           <Providers>
             <Suspense fallback={<div>Loading...</div>}>
               {children}
+              <SpeedInsights />
             </Suspense>
           </Providers>
         </EmotionRegistry>
