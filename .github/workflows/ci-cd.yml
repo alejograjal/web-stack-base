@@ -292,8 +292,11 @@ jobs:
           echo "🚀 Rebuilding and restarting containers for Manuel Antonio Explorer..."
           docker compose --project-name manuel-antonio-explorer up -d --build --remove-orphans
 
-          echo "🧹 Removing old unused images related to this project..."
-          docker image prune -f
+          echo "🧹 Cleaning up unused Docker images..."
+          docker image prune -af
+
+          echo "🧹 Cleaning up unused BuildKit cache..."
+          docker builder prune -af
 
           echo "🧽 Removing last backup..."
           if [ -f /tmp/last_backup_path ]; then
