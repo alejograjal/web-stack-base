@@ -8,12 +8,14 @@ import GallerySection from '@sections/GallerySection/GallerySection';
 import ContactSection from '@sections/ContactSection/ContactSection';
 import ExperienceSection from '@sections/ExperienceSection/ExperienceSection';
 import FloatingWhatsAppButton from '@components/FloatingButtons/FloatingWhatsAppButton';
+import { MicrodataTouristAttraction } from '@sections/Microdata/MicrodataTouristAttraction';
 
 export default function Principal() {
   return (
     <>
       <Header />
       <main className="scroll-smooth">
+        <MicrodataTouristAttraction />
         <Snackbar />
         <HomeSection />
         <ToursSection />

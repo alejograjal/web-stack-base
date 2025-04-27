@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Manuel Antonio Explorer | Costa Rica Tours & Outdoor Adventures",
   description:
-    "Discover unforgettable tours in Manuel Antonio, Quepos, and Puntarenas, Costa Rica. Explore mangroves, ride horses, and experience wildlife and outdoor adventures. ¡Vive la naturaleza en su máximo esplendor!",
+    "Discover unforgettable tours in Manuel Antonio, Costa Rica. Explore mangroves, horseback riding, and wildlife adventures. Book your next adventure today!",
   keywords: [
     "Manuel Antonio",
     "Quepos",

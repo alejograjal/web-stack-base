@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://manuelantonioexplorer.com/sitemap.xml
