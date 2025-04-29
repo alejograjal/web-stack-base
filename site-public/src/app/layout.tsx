@@ -76,6 +76,14 @@ export const metadata: Metadata = {
     "eco tours in Costa Rica",
     "day tours Manuel Antonio",
   ],
+  metadataBase: new URL("https://manuelantonioexplorer.com"),
+  alternates: {
+    canonical: "https://manuelantonioexplorer.com/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: "Manuel Antonio Explorer | Costa Rica Tours",
     description:
@@ -102,8 +110,7 @@ export const metadata: Metadata = {
       "https://manuelantonioexplorer.com/og-image.jpg",
     ],
     creator: "@manuelantonioexplorer",
-  },
-  metadataBase: new URL("https://manuelantonioexplorer.com"),
+  }
 };
 
 export default function RootLayout({
