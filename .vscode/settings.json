@@ -15,7 +15,7 @@
         "strings": true
     },
     "sonarlint.connectedMode.project": {
-        "projectKey": "alejograjal_web-stack-base",
-        "connectionId": "alejograjal-general"
+        "connectionId": "alejograjal-general",
+        "projectKey": "alejograjal_web-stack-base"
     }
 }
