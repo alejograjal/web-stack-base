@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📦 site-public
 
-## Getting Started
+This directory contains the frontend of the web-stack-base project, a modern foundation for web applications built with Next.js, TypeScript, and Docker (as an optional deployment method). It is designed to streamline the development, testing, and deployment of scalable web applications.
 
-First, run the development server:
+## 🚀 Tecnologías Utilizadas
+
+- Next.js 14
+- TypeScript
+- Docker
+- ESLint
+- PostCSS
+- Geist Font
+
+## 🛠️ Instalación y Ejecución
+
+### Prerequisites  
+- Make sure api is running, please learn how to execute it
+- Node.js (+v18)
+- npm
+- Docker and Docker Compose (optional for containers)
+
+### Steps to Start the Project
+1. Clone repository
+
+```bash
+git clone https://github.com/alejograjal/web-stack-base.git
+cd web-stack-base/site-public
+```
+
+2. Move or open to folder `site-public`
+
+3. Install dependencies
+
+```bash
+npm install
+````
+
+4. Add env variable `NEXT_PUBLIC_API_WEB_STACK_BASE_URL` with the url of the api running
+
+5. Run development locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Open your browser in http://localhost:3000 to check functionality.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🐳 Docker use
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### To execute project in a docker container
 
-## Learn More
+```bash
+docker-compose up --build
+````
 
-To learn more about Next.js, take a look at the following resources:
+This will run the site in http://localhost:3000.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+site-public/
+├── public/               # Static files
+├── src/                  # Main source code
+│   └── app/              # Next.js pages and components
+├── Dockerfile            # Docker configuration
+├── docker-compose.yml    # Container orchestration
+├── package.json          # Dependencies and scripts
+├── tsconfig.json         # TypeScript configuration
+├── next.config.ts        # Next.js configuration
+└── README.md             # Project documentation
+````
 
-## Deploy on Vercel
+## 📚 Additional Resources
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [TypeScript Guide](https://www.typescriptlang.org/docs/)
+- [Docker Guide](https://docs.docker.com/get-started/)

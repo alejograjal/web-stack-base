@@ -5,7 +5,7 @@ interface ErrorProcessProps {
     message?: string;
 }
 
-export const ErrorProcess = ({ message = "Something went wrong while loading the information. Please try again later." }: ErrorProcessProps) => {
+const ErrorProcess = ({ message = "Something went wrong while loading the information. Please try again later." }: ErrorProcessProps) => {
     return (
         <Box className="flex items-center gap-[0.375rem] !px-4 !py-4 bg-[#fdf6f6] !rounded-[0.5rem] border border-[#f0cfcf]">
             <ErrorOutlineIcon color="error" sx={{ fontSize: 28 }} />
@@ -15,3 +15,5 @@ export const ErrorProcess = ({ message = "Something went wrong while loading the
         </Box>
     );
 };
+
+export default ErrorProcess;

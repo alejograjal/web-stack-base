@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export const useOverlayMenu = () => {
+const useOverlayMenu = () => {
     const [openMenu, setOpenMenu] = useState(false);
 
     const toggleOverlayMenu = (open: boolean) => {
@@ -22,3 +22,5 @@ export const useOverlayMenu = () => {
         handleScrollTo,
     };
 };
+
+export default useOverlayMenu;

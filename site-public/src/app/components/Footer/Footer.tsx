@@ -2,7 +2,7 @@
 
 import { memo } from 'react';
 import { motion } from 'framer-motion';
-import { useOverlayMenu } from '@hooks/ui/useOverlayMenu';
+import useOverlayMenu from '@hooks/ui/useOverlayMenu';
 import { Facebook, Instagram } from '@mui/icons-material';
 import { Typography, Grid, Box, Link } from '@mui/material';
 

@@ -4,8 +4,8 @@ import { memo } from "react";
 import Image from "next/image";
 import FullScreenMenu from "./FullScreenMenu";
 import MenuIcon from '@mui/icons-material/Menu';
+import useOverlayMenu from "@hooks/ui/useOverlayMenu";
 import Logo from "@assets/Manuel_Antonio_Explorer.webp";
-import { useOverlayMenu } from "@hooks/ui/useOverlayMenu";
 import { AppBar, Toolbar, Box, Typography, Link, Container, IconButton } from "@mui/material";
 
 const Header = memo(() => {

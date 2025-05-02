@@ -1,6 +1,6 @@
 import Footer from '@components/Footer/Footer';
 import Header from '@components/Header/Header';
-import { Snackbar } from '@components/Shared/Snackbar';
+import Snackbar from '@components/Shared/Snackbar';
 import HomeSection from '@sections/HomeSection/HomeSection';
 import ToursSection from '@sections/ToursSection/ToursSection';
 import ReviewsSection from '@sections/ReviewsSection/ReviewsSection';
@@ -8,9 +8,9 @@ import GallerySection from '@sections/GallerySection/GallerySection';
 import ContactSection from '@sections/ContactSection/ContactSection';
 import ExperienceSection from '@sections/ExperienceSection/ExperienceSection';
 import FloatingWhatsAppButton from '@components/FloatingButtons/FloatingWhatsAppButton';
-import { MicrodataTouristAttraction } from '@sections/Microdata/MicrodataTouristAttraction';
+import MicrodataTouristAttraction from '@sections/Microdata/MicrodataTouristAttraction';
 
-export default function Principal() {
+const Principal = () => {
   return (
     <>
       <Header />
@@ -29,3 +29,5 @@ export default function Principal() {
     </>
   );
 }
+
+export default Principal;

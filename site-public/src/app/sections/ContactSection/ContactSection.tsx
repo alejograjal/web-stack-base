@@ -51,8 +51,8 @@ const ContactSection = () => {
                     >
                         <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
                             <PhoneIcon />
-                            <Typography component="a" href="tel:+50663459999">
-                                +506 6345 9999
+                            <Typography component="a" href="tel:+50663459555">
+                                +506 6345 9555
                             </Typography>
                         </Box>
                     </motion.div>

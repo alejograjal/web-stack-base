@@ -4,7 +4,7 @@
 import { useSnackbar } from "@src/stores/useSnackbar"
 import { Alert, Snackbar as MuiSnackbar } from "@mui/material"
 
-export const Snackbar = () => {
+const Snackbar = () => {
     const isVisible = useSnackbar((state) => state.visible)
     const message = useSnackbar((state) => state.message)
     const severity = useSnackbar((state) => state.severity)
@@ -26,3 +26,5 @@ export const Snackbar = () => {
         </MuiSnackbar>
     )
 }
+
+export default Snackbar;

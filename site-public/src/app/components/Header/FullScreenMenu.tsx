@@ -3,8 +3,8 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import CloseIcon from '@mui/icons-material/Close';
+import useOverlayMenu from '@hooks/ui/useOverlayMenu';
 import { IconButton, Typography } from '@mui/material';
-import { useOverlayMenu } from '@hooks/ui/useOverlayMenu';
 
 interface FullScreenMenuProps {
     open: boolean;

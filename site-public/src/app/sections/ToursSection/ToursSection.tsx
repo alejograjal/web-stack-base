@@ -3,11 +3,11 @@
 import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 import { Service } from '@api/types/api-web-stack-base';
-import { ErrorProcess } from "@app/components/Error/ErrorProcess";
+import ErrorProcess from "@app/components/Error/ErrorProcess";
 import ImageCarousel from '@app/components/Carousel/ImageCarousel';
 import { Box, Typography, Grid, Card, CardContent, Divider } from '@mui/material';
 import { UseGetServices } from '@hooks/api/web-stack-base/service/UseGetServices';
-import { CircularLoadingProgress } from '@app/components/LoadingProgress/CircularLoadingProcess';
+import CircularLoadingProgress from '@app/components/LoadingProgress/CircularLoadingProcess';
 
 const ToursSection = memo(() => {
     const { data: tours, isLoading, isError } = UseGetServices();

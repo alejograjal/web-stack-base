@@ -6,10 +6,10 @@ import { isNil } from "@src/util/util";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Navigation, Pagination } from "swiper/modules";
-import { ErrorProcess } from "@app/components/Error/ErrorProcess";
+import ErrorProcess from "@app/components/Error/ErrorProcess";
 import { UseGetReviews } from "@hooks/api/web-stack-base/review/UseGetReviews";
+import CircularLoadingProgress from "@app/components/LoadingProgress/CircularLoadingProcess";
 import { Avatar, Box, Card, CardContent, CardHeader, Rating, Typography } from "@mui/material";
-import { CircularLoadingProgress } from "@app/components/LoadingProgress/CircularLoadingProcess";
 
 const ReviewsSection = memo(() => {
     const { data: reviews, isLoading, isError } = UseGetReviews();

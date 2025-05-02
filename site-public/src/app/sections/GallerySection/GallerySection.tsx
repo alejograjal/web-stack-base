@@ -5,13 +5,13 @@ import { motion } from 'framer-motion';
 import Masonry from 'react-masonry-css';
 import 'yet-another-react-lightbox/styles.css';
 import Lightbox from 'yet-another-react-lightbox';
+import useOverlayMenu from '@hooks/ui/useOverlayMenu';
 import { Box, Typography, Button } from '@mui/material';
 import { Resource } from '@api/types/api-web-stack-base';
 import { useCallback, useEffect, useState } from 'react';
-import { useOverlayMenu } from '@hooks/ui/useOverlayMenu';
-import { ErrorProcess } from '@components/Error/ErrorProcess';
-import { UseGetResources } from '@hooks/api/web-stack-base/resource/UseGetResource';
-import { CircularLoadingProgress } from '@components/LoadingProgress/CircularLoadingProcess';
+import ErrorProcess from '@components/Error/ErrorProcess';
+import UseGetResources from '@hooks/api/web-stack-base/resource/UseGetResource';
+import CircularLoadingProgress from '@components/LoadingProgress/CircularLoadingProcess';
 
 const GallerySection = () => {
     const { handleScrollTo } = useOverlayMenu();

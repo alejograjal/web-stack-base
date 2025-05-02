@@ -1,6 +1,6 @@
 import { Box, Typography, Link as MuiLink } from '@mui/material';
 
-export const MicrodataTouristAttraction = () => {
+const MicrodataTouristAttraction = () => {
     return (
         <Box
             component="div"
@@ -42,3 +42,5 @@ export const MicrodataTouristAttraction = () => {
         </Box>
     );
 }
+
+export default MicrodataTouristAttraction;

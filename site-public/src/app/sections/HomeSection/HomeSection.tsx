@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import React, { Suspense } from 'react';
+import useOverlayMenu from '@hooks/ui/useOverlayMenu';
 import { Box, Typography, Button } from '@mui/material';
-import { useOverlayMenu } from '@hooks/ui/useOverlayMenu';
-import { CircularLoadingProgress } from '@components/LoadingProgress/CircularLoadingProcess';
+import CircularLoadingProgress from '@components/LoadingProgress/CircularLoadingProcess';
 
 const GalleryHome = React.lazy(() => import('@app/sections/HomeSection/GalleryHome'));
 
@@ -18,8 +18,8 @@ const HomeSection = () => {
                 <Image
                     src={imageUrl}
                     alt="Manuel Antonio"
-                    fill
-                    priority
+                    fill={true}
+                    priority={true}
                     className="object-cover z-0"
                     placeholder="blur"
                     blurDataURL="/assets/Manuel-Antonio-Lowres.jpg"

@@ -3,7 +3,7 @@ import { Resource } from "@api/types/api-web-stack-base";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { castRequestBody, UseTypedApiClientBS } from "@hooks/api/UseTypedApiClientBS";
 
-export const UseGetResources = (resourceTypeId?: number, enabled?: boolean): UseQueryResult<Array<Resource>, ApiError> => {
+const UseGetResources = (resourceTypeId?: number, enabled?: boolean): UseQueryResult<Array<Resource>, ApiError> => {
     const path = '/api/resource';
     const method = 'get';
 
@@ -19,3 +19,5 @@ export const UseGetResources = (resourceTypeId?: number, enabled?: boolean): Use
         staleTime: 0,
     })
 }
+
+export default UseGetResources;
