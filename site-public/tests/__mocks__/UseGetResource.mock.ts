@@ -1,6 +1,7 @@
 import { ApiError } from "openapi-typescript-fetch";
 import { UseQueryResult } from "@tanstack/react-query";
 import { Resource } from "@api/types/api-web-stack-base";
+import { createMockUseQuery } from "./createMockUseQuery";
 
 type MockUseGetResourcesReturn = UseQueryResult<Resource[], ApiError>;
 
@@ -10,30 +11,7 @@ const mockImplementation = (
     data: Resource[] | null = null,
     isLoading: boolean = false,
     isError: boolean = false
-): MockUseGetResourcesReturn => ({
-    data: data ?? null,
-    isLoading,
-    isError,
-    error: isError ? new ApiError({} as never) : null,
-    isSuccess: !isError && !isLoading && data !== null,
-    status: isError ? 'error' : isLoading ? 'loading' : 'success',
-    fetchStatus: 'idle',
-    refetch: jest.fn(),
-    remove: jest.fn(),
-    dataUpdatedAt: 0,
-    errorUpdatedAt: 0,
-    failureCount: 0,
-    failureReason: null,
-    isFetched: true,
-    isFetchedAfterMount: true,
-    isFetching: false,
-    isInitialLoading: false,
-    isPaused: false,
-    isPlaceholderData: false,
-    isPreviousData: false,
-    isRefetching: false,
-    isStale: false,
-} as unknown as MockUseGetResourcesReturn);
+): MockUseGetResourcesReturn => createMockUseQuery(data!, isLoading, isError);
 
 mockUseGetResources.mockImplementation(
     () => mockImplementation(null, false, false)
