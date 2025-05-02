@@ -251,6 +251,12 @@ jobs:
     - name: ⬇️ Checkout code
       uses: actions/checkout@v3
 
+    - name: ✅ Run Next.js tests (Production)
+      run: |
+        cd site-public
+        npm ci
+        npm run test
+
     - name: 📦 Backup and clean remote folder before deploy
       run: |
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
