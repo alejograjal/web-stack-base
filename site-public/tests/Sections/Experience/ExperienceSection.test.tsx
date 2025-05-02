@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
-import { act, render, screen } from '@testing-library/react';
-import ExperienceSection from '@app/sections/ExperienceSection/ExperienceSection';
 import '@testing-library/jest-dom';
+import { act, render, screen } from '@testing-library/react';
 import { mockSections } from '@tests/__mocks__/experienceMocks';
+import ExperienceSection from '@app/sections/ExperienceSection/ExperienceSection';
 
 type MotionDivProps = {
     children: React.ReactNode;

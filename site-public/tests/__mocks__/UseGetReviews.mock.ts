@@ -1,16 +1,16 @@
 import { ApiError } from "openapi-typescript-fetch";
+import { Review } from "@api/types/api-web-stack-base";
 import { UseQueryResult } from "@tanstack/react-query";
-import { Resource } from "@api/types/api-web-stack-base";
 
-type MockUseGetResourcesReturn = UseQueryResult<Resource[], ApiError>;
+type MockUseGetReviewsReturn = UseQueryResult<Review[], ApiError>;
 
-const mockUseGetResources = jest.fn<MockUseGetResourcesReturn, [number?, boolean?]>();
+const mockUseGetReviews = jest.fn<MockUseGetReviewsReturn, []>();
 
 const mockImplementation = (
-    data: Resource[] | null = null,
+    data: Review[] | null = null,
     isLoading: boolean = false,
     isError: boolean = false
-): MockUseGetResourcesReturn => ({
+): MockUseGetReviewsReturn => ({
     data: data ?? null,
     isLoading,
     isError,
@@ -33,36 +33,36 @@ const mockImplementation = (
     isPreviousData: false,
     isRefetching: false,
     isStale: false,
-} as unknown as MockUseGetResourcesReturn);
+} as unknown as MockUseGetReviewsReturn);
 
-mockUseGetResources.mockImplementation(
+mockUseGetReviews.mockImplementation(
     () => mockImplementation(null, false, false)
 );
 
 export const mockLoadingState = () => {
-    mockUseGetResources.mockImplementation(
+    mockUseGetReviews.mockImplementation(
         () => mockImplementation(null, true, false)
     );
 };
 
 export const mockErrorState = () => {
-    mockUseGetResources.mockImplementation(
+    mockUseGetReviews.mockImplementation(
         () => mockImplementation(null, false, true)
     );
 };
 
-export const mockSuccessState = (data: Resource[]) => {
-    mockUseGetResources.mockImplementation(
+export const mockSuccessState = (data: Review[]) => {
+    mockUseGetReviews.mockImplementation(
         () => mockImplementation(data, false, false)
     );
 };
 
 export const mockEmptyState = () => {
-    mockUseGetResources.mockImplementation(
+    mockUseGetReviews.mockImplementation(
         () => mockImplementation([], false, false)
     );
 };
 
-export { mockUseGetResources };
+export { mockUseGetReviews };
 
-export default mockUseGetResources;
+export default mockUseGetReviews;

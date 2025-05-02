@@ -13,4 +13,4 @@ export const ReviewSchema = ContactSchema.concat(object().shape({
         .max(5, 'Rate must be at most 5'),
 }));
 
-export type BranchForm = InferType<typeof ReviewSchema>
+export type ReviewForm = InferType<typeof ReviewSchema>

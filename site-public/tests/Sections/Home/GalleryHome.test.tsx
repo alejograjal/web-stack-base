@@ -2,8 +2,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/display-name */
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
-import GalleryHome from '@app/sections/HomeSection/GalleryHome';
 import '@testing-library/jest-dom';
 import {
     mockUseGetResources,
@@ -13,6 +11,8 @@ import {
     mockEmptyState
 } from '@tests/__mocks__/UseGetResource.mock';
 import { mockResources } from '@tests/__mocks__/galleryMocks';
+import GalleryHome from '@app/sections/HomeSection/GalleryHome';
+import { act, render, screen, waitFor } from '@testing-library/react';
 
 jest.mock('@hooks/api/web-stack-base/resource/UseGetResource', () => ({
     __esModule: true,

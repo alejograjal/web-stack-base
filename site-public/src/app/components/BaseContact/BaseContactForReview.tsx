@@ -1,7 +1,7 @@
 import BaseContact, { BaseContactProps } from './BaseContact';
-import type { BranchForm } from '@sections/ReviewsSection/ReviewSchema';
+import type { ReviewForm } from '@sections/ReviewsSection/ReviewSchema';
 
-const BaseContactForReview = (props: BaseContactProps<BranchForm>) => (
+const BaseContactForReview = (props: BaseContactProps<ReviewForm>) => (
     <BaseContact {...props} />
 );
 

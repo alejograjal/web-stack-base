@@ -15,4 +15,4 @@ export const ContactSchema = object().shape({
     message: string().required('Message is required').max(500, 'Message must be at most 500 characters')
 })
 
-export type BranchForm = InferType<typeof ContactSchema>
+export type ContactForm = InferType<typeof ContactSchema>

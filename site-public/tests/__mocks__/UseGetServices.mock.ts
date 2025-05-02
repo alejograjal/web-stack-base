@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApiError } from "openapi-typescript-fetch";
-import { Service } from "@api/types/api-web-stack-base";
 import { UseQueryResult } from "@tanstack/react-query";
+import { Service } from "@api/types/api-web-stack-base";
 
 type MockUseGetServicesReturn = UseQueryResult<Service[], ApiError>;
 
@@ -15,7 +14,7 @@ const mockImplementation = (
     data: data ?? null,
     isLoading,
     isError,
-    error: isError ? new ApiError({} as any) : null,
+    error: isError ? new ApiError({} as never) : null,
     isSuccess: !isError && !isLoading && data !== null,
     status: isError ? 'error' : isLoading ? 'loading' : 'success',
     fetchStatus: 'idle',
@@ -34,7 +33,7 @@ const mockImplementation = (
     isPreviousData: false,
     isRefetching: false,
     isStale: false,
-} as any);
+} as unknown as MockUseGetServicesReturn);
 
 mockUseGetServices.mockImplementation(
     () => mockImplementation(null, false, false)

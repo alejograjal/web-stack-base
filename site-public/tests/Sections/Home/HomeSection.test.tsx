@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/display-name */
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import HomeSection from '@sections/HomeSection/HomeSection';
 import '@testing-library/jest-dom';
+import HomeSection from '@sections/HomeSection/HomeSection';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 
 jest.mock('@app/sections/HomeSection/GalleryHome', () => ({
     __esModule: true,
