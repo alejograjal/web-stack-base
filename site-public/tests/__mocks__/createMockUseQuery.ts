@@ -6,17 +6,16 @@ export function createMockUseQuery<T>(
     isLoading = false,
     isError = false
 ): UseQueryResult<T[], ApiError> {
-    const statusMap = {
+    const status = {
         error: "error",
         loading: "pending",
         success: "success"
     };
 
-    const status = isError
-        ? statusMap.error
-        : isLoading
-            ? statusMap.loading
-            : statusMap.success;
+    let currentStatus: keyof typeof status = "success";
+
+    if (isError) currentStatus = "error";
+    if (isLoading) currentStatus = "loading";
 
     const mockResult = {
         data: isLoading || isError ? undefined : data,
@@ -24,7 +23,7 @@ export function createMockUseQuery<T>(
         isError,
         error: isError ? new ApiError({} as never) : null,
         isSuccess: !isError && !isLoading && !!data,
-        status: status,
+        status: status[currentStatus],
         fetchStatus: "idle",
         refetch: jest.fn() as (options?: RefetchOptions) => Promise<QueryObserverResult<T[], ApiError>>,
         dataUpdatedAt: 0,
