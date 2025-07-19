@@ -4,7 +4,8 @@ services:
   mssql:
     container_name: manuel-antonio-explorer-mssql
     image: mcr.microsoft.com/mssql/server:2022-latest
-    restart: no
+    restart: unless-stopped
+    user: "10001:0" 
     environment:
       ACCEPT_EULA:"Y"
       MSSQL_SA_PASSWORD:"${SQL_SA_PASSWORD}"
